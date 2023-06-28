@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class HW10_Q2 {
+public class HW10Q2 {
     public static void main(String[] args) {
         Set<Character> firstSet = new TreeSet<>();
         Set<Character> secondSet = new TreeSet<>();

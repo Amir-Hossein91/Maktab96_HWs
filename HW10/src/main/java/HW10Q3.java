@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class HW10_Q3 {
+public class HW10Q3 {
 
     public static void main(String[] args) {
         List<Integer> inputList = new ArrayList<>();

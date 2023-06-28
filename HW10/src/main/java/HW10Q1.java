@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class HW10_Q1 {
+public class HW10Q1 {
 
     private static List<String> possibleWords = new ArrayList<>();
     private static Scanner input = new Scanner(System.in);
