@@ -6,7 +6,7 @@ public class HW10Q1 {
     private static Scanner input = new Scanner(System.in);
     private static Map<String, List<String>> map = new HashMap<>();
 
-    public static void main(String[] args) {
+    public void run() {
         while (true){
             System.out.println("Enter the word (0: exit, all: all mapped values ): ");
             String word = input.nextLine();

@@ -3,7 +3,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class HW10Q2 {
-    public static void main(String[] args) {
+    public void run() {
         Set<Character> firstSet = new TreeSet<>();
         Set<Character> secondSet = new TreeSet<>();
         fillSets(firstSet, secondSet);

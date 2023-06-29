@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class HW10Q3 {
 
-    public static void main(String[] args) {
+    public void run() {
         List<Integer> inputList = new ArrayList<>();
         Random random = new Random();
 

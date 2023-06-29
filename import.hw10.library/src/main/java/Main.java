@@ -5,12 +5,12 @@ public class Main {
         HW10Q3 question3 = new HW10Q3();
         HashMapWhitOrder<String, Integer> map = new HashMapWhitOrder<>();
 
-        question1.main(args);
+        question1.run();
 
-        //question2.main(args);
+       // question2.run();
 
-       // question3.main(args);
+       //question3.run();
 
-       // map.main(args);
+       //map.run();
     }
 }

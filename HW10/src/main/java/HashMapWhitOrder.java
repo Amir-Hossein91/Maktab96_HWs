@@ -9,7 +9,7 @@ public class HashMapWhitOrder<K , V> {
         this.values = new ArrayList<>();
     }
 
-    public static void main(String[] args) {
+    public void run() {
         Map<String, Integer>  realMap = new HashMap<>();
 
         HashMapWhitOrder<String, Integer> map = new HashMapWhitOrder<>();
