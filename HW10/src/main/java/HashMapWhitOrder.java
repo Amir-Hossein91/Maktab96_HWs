@@ -9,27 +9,6 @@ public class HashMapWhitOrder<K , V> {
         this.values = new ArrayList<>();
     }
 
-    public void run() {
-        Map<String, Integer>  realMap = new HashMap<>();
-
-        HashMapWhitOrder<String, Integer> map = new HashMapWhitOrder<>();
-        map.put(null, null);
-        map.put("first", 1);
-        map.put("second", 2);
-        map.put("third", null);
-        map.put("chaharom" , 5);
-        map.put("next" , 4);
-        map.put("fourth" , 4);
-        map.put("chaharom" , 8);
-
-
-        System.out.println("has key null? " + map.hasKey(null));
-        System.out.println("is map empty? " + map.isEmpty());
-        System.out.println("all the entries: " + map.entryList());
-        map.setKeyFor(4,"amir", "bonus");
-        System.out.println("all the entries: " + map.entryList());
-
-    }
 
     public void put (K key , V value){
         if(!keys.contains(key)){
