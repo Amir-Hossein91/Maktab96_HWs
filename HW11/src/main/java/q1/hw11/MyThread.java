@@ -23,7 +23,6 @@ public class MyThread extends Thread{
 
     public void fillTotal (List<Integer> numbers , List<Integer> total){
 
-
         synchronized (this.total){
             if(numbers.get(0) == 1 && total.size() == 0) {
                 try {
