@@ -5,11 +5,11 @@ public class Main {
         HW10Q3 question3 = new HW10Q3();
         HashMapWhitOrder<String, Integer> map = new HashMapWhitOrder<>();
 
-        //question1.run();
+//        question1.run();
 
-       // question2.run();
+//        question2.run();
 
-       //question3.run();
+//       question3.run();
 
         map.put(null, null);
         map.put("first", 1);
