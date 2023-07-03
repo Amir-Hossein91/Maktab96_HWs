@@ -2,9 +2,15 @@ import java.util.*;
 
 public class HW10Q1 {
 
-    private static List<String> possibleWords = new ArrayList<>();
-    private static Scanner input = new Scanner(System.in);
-    private static Map<String, List<String>> map = new HashMap<>();
+    private static final List<String> possibleWords;
+    private static final Scanner input;
+    private static final Map<String, List<String>> map;
+
+    static {
+        possibleWords = new ArrayList<>();
+        input = new Scanner(System.in);
+        map = new HashMap<>();
+    }
 
     public void run() {
         while (true){
