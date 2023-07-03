@@ -5,14 +5,19 @@ import java.util.Random;
 public class HW10Q3 {
 
     public void run() {
-        List<Integer> inputList = new ArrayList<>();
+        List<Integer> integerList = createRandomIntegerList();
+        System.out.println(integerList);
+        manageList(integerList);
+        System.out.println(integerList);
+    }
+
+    public static List<Integer> createRandomIntegerList() {
+        List<Integer> integerList = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
-            inputList.add(random.nextInt(1, 11));
+            integerList.add(random.nextInt(1, 11));
         }
-        System.out.println(inputList);
-        manageList(inputList);
-        System.out.println(inputList);
+        return integerList;
     }
 
     public static void manageList(List<Integer> list) {
