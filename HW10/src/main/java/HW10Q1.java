@@ -31,24 +31,18 @@ public class HW10Q1 {
             char [] charArray = word.toCharArray();
             List<Character> list = new ArrayList<>();
 
-            for(int i =0; i< charArray.length; i++)
-                list.add(charArray[i]);
-
+            for (char c : charArray) list.add(c);
             permutation("", list);
             map.put(word, new ArrayList<>(possibleWords));
             possibleWords.clear();
             System.out.println(map.get(word));
             System.out.println("Enter the matching word: ");
             String match = input.nextLine();
-
             if(map.get(word).contains(match))
                 System.out.println("Pass!");
             else
                 System.out.println("Fail!");
-
-
         }
-
     }
 
     public static void permutation (String result , List<Character> chars){
