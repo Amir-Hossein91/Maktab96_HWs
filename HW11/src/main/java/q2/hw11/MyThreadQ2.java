@@ -1,11 +1,11 @@
 package q2.hw11;
 
-public class MyThread extends Thread{
+public class MyThreadQ2 extends Thread{
 
     private final Object waitOn;
     private final Object notifyOn;
 
-    public MyThread (Object waitOn, Object notifyOn, String name){
+    public MyThreadQ2(Object waitOn, Object notifyOn, String name){
         super(name);
         this.waitOn = waitOn;
         this.notifyOn = notifyOn;
