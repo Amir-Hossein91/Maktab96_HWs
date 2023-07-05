@@ -6,12 +6,13 @@ import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
 
 public class HW11Q1 {
+    private static final List<Integer> total = new ArrayList<>();
+    private static final List<Integer> even = new ArrayList<>();
+    private static final List<Integer> odd = new ArrayList<>();
+
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
-        List<Integer> total = new ArrayList<>();
-        List<Integer> even = new ArrayList<>();
-        List<Integer> odd = new ArrayList<>();
         CountDownLatch count = new CountDownLatch(2);
         MyThread evenNumbers;
         MyThread oddNumbers;
@@ -19,12 +20,7 @@ public class HW11Q1 {
         System.out.println("Enter a number:");
         int number = input.nextInt();
 
-        for(int i =0; i <= number; i++){
-            if(i % 2 == 0)
-                even.add(i);
-            else
-                odd.add(i);
-        }
+        fillLists(number);
 
         evenNumbers = new MyThread(even, total, count);
         oddNumbers = new MyThread(odd, total, count);
@@ -39,5 +35,14 @@ public class HW11Q1 {
 
         System.out.println(total);
 
+    }
+
+    public static void fillLists (int number){
+        for(int i =0; i <= number; i++){
+            if(i % 2 == 0)
+                even.add(i);
+            else
+                odd.add(i);
+        }
     }
 }
