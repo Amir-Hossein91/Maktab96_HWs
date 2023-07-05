@@ -1,4 +1,4 @@
-package q1.hw11;
+package hw11.q1;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;

@@ -1,4 +1,4 @@
-package q1.hw11;
+package hw11.q1;
 
 import java.util.ArrayList;
 import java.util.List;

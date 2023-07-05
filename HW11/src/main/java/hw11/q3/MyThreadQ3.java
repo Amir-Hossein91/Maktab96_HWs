@@ -1,4 +1,4 @@
-package q3.hw111;
+package hw11.q3;
 
 public class MyThreadQ3 extends Thread{
 

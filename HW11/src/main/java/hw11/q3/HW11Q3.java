@@ -1,4 +1,4 @@
-package q3.hw111;
+package hw11.q3;
 
 public class HW11Q3 {
     public static void main(String[] args) {
