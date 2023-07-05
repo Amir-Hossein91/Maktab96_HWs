@@ -14,16 +14,16 @@ public class HW11Q1 {
 
         Scanner input = new Scanner(System.in);
         CountDownLatch count = new CountDownLatch(2);
-        MyThread evenNumbers;
-        MyThread oddNumbers;
+        MyThreadQ1 evenNumbers;
+        MyThreadQ1 oddNumbers;
 
         System.out.println("Enter a number:");
         int number = input.nextInt();
 
         fillLists(number);
 
-        evenNumbers = new MyThread(even, total, count);
-        oddNumbers = new MyThread(odd, total, count);
+        evenNumbers = new MyThreadQ1(even, total, count);
+        oddNumbers = new MyThreadQ1(odd, total, count);
         evenNumbers.start();
         oddNumbers.start();
 

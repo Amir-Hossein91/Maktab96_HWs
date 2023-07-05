@@ -3,13 +3,13 @@ package q1.hw11;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-public class MyThread extends Thread{
+public class MyThreadQ1 extends Thread{
 
     private final List<Integer> numbers;
     private final List<Integer> total;
     private final CountDownLatch count;
 
-    public MyThread(List<Integer> numbers , List<Integer> total, CountDownLatch count){
+    public MyThreadQ1(List<Integer> numbers , List<Integer> total, CountDownLatch count){
         this.numbers = numbers;
         this.total = total;
         this.count = count;
