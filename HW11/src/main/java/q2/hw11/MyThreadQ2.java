@@ -39,12 +39,6 @@ public class MyThreadQ2 extends Thread{
                 this.notifyOn.notify();
                 System.out.println(Thread.currentThread().getName() + " has notified on " + notifyOn);
             }
-
-
-
-
         }
-
-
     }
 }
