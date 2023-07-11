@@ -2,6 +2,7 @@ package cw12.question1;
 
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.Random;
 import java.util.function.*;
 
 public class LambdaUtil {
@@ -35,10 +36,11 @@ public class LambdaUtil {
      * @return function that repeats Strings
      */
     public static BiFunction<String, Integer, String> stringMultiplier() {
-        String result = "";
+
         return (word, number) -> {
+            String result = "";
           for(int i =1; i<= number; i++){
-              result.concat(word);
+             result += word;
           }
           return result;
         };
@@ -51,8 +53,7 @@ public class LambdaUtil {
      * @return function that converts adds dollar sign
      */
     public static Function<BigDecimal, String> toDollarStringFunction() {
-        //todo
-        return null;
+        return number -> "$".concat(number.toString());
     }
 
     /**
@@ -64,8 +65,7 @@ public class LambdaUtil {
      * @return a string predicate
      */
     public static Predicate<String> lengthInRangePredicate(int min, int max) {
-        //todo
-        return null;
+        return s -> s.length() >= min && s.length() < max;
     }
 
     /**
@@ -74,8 +74,8 @@ public class LambdaUtil {
      * @return int supplier
      */
     public static IntSupplier randomIntSupplier() {
-        //todo
-        return null;
+        Random random = new Random();
+        return random::nextInt;
     }
 
 
@@ -85,8 +85,8 @@ public class LambdaUtil {
      * @return int operation
      */
     public static IntUnaryOperator boundedRandomIntSupplier() {
-        //todo
-        return null;
+        Random random = new Random();
+        return random::nextInt;
     }
 
     /**
@@ -95,8 +95,7 @@ public class LambdaUtil {
      * @return square operation
      */
     public static IntUnaryOperator intSquareOperation() {
-        //todo
-        return null;
+        return number -> number * number;
     }
 
     /**
@@ -105,8 +104,7 @@ public class LambdaUtil {
      * @return binary sum operation
      */
     public static LongBinaryOperator longSumOperation() {
-        //todo
-        return null;
+        return Long::sum;
     }
 
     /**
@@ -115,8 +113,7 @@ public class LambdaUtil {
      * @return string to int converter
      */
     public static ToIntFunction<String> stringToIntConverter() {
-        //todo
-        return null;
+        return Integer::parseInt;
     }
 
     /**
@@ -127,8 +124,7 @@ public class LambdaUtil {
      * @return a function supplier
      */
     public static Supplier<IntUnaryOperator> nMultiplyFunctionSupplier(int n) {
-        //todo
-        return null;
+        return () -> number -> n * number;
     }
 
     /**
@@ -137,8 +133,7 @@ public class LambdaUtil {
      * @return a supplier instance
      */
     public static Supplier<Supplier<Supplier<String>>> trickyWellDoneSupplier() {
-        //todo
-        return null;
+        return () -> () -> () -> "WELL DONE!";
     }
 
     /**
