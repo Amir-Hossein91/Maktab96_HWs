@@ -39,10 +39,10 @@ public class LambdaUtil {
 
         return (word, number) -> {
             String result = "";
-          for(int i =1; i<= number; i++){
-             result += word;
-          }
-          return result;
+            for (int i = 1; i <= number; i++) {
+                result += word;
+            }
+            return result;
         };
     }
 
@@ -155,8 +155,26 @@ public class LambdaUtil {
      * @return a binary function that receiver predicate and function and compose them to create a new function
      */
     public static BiFunction<IntUnaryOperator, IntPredicate, IntUnaryOperator> functionToConditionalFunction() {
-        //todo :: extra points
-        return null;
+
+//        return (operator, predicate) -> {
+//            IntUnaryOperator result = new IntUnaryOperator() {
+//                @Override
+//                public int applyAsInt(int operand) {
+//                    if (predicate.test(operand))
+//                        return operator.applyAsInt(operand);
+//                    else
+//                        return operand;
+//                }
+//            };
+//            return result;
+//        };
+
+         return (operator, predicate) -> operand -> {
+                    if (predicate.test(operand))
+                        return operator.applyAsInt(operand);
+                    else
+                        return operand;
+                };
     }
 
     /**
