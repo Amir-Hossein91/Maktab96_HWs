@@ -142,8 +142,7 @@ public class LambdaUtil {
      * @return function that composes functions with trim() function
      */
     public static UnaryOperator<Function<String, String>> composeWithTrimFunction() {
-        //todo
-        return null;
+        return function -> function.compose(String::trim);
     }
 
     /**
