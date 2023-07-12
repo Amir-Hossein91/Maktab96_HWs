@@ -13,8 +13,7 @@ public class LambdaUtil {
      * @return a string supplier
      */
     public static Supplier<String> helloSupplier() {
-//        Supplier<String> result = () -> "Hello";
-//        return result;
+
         return () -> "Hello";
     }
 
@@ -24,8 +23,7 @@ public class LambdaUtil {
      * @return a string predicate
      */
     public static Predicate<String> isEmptyPredicate() {
-//        Predicate<String> result = String::isEmpty;
-//        return result;
+
         return String::isEmpty;
     }
 
