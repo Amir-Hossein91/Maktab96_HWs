@@ -1,4 +1,4 @@
-package ir.maktab.model;
+package question1.model;
 
 import java.util.Date;
 

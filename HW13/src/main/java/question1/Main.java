@@ -1,4 +1,4 @@
-package ir.maktab;
+package question1;
 
 
 
