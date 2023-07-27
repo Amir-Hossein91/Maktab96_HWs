@@ -1,7 +1,7 @@
 showUndoneMenu() {
   while (true); do
     clear
-    undoneMenu=("Show ToDo List" "Mark a New Task As Done" "Add a Task" "Remove a Task" "Search in ToDo List" "Back")
+    undoneMenu=("Show ToDo List" "Mark a Task As Done" "Add a New Task" "Remove a Task" "Search in ToDo List" "Back")
     for ((i = 0; i < ${#undoneMenu[@]}; i++)); do
       echo "$((i + 1))) " ${undoneMenu[i]}
     done
@@ -10,13 +10,13 @@ showUndoneMenu() {
     1)
 
       echo "Here are the list of your tasks:"
-      cat -n <tasks/Undone.txt
+      cat -b <tasks/Undone.txt
       echo
       read -p "press enter to go back"
       ;;
     2)
       echo "you want to mark a task as done"
-      cat -n <tasks/Undone.txt
+      cat -b <tasks/Undone.txt
       echo
       read -p "Which task has been accomplished?" line
       sed -n "$line p" tasks/Undone.txt >>tasks/Done.txt
@@ -31,7 +31,7 @@ showUndoneMenu() {
       ;;
     4)
       echo "you want to remove a task"
-      cat -n <tasks/Undone.txt
+      cat -b <tasks/Undone.txt
       echo
       read -p "Which task do you want to remove?" line
       sed -n "$line p" tasks/Undone.txt >>tasks/Removed.txt
@@ -83,5 +83,4 @@ while (true); do
     echo "Wrong Entry!"
     ;;
   esac
-
 done
