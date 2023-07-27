@@ -3,11 +3,15 @@ package question1;
 
 import question1.mockdata.MockData;
 import question1.model.Person;
+import question1.model.PersonSummary;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
 //        //B-1:
 //        for (Person p : filterAgeLessThanFifty()) {
@@ -29,11 +33,18 @@ public class Main {
 //            System.out.println(s);
 //        }
 
-        //B-5
-        System.out.println(fetchHundredPeople().size());
-        for(Map.Entry<String, Person> entry :fetchHundredPeople().entrySet()){
-            System.out.println(entry);
+//        //B-5
+//        System.out.println(fetchHundredPeople().size());
+//        for(Map.Entry<String, Person> entry :fetchHundredPeople().entrySet()){
+//            System.out.println(entry);
+//        }
+
+        //B-6
+        List<PersonSummary> personSummaries = alterAgesFetchMales();
+        for(PersonSummary p : personSummaries){
+                System.out.println(p);
         }
+        System.out.println(calculateMaleAverageAges(personSummaries));
 
 
 
@@ -71,4 +82,34 @@ public class Main {
         return result;
     }
 
+    public static List<PersonSummary> alterAgesFetchMales() {
+        List<PersonSummary> result = MockData.getPeople().stream()
+                .map(person ->
+                {
+                    try {
+                        return new PersonSummary(person.getId(),
+                                person.getFirstName(),
+                                person.getLastName(),
+                                person.getGender(),
+                                new SimpleDateFormat("dd/MM/yyyy").parse(person.getBirthDate()));
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .filter(personSummary -> personSummary.getGender().equalsIgnoreCase("male"))
+                .toList();
+
+        result.forEach(personSummary -> {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(personSummary.getBirthDate());
+                    personSummary.setAge(LocalDate.now().getYear() - calendar.get(Calendar.YEAR));
+                });
+
+        return result;
+    }
+    public static int calculateMaleAverageAges(List<PersonSummary> list){
+        return list.stream()
+                .map(PersonSummary::getAge)
+                .reduce(0, (age1, age2) -> age1 + age2)/ list.size();
+    }
 }
