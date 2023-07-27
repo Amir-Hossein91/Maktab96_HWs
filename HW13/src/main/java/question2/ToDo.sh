@@ -8,23 +8,38 @@ showUndoneMenu() {
     read -p "Choose an option: " choice2
     case $choice2 in
     1)
-      cd tasks || return
-      cat -n < Undone.txt
-      cd ..
+
+      echo "Here are the list of your tasks:"
+      cat -n <tasks/Undone.txt
       echo
       read -p "press enter to go back"
       ;;
     2)
-      echo "you want to search in the list"
-      read -p "press enter to go back"
+      echo "you want to mark a task as done"
+      cat -n <tasks/Undone.txt
+      echo
+      read -p "Which task has been accomplished?" line
+      sed -n "$line p" tasks/Undone.txt >>tasks/Done.txt
+      sed -i "$line d" tasks/Undone.txt
+      read -p "Good job! press enter to go back"
       ;;
     3)
-      read -p "press enter to go back"
+      read -p "What is the new task?" task
+      echo $task >>tasks/Undone.txt
+
+      read -p "New task added! press enter to go back"
       ;;
     4)
-      read -p "press enter to go back"
+      echo "you want to remove a task"
+      cat -n <tasks/Undone.txt
+      echo
+      read -p "Which task do you want to remove?" line
+      sed -n "$line p" tasks/Undone.txt >>tasks/Removed.txt
+      sed -i "$line d" tasks/Undone.txt
+      read -p "Task removed! press enter to go back"
       ;;
     5)
+      echo "you want to search for a task"
       read -p "press enter to go back"
       ;;
     6)
@@ -40,7 +55,7 @@ touch Undone.txt Done.txt Removed.txt
 cd ..
 while (true); do
   clear
-  mainList=("Undone Tasks" "Done Tasks" "Removed Tasks" "Exit")
+  mainList=("ToDo Tasks" "Done Tasks" "Removed Tasks" "Exit")
   for ((i = 0; i < ${#mainList[@]}; i++)); do
     echo "$((i + 1))) " ${mainList[i]}
   done
@@ -50,12 +65,13 @@ while (true); do
     showUndoneMenu
     ;;
   2)
-    cat -b < tasks/Done.txt
+    cat -b <tasks/Done.txt
     echo
     read -p "press enter to go back"
     ;;
   3)
-    echo "you want to see the removed tasks"
+    cat -b <tasks/Removed.txt
+    echo
     read -p "press enter to go back"
     ;;
 
