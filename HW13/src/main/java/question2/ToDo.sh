@@ -25,7 +25,8 @@ showUndoneMenu() {
       ;;
     3)
       read -p "What is the new task?" task
-      echo $task >>tasks/Undone.txt
+      regesterDate=$(date +"%Y-%m-%d %T")
+      echo -e $task"\t"$regesterDate >>tasks/Undone.txt
 
       read -p "New task added! press enter to go back"
       ;;
