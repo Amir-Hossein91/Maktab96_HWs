@@ -15,13 +15,15 @@ showUndoneMenu() {
       read -p "press enter to go back"
       ;;
     2)
+      IFS="$(printf '\t')"
       echo "you want to mark a task as done"
       cat -b <tasks/Undone.txt
       echo
       read -p "Which task has been accomplished?" line
-      sed -n "$line p" tasks/Undone.txt >>tasks/Done.txt
+      read -ra newArray <<< "$(sed -n "$line p" tasks/Undone.txt)"
+      echo -e ${newArray[0]}"\t"$(date +"%Y-%m-%d %T") >>tasks/Done.txt
       sed -i "$line d" tasks/Undone.txt
-      read -p "Good job! press enter to go back"
+      read -p "Great job! press enter to go back"
       ;;
     3)
       read -p "What is the new task?" task
@@ -31,11 +33,13 @@ showUndoneMenu() {
       read -p "New task added! press enter to go back"
       ;;
     4)
+      IFS="$(printf '\t')"
       echo "you want to remove a task"
       cat -b <tasks/Undone.txt
       echo
       read -p "Which task do you want to remove?" line
-      sed -n "$line p" tasks/Undone.txt >>tasks/Removed.txt
+      read -ra newarray <<< "$(sed -n "$line p" tasks/Undone.txt)"
+      echo -e ${newarray[0]}"\t"$(date +"%Y-%m-%d %T") >>tasks/Removed.txt
       sed -i "$line d" tasks/Undone.txt
       read -p "Task removed! press enter to go back"
       ;;
