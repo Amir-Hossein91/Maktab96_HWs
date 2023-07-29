@@ -1,3 +1,5 @@
+#! /bin/bash
+
 showUndoneMenu() {
   while (true); do
     clear
