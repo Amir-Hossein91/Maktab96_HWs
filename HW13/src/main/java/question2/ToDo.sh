@@ -45,8 +45,7 @@ showUndoneMenu() {
     5)
       read -p "Enter the phrase you're searching for: " phrase
       result=$(grep -n "$phrase" tasks/Undone.txt)
-      if [ -z "$result" ]
-      then
+      if [ -z "$result" ]; then
         echo "No results found!"
       else
         echo "$result"
@@ -64,7 +63,77 @@ showUndoneMenu() {
   done
 }
 
+showDoneMenu() {
+  while [ true ]; do
+    clear
+    options=("Show Done List" "Search in Done List" "Back")
+    for ((i = 0; i < ${#options[@]}; i++)); do
+      echo "$((i + 1))) " ${options[i]}
+    done
+    read -p "Choose an option: " choice3
+    case $choice3 in
+    1)
+      echo "Tasks you accomplished already: "
+      cat -b <tasks/Done.txt
+      echo
+      read -p "press enter to continue"
+      ;;
+    2)
+      read -p "Enter the phrase you're searching for: " phrase
+      result=$(grep -n "$phrase" tasks/Done.txt)
+      if [ -z "$result" ]; then
+        echo "No results found!"
+      else
+        echo "$result"
+      fi
+      read -p "press enter to continue"
+      ;;
+    3)
+      break
+      ;;
+    *)
+      echo "Wrong Entry!"
+      read -p "press enter to go continue"
+      ;;
+    esac
+  done
+}
 
+showRemovedMenu() {
+  while [ true ]; do
+    clear
+    options=("Show Removed List" "Search in Removed List" "Back")
+    for ((i = 0; i < ${#options[@]}; i++)); do
+      echo "$((i + 1))) " ${options[i]}
+    done
+    read -p "Choose an option: " choice3
+    case $choice3 in
+    1)
+      echo "Tasks you removed from ToDo list: "
+      cat -b <tasks/Removed.txt
+      echo
+      read -p "press enter to continue"
+      ;;
+    2)
+      read -p "Enter the phrase you're searching for: " phrase
+      result=$(grep -n "$phrase" tasks/Removed.txt)
+      if [ -z "$result" ]; then
+        echo "No results found!"
+      else
+        echo "$result"
+      fi
+      read -p "press enter to continue"
+      ;;
+    3)
+      break
+      ;;
+    *)
+      echo "Wrong Entry!"
+      read -p "press enter to go continue"
+      ;;
+    esac
+  done
+}
 
 mkdir -p tasks
 cd tasks || return
@@ -82,26 +151,21 @@ while (true); do
     showUndoneMenu
     ;;
   2)
-    cat -b <tasks/Done.txt
-    echo
-    read -p "press enter to continue"
+    showDoneMenu
     ;;
   3)
-    cat -b <tasks/Removed.txt
-    echo
-    read -p "press enter to continue"
+    showRemovedMenu
     ;;
 
   4)
     read -p "Enter the phrase you're searching for: " phrase
-          result=$(grep -n "$phrase" tasks/Undone.txt tasks/Done.txt tasks/Removed.txt)
-          if [ -z "$result" ]
-          then
-            echo "No results found!"
-          else
-            echo "$result"
-          fi
-          read -p "press enter to continue"
+    result=$(grep -n "$phrase" tasks/Undone.txt tasks/Done.txt tasks/Removed.txt)
+    if [ -z "$result" ]; then
+      echo "No results found!"
+    else
+      echo "$result"
+    fi
+    read -p "press enter to continue"
     ;;
   5)
     clear
