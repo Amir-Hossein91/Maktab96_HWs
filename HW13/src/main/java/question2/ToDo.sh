@@ -27,9 +27,21 @@ showUndoneMenu() {
       ;;
     3)
       read -p "What is the new task?" task
-      regesterDate=$(date +"%Y-%m-%d %T")
-      echo -e $task"\t"$regesterDate >>tasks/Undone.txt
-      read -p "New task added! press enter to continue"
+      read -p "Set the periority of the task (1 to 3): " priority
+      case $priority in
+      1 | 2 | 3 )
+        regesterDate=$(date +"%Y-%m-%d %T")
+              echo -e $task" ( priority: $priority )""\t"$regesterDate >>tasks/Undone.txt
+              sorted=$(sort -t ":" -k 2 -r tasks/Undone.txt)
+              echo "$sorted" > tasks/Undone.txt
+              read -p "New task added! press enter to continue"
+      ;;
+      *)
+        read -p "Priority out of range! Task was not saved. Press enter to try again"
+        continue
+        ;;
+      esac
+
       ;;
     4)
       IFS="$(printf '\t')"
