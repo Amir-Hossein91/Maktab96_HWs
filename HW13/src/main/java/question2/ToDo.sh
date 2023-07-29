@@ -12,7 +12,7 @@ showUndoneMenu() {
       echo "Here are the list of your tasks:"
       cat -b <tasks/Undone.txt
       echo
-      read -p "press enter to go back"
+      read -p "press enter to continue"
       ;;
     2)
       IFS="$(printf '\t')"
@@ -20,17 +20,16 @@ showUndoneMenu() {
       cat -b <tasks/Undone.txt
       echo
       read -p "Which task has been accomplished?" line
-      read -ra newArray <<< "$(sed -n "$line p" tasks/Undone.txt)"
+      read -ra newArray <<<"$(sed -n "$line p" tasks/Undone.txt)"
       echo -e ${newArray[0]}"\t"$(date +"%Y-%m-%d %T") >>tasks/Done.txt
       sed -i "$line d" tasks/Undone.txt
-      read -p "Great job! press enter to go back"
+      read -p "Great job! press enter to continue"
       ;;
     3)
       read -p "What is the new task?" task
       regesterDate=$(date +"%Y-%m-%d %T")
       echo -e $task"\t"$regesterDate >>tasks/Undone.txt
-
-      read -p "New task added! press enter to go back"
+      read -p "New task added! press enter to continue"
       ;;
     4)
       IFS="$(printf '\t')"
@@ -38,21 +37,34 @@ showUndoneMenu() {
       cat -b <tasks/Undone.txt
       echo
       read -p "Which task do you want to remove?" line
-      read -ra newarray <<< "$(sed -n "$line p" tasks/Undone.txt)"
+      read -ra newarray <<<"$(sed -n "$line p" tasks/Undone.txt)"
       echo -e ${newarray[0]}"\t"$(date +"%Y-%m-%d %T") >>tasks/Removed.txt
       sed -i "$line d" tasks/Undone.txt
-      read -p "Task removed! press enter to go back"
+      read -p "Task removed! press enter to continue"
       ;;
     5)
-      echo "you want to search for a task"
-      read -p "press enter to go back"
+      read -p "Enter the phrase you're searching for: " phrase
+      result=$(grep -n "$phrase" tasks/Undone.txt)
+      if [ -z "$result" ]
+      then
+        echo "No results found!"
+      else
+        echo "$result"
+      fi
+      read -p "press enter to continue"
       ;;
     6)
       break
       ;;
+    *)
+      echo "Wrong Entry!"
+      read -p "press enter to go continue"
+      ;;
     esac
   done
 }
+
+
 
 mkdir -p tasks
 cd tasks || return
@@ -60,7 +72,7 @@ touch Undone.txt Done.txt Removed.txt
 cd ..
 while (true); do
   clear
-  mainList=("ToDo Tasks" "Done Tasks" "Removed Tasks" "Exit")
+  mainList=("ToDo Tasks" "Done Tasks" "Removed Tasks" "Search" "Exit")
   for ((i = 0; i < ${#mainList[@]}; i++)); do
     echo "$((i + 1))) " ${mainList[i]}
   done
@@ -72,20 +84,32 @@ while (true); do
   2)
     cat -b <tasks/Done.txt
     echo
-    read -p "press enter to go back"
+    read -p "press enter to continue"
     ;;
   3)
     cat -b <tasks/Removed.txt
     echo
-    read -p "press enter to go back"
+    read -p "press enter to continue"
     ;;
 
   4)
+    read -p "Enter the phrase you're searching for: " phrase
+          result=$(grep -n "$phrase" tasks/Undone.txt tasks/Done.txt tasks/Removed.txt)
+          if [ -z "$result" ]
+          then
+            echo "No results found!"
+          else
+            echo "$result"
+          fi
+          read -p "press enter to continue"
+    ;;
+  5)
     clear
     exit
     ;;
   *)
     echo "Wrong Entry!"
+    read -p "press enter to go continue"
     ;;
   esac
 done
