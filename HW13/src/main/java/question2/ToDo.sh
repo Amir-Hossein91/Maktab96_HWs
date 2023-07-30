@@ -28,6 +28,11 @@ showUndoneMenu() {
       ;;
     3)
       read -p "What is the new task?" task
+      if [[ -z "$task" || "$task" == *:* ]]; then
+        echo "Empty tasks or tasks containing character ':' are forbidden."
+        read -p "Press enter to continue"
+        continue
+      fi
       read -p "Set the periority of the task (1 to 3): " priority
       case $priority in
       1 | 2 | 3)
@@ -38,8 +43,7 @@ showUndoneMenu() {
         read -p "New task added! press enter to continue"
         ;;
       *)
-        read -p "Priority out of range! Task was not saved. Press enter to try again"
-        continue
+        read -p "Priority out of range! Task is not saved. Press enter to continue"
         ;;
       esac
       ;;
@@ -148,9 +152,7 @@ showRemovedMenu() {
 }
 
 mkdir -p tasks
-cd tasks || return
-touch Undone.txt Done.txt Removed.txt
-cd ..
+touch tasks/Undone.txt tasks/Done.txt tasks/Removed.txt
 while (true); do
   clear
   mainList=("ToDo Tasks" "Done Tasks" "Removed Tasks" "Search" "Exit")
