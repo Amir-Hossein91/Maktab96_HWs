@@ -14,10 +14,21 @@ public class Person {
 
     public Person (){
     }
+
+    public Person(String firstname, String lastname){
+        this.firstname = firstname;
+        this.lastname = lastname;
+        birthDate = null;
+    }
     public Person(String firstname, String lastname, Date birthDate) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.birthDate = birthDate;
+    }
+
+
+    public long getId() {
+        return id;
     }
 
     public String getFirstname() {
@@ -42,5 +53,15 @@ public class Person {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", birthDate=" + birthDate +
+                '}';
     }
 }
