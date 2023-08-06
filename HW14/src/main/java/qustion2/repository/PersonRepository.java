@@ -7,34 +7,43 @@ import java.util.List;
 
 public class PersonRepository {
 
+    private EntityManager em;
 
-    public Person save(Person person, EntityManager em){
+    public PersonRepository (EntityManager em){
+        this.em = em;
+    }
+
+    public EntityManager getEntityManager() {
+        return em;
+    }
+
+    public Person save(Person person){
         em.persist(person);
        return em.find(Person.class,person.getId());
     }
 
-    public void update(Person person, EntityManager em){
-        if(findById(person.getId(), em) == null)
+    public void update(Person person){
+        if(findById(person.getId()) == null)
             throw new IllegalArgumentException("Wrong Entry!");
         em.merge(person);
     }
 
-    public void delete(Person person, EntityManager em){
-        if(!contains(person,em))
+    public void delete(Person person){
+        if(!contains(person))
             throw new IllegalArgumentException("Wrong entry!");
-        em.remove(findById(person.getId(), em));
+        em.remove(findById(person.getId()));
     }
 
-    public List<Person> loadAll(EntityManager em){
+    public List<Person> loadAll(){
         return em.createQuery("from Person").getResultList();
     }
 
-    public boolean contains(Person person, EntityManager em){
-        Person fetched = findById(person.getId(), em);
+    public boolean contains(Person person){
+        Person fetched = findById(person.getId());
         return person.equals(fetched);
     }
 
-    public Person findById(Long id, EntityManager em){
+    public Person findById(Long id){
         return em.find(Person.class, id);
     }
 

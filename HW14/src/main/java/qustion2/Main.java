@@ -12,16 +12,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        System.out.println(personService.signUp("hamid", "rahimi"));
+//        System.out.println(personService.signUp("mina", "afsari"));
 
-//        System.out.println(personService.contains(new Person(4,"hamid","rahimi",null)));
+//        System.out.println(personService.contains(new Person(5,"mina","afsari",null)));
 
-
-//        personService.delete(new Person(4,"hamid","rahimi",null));
+//        personService.delete(new Person(3,"amin","dehbandi",null));
 
 //        personService.loadAll().forEach(System.out::println);
 
-//        personService.update(new Person(3,"amin", "dehbandi", null));
+//        personService.update(new Person(5,"amin", "dehbandi", null));
 
 
     }

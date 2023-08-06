@@ -3,52 +3,49 @@ package qustion2.service;
 import qustion2.entity.Person;
 import qustion2.repository.PersonRepository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 public class PersonService {
-    private final EntityManager em;
     private final PersonRepository personRepository;
 
-    public PersonService (PersonRepository personRepository, EntityManager em){
+    public PersonService (PersonRepository personRepository){
         this.personRepository = personRepository;
-        this.em = em;
     }
 
     public Person signUp(String firstname, String lastname){
         Person person = new Person(firstname,lastname);
-        em.getTransaction().begin();
-        person = personRepository.save(person,em);
-        em.getTransaction().commit();
+        personRepository.getEntityManager().getTransaction().begin();
+        person = personRepository.save(person);
+        personRepository.getEntityManager().getTransaction().commit();
         return person;
     }
 
     public void update(Person person){
-        em.getTransaction().begin();
+        personRepository.getEntityManager().getTransaction().begin();
         try{
-            personRepository.update(person,em);
-            em.getTransaction().commit();
+            personRepository.update(person);
+            personRepository.getEntityManager().getTransaction().commit();
         }catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
     }
 
     public void delete(Person person){
-        em.getTransaction().begin();
+        personRepository.getEntityManager().getTransaction().begin();
         try{
-            personRepository.delete(person,em);
-            em.getTransaction().commit();
+            personRepository.delete(person);
+            personRepository.getEntityManager().getTransaction().commit();
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
     }
 
     public List<Person> loadAll(){
-        return personRepository.loadAll(em);
+        return personRepository.loadAll();
     }
 
     public boolean contains(Person person){
-        return personRepository.contains(person,em);
+        return personRepository.contains(person);
     }
 
 
