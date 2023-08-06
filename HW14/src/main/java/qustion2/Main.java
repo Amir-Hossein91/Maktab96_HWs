@@ -19,9 +19,9 @@ public class Main {
 
 //        personService.delete(new Person(4,"hamid","rahimi",null));
 
-//        System.out.println(personService.loadAll());
+//        personService.loadAll().forEach(System.out::println);
 
-        personService.update(new Person(3,"amin", "dehbandi", null));
+//        personService.update(new Person(3,"amin", "dehbandi", null));
 
 
     }
