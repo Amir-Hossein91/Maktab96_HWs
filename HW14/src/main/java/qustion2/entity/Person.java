@@ -2,6 +2,8 @@ package qustion2.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
+
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Person {
@@ -26,6 +28,12 @@ public class Person {
         this.birthDate = birthDate;
     }
 
+    public Person(long id, String firstname, String lastname, Date birthDate) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.birthDate = birthDate;
+    }
 
     public long getId() {
         return id;
@@ -64,4 +72,19 @@ public class Person {
                 ", birthDate=" + birthDate +
                 '}';
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id && firstname.equals(person.firstname) && lastname.equals(person.lastname) && Objects.equals(birthDate, person.birthDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname, birthDate);
+    }
+
 }
