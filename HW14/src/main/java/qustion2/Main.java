@@ -1,26 +1,34 @@
 package qustion2;
 
 
-import qustion2.entity.Person;
-import qustion2.service.PersonService;
+import qustion2.entity.Teacher;
+import qustion2.service.impl.PersonServiceImpl;
+import qustion2.service.impl.StudentServiceImpl;
+import qustion2.service.impl.TeacherServiceImpl;
 import qustion2.utility.ApplicationContext;
 
-import java.util.Date;
-
 public class Main {
-    public static PersonService personService = ApplicationContext.personService;
+    public static PersonServiceImpl personService = ApplicationContext.personService;
+    public static StudentServiceImpl studentService = ApplicationContext.studentService;
+    public static TeacherServiceImpl teacherService = ApplicationContext.teacherService;
 
     public static void main(String[] args) {
 
-//        System.out.println(personService.signUp("mina", "afsari"));
+//        System.out.println(personService.signUp("alireza", "gharibi"));
 
-//        System.out.println(personService.contains(new Person(5,"mina","afsari",null)));
+//        System.out.println(personService.contains(new Person(6,"alireza","gharibi",null)));
 
 //        personService.delete(new Person(3,"amin","dehbandi",null));
 
 //        personService.loadAll().forEach(System.out::println);
 
 //        personService.update(new Person(5,"amin", "dehbandi", null));
+
+//        System.out.println(teacherService.signUp("ali","kabiri","362547"));
+
+//        teacherService.loadAll().forEach(System.out::println);
+
+//        System.out.println(teacherService.contains(new Teacher(7,"amir","ahmdi",null,"521425",null,null,0)));
 
 
     }
