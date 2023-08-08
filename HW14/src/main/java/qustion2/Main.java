@@ -15,12 +15,12 @@ public class Main {
     public static void main(String[] args) {
 
 //        System.out.println(personService.signUp("alireza", "gharibi"));
-
+//
 //        System.out.println(personService.contains(new Person(6,"alireza","gharibi",null)));
 
 //        personService.delete(new Person(3,"amin","dehbandi",null));
 
-//        personService.loadAll().forEach(System.out::println);
+        personService.loadAll().forEach(System.out::println);
 
 //        personService.update(new Person(5,"amin", "dehbandi", null));
 
@@ -28,7 +28,12 @@ public class Main {
 
 //        teacherService.loadAll().forEach(System.out::println);
 
-//        System.out.println(teacherService.contains(new Teacher(7,"amir","ahmdi",null,"521425",null,null,0)));
+//        studentService.loadAll().forEach(System.out::println);
+
+//        System.out.println(teacherService.contains(new Teacher(7,"ali","kabiri",null,"362547",null,null,0)));
+
+
+//        System.out.println(studentService.signUp("ali","ghanbari","362547"));
 
 
     }

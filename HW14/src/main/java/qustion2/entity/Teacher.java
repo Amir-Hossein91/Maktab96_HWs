@@ -97,10 +97,14 @@ public class Teacher extends Person{
     @Override
     public String toString() {
         return "Teacher{" +
-                "teacherCode='" + teacherCode + '\'' +
-                ", degree='" + degree + '\'' +
-                ", facultyLevel=" + facultyLevel +
-                ", salary=" + salary +
+                "id =" + getId() +
+                ", firstname ='" + getFirstname() + '\'' +
+                ", lastname ='" + getLastname() + '\'' +
+                ", birthDate ='" + getBirthDate() + '\'' +
+                ", teacherCode ='" + teacherCode + '\'' +
+                ", degree ='" + degree + '\'' +
+                ", facultyLevel =" + facultyLevel +
+                ", salary =" + salary +
                 '}';
     }
 }

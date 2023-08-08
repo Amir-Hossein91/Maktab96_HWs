@@ -6,6 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@DiscriminatorValue("P")
 public class Person {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
