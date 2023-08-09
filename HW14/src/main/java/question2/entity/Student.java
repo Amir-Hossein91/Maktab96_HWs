@@ -1,8 +1,9 @@
 package question2.entity;
 
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,6 +13,8 @@ import java.util.Objects;
 public class Student extends Person{
     @NotNull(message = "Student code can't be null")
     @Column(unique = true)
+    @Digits(integer = 5,fraction = 0,message = "Student code must contain only digits")
+    @Length(min = 5, max = 5, message = "Student code must have 5 digits")
     private String studentCode;
     @NotNull(message = "Field of study can't be null")
     private String field;

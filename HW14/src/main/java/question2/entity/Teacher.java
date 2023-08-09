@@ -2,6 +2,7 @@ package question2.entity;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.Column;
@@ -15,6 +16,8 @@ import java.util.Objects;
 public class Teacher extends Person{
     @NotNull(message = "Teacher code can't be null")
     @Column(unique = true)
+    @Digits(integer = 5, fraction = 0,message = "Teacher code must contain only digits")
+    @Length(min = 5,max = 5,message = "Teacher code must have 5 digits")
     private String teacherCode;
     @NotNull(message = "Teacher's degree can't be null")
     @Enumerated

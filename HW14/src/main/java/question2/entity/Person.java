@@ -2,6 +2,7 @@ package question2.entity;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,8 +15,10 @@ public class Person {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
     @NotNull(message = "Firstname can't be null")
+    @Length(min = 3, message = "Name must be at least 3 characters")
     private String firstname;
     @NotNull(message = "Lastname can't be null")
+    @Length(min = 3, message = "Lastname must be al least 3 characters")
     private String lastname;
     @Temporal(value = TemporalType.DATE)
     @Past
