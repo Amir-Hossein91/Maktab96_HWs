@@ -9,5 +9,5 @@ public interface BaseService<T extends Person> {
     void delete (T t);
     List<T> loadAll();
     boolean contains (T t);
-
+    boolean isValid (T t);
 }
