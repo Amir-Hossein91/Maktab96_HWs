@@ -1,6 +1,7 @@
 package question2.entity;
 
-import com.sun.istack.NotNull;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,14 +9,16 @@ import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@DiscriminatorValue("P")
 public class Person {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
-    @NotNull
+    @NotNull(message = "Firstname can't be null")
     private String firstname;
+    @NotNull(message = "Lastname can't be null")
     private String lastname;
+    @Temporal(value = TemporalType.DATE)
+    @Past
     private Date birthDate;
 
     public Person (){

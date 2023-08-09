@@ -13,13 +13,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        System.out.println(personService.signUp("alireza", "gharibi"));
+        System.out.println(personService.signUp("alireza", "gharibi"));
 //
 //        System.out.println(personService.contains(new Person(6,"alireza","gharibi",null)));
 
 //        personService.delete(new Person(3,"amin","dehbandi",null));
 
-        personService.loadAll().forEach(System.out::println);
+//        personService.loadAll().forEach(System.out::println);
 
 //        personService.update(new Person(5,"amin", "dehbandi", null));
 

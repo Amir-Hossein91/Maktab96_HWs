@@ -1,14 +1,28 @@
 package question2.entity;
 
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.UniqueElements;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.UniqueConstraint;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
 public class Teacher extends Person{
+    @NotNull(message = "Teacher code can't be null")
+    @Column(unique = true)
     private String teacherCode;
-    private String degree;
+    @NotNull(message = "Teacher's degree can't be null")
+    @Enumerated
+    private Degree degree;
+    @NotNull(message = "Faculty level can't be null")
+    @Enumerated
     private FacultyLevel facultyLevel;
+    @Digits(integer = 5,fraction = 2,message = "Invalid salary format")
     private double salary;
 
     public Teacher() {
@@ -23,7 +37,7 @@ public class Teacher extends Person{
                    String lastname,
                    Date birthDate,
                    String teacherCode,
-                   String degree,
+                   Degree degree,
                    FacultyLevel facultyLevel,
                    double salary) {
         super(firstname, lastname, birthDate);
@@ -38,7 +52,7 @@ public class Teacher extends Person{
                    String lastname,
                    Date birthDate,
                    String teacherCode,
-                   String degree,
+                   Degree degree,
                    FacultyLevel facultyLevel,
                    double salary) {
         super(id, firstname, lastname, birthDate);
@@ -56,11 +70,11 @@ public class Teacher extends Person{
         this.teacherCode = teacherCode;
     }
 
-    public String getDegree() {
+    public Degree getDegree() {
         return degree;
     }
 
-    public void setDegree(String degree) {
+    public void setDegree(Degree degree) {
         this.degree = degree;
     }
 

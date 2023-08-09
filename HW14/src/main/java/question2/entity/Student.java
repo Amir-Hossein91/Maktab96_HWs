@@ -1,13 +1,21 @@
 package question2.entity;
 
-import javax.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.UniqueElements;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
 public class Student extends Person{
+    @NotNull(message = "Student code can't be null")
+    @Column(unique = true)
     private String studentCode;
+    @NotNull(message = "Field of study can't be null")
     private String field;
+    @Range(min = 1980,max = 2023, message = "Entrance year should be between 1980 and 2023")
     private int enteranceYear;
 
     public Student() {
