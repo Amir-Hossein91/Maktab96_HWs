@@ -1,13 +1,17 @@
 package question2.service.impl;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validator;
-import question2.entity.Student;
+
+import question2.entity.Degree;
+import question2.entity.FacultyLevel;
 import question2.entity.Teacher;
 import question2.repository.impl.TeacherRepositoryImpl;
 import question2.service.TeacherService;
 import question2.utility.ApplicationContext;
+import question2.validation.EntityValidator;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -18,12 +22,12 @@ public class TeacherServiceImpl implements TeacherService {
 
     public TeacherServiceImpl(TeacherRepositoryImpl teacherRepository){
         this.teacherRepository = teacherRepository;
-        this.teacherValidator = ApplicationContext.validator;
+        this.teacherValidator = EntityValidator.validator;
     }
 
     @Override
     public Teacher signUp(String firstname, String lastname, String teacherCode) {
-        Teacher teacher = new Teacher(firstname,lastname, teacherCode);
+        Teacher teacher = new Teacher(firstname,lastname,new Date(),teacherCode, Degree.MASTERS, FacultyLevel.MASTER,4000);
         if(!isValid(teacher))
             return null;
         teacherRepository.getEntityManager().getTransaction().begin();

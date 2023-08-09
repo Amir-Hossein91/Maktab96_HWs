@@ -1,13 +1,14 @@
 package question2.service.impl;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validator;
-import question2.entity.Person;
+
 import question2.entity.Student;
 import question2.repository.impl.StudentRepositoryImpl;
 import question2.service.StudentService;
 import question2.utility.ApplicationContext;
+import question2.validation.EntityValidator;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class StudentServiceImpl implements StudentService {
 
     public StudentServiceImpl(StudentRepositoryImpl studentRepository){
         this.studentRepository = studentRepository;
-        this.studentValidator = ApplicationContext.validator;
+        this.studentValidator = EntityValidator.validator;
     }
 
     @Override

@@ -1,12 +1,13 @@
 package question2.service.impl;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validator;
 import question2.entity.Person;
 import question2.repository.impl.PersonRepositoryImpl;
 import question2.service.PersonService;
 import question2.utility.ApplicationContext;
+import question2.validation.EntityValidator;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class PersonServiceImpl implements PersonService {
 
     public PersonServiceImpl(PersonRepositoryImpl personRepository){
         this.personRepository = personRepository;
-        this.personValidator = ApplicationContext.validator;
+        this.personValidator = EntityValidator.validator;
     }
     @Override
     public Person signUp(String firstname, String lastname){
