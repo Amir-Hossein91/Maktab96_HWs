@@ -17,8 +17,8 @@ public class Student extends Person{
     @Size(min = 5, max = 5, message = "Student code must have 5 digits")
     private String studentCode;
     @NotNull(message = "Field of study can't be null")
-    private String field;
-    @Range(min = 1980,max = 2023, message = "Entrance year should be between 1980 and 2023")
+    private StudyField field;
+    @Range(min = 2010,max = 2023, message = "Entrance year should be between 2010 and 2023")
     private int enteranceYear;
 
     public Student() {
@@ -33,7 +33,7 @@ public class Student extends Person{
                    String lastname,
                    Date birthDate,
                    String studentCode,
-                   String field,
+                   StudyField field,
                    int enteranceYear) {
         super(firstname, lastname, birthDate);
         this.studentCode = studentCode;
@@ -46,12 +46,19 @@ public class Student extends Person{
                    String lastname,
                    Date birthDate,
                    String studentCode,
-                   String field,
+                   StudyField field,
                    int enteranceYear) {
         super(id, firstname, lastname, birthDate);
         this.studentCode = studentCode;
         this.field = field;
         this.enteranceYear = enteranceYear;
+    }
+
+    public Student(String firstname, String lastname, String studentCode, StudyField field) {
+        super (firstname, lastname);
+        this.studentCode = studentCode;
+        this.field = field;
+        this.enteranceYear=2010;
     }
 
     public String getStudentCode() {
@@ -62,11 +69,11 @@ public class Student extends Person{
         this.studentCode = studentCode;
     }
 
-    public String getField() {
+    public StudyField getField() {
         return field;
     }
 
-    public void setField(String field) {
+    public void setField(StudyField field) {
         this.field = field;
     }
 

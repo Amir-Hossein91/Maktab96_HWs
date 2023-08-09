@@ -2,6 +2,7 @@ package question2.service.impl;
 
 
 import question2.entity.Student;
+import question2.entity.StudyField;
 import question2.repository.impl.StudentRepositoryImpl;
 import question2.service.StudentService;
 import question2.utility.ApplicationContext;
@@ -9,6 +10,7 @@ import question2.validation.EntityValidator;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -23,8 +25,19 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student signUp(String firstname, String lastname, String studentCode) {
-        Student student = new Student(firstname,lastname, studentCode);
+    public Student signUp(String firstname, String lastname, String studentCode, StudyField field) {
+        Student student = new Student(firstname,lastname, studentCode,field);
+        if(!isValid(student))
+            return null;
+        studentRepository.getEntityManager().getTransaction().begin();
+        student = studentRepository.save(Student.class,student);
+        studentRepository.getEntityManager().getTransaction().commit();
+        return student;
+    }
+
+    @Override
+    public Student signUp(String firstname, String lastname, Date birthDate, String studentCode, StudyField field, int entranceYear) {
+        Student student = new Student(firstname,lastname,birthDate,studentCode,field,entranceYear);
         if(!isValid(student))
             return null;
         studentRepository.getEntityManager().getTransaction().begin();
