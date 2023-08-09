@@ -62,6 +62,13 @@ public class Teacher extends Person{
         this.salary = salary;
     }
 
+    public Teacher(String firstname, String lastname, String teacherCode, Degree degree, FacultyLevel facultyLevel) {
+        super(firstname, lastname);
+        this.teacherCode=teacherCode;
+        this.degree = degree;
+        this.facultyLevel = facultyLevel;
+    }
+
     public String getTeacherCode() {
         return teacherCode;
     }
