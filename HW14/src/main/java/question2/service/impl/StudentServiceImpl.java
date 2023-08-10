@@ -2,10 +2,9 @@ package question2.service.impl;
 
 
 import question2.entity.Student;
-import question2.entity.StudyField;
+import question2.entity.enums.StudyField;
 import question2.repository.impl.StudentRepositoryImpl;
 import question2.service.StudentService;
-import question2.utility.ApplicationContext;
 import question2.validation.EntityValidator;
 
 import javax.validation.ConstraintViolation;

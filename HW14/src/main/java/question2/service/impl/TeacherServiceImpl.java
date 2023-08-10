@@ -1,8 +1,8 @@
 package question2.service.impl;
 
 
-import question2.entity.Degree;
-import question2.entity.FacultyLevel;
+import question2.entity.enums.Degree;
+import question2.entity.enums.FacultyLevel;
 import question2.entity.Teacher;
 import question2.repository.impl.TeacherRepositoryImpl;
 import question2.service.TeacherService;
