@@ -1,4 +1,4 @@
-package question2.entity;
+package question2.entity.enums;
 
 public enum FacultyLevel {
     COACH,
