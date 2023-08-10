@@ -39,7 +39,7 @@ public class BaseRepositoryImpl<T extends Person> implements BaseRepository<T> {
 
     @Override
     public boolean contains(Class<T> cname,T t) {
-        Person fetched = findById(cname,t.getId());
+        T fetched = findById(cname,t.getId());
         return t.equals(fetched);
     }
 
