@@ -10,7 +10,9 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "User_type",discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "person")
 public class Person {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -21,7 +23,7 @@ public class Person {
     @NotNull(message = "Lastname can't be null")
     @Size(min = 3, message = "Lastname must be al least 3 characters")
     private String lastname;
-    @Temporal(value = TemporalType.DATE)
+
     @Past
     private Date birthDate;
 

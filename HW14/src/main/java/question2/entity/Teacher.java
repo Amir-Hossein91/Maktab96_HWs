@@ -1,8 +1,9 @@
 package question2.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
+import question2.entity.enums.Degree;
+import question2.entity.enums.FacultyLevel;
+
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
+@DiscriminatorValue(value = "Teacher")
 public class Teacher extends Person{
     @NotNull(message = "Teacher code can't be null")
     @Column(unique = true)
@@ -17,10 +19,12 @@ public class Teacher extends Person{
     @Size(min = 5,max = 5,message = "Teacher code must have 5 digits")
     private String teacherCode;
     @NotNull(message = "Teacher's degree can't be null")
-    @Enumerated
+//    @Column(columnDefinition = "VARCHAR(30)")
+//    @Enumerated(EnumType.STRING)
     private Degree degree;
     @NotNull(message = "Faculty level can't be null")
-    @Enumerated
+//    @Column(columnDefinition = "VARCHAR(30)")
+//    @Enumerated(EnumType.STRING)
     private FacultyLevel facultyLevel;
     @Digits(integer = 5,fraction = 2,message = "Invalid salary format")
     private double salary;
