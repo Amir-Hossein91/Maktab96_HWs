@@ -2,27 +2,23 @@ package basics.baseRepository.impl;
 
 import basics.baseRepository.BaseRepository;
 import connection.Connection;
-import jakarta.persistence.EntityManager;
+import lombok.Getter;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
+@Getter
 public class BaseRepositoryImpl<T> implements BaseRepository<T> {
 
-    EntityManager em;
-    Class<T> className;
+    private final EntityManager em;
+    private Class<T> className;
 
     public BaseRepositoryImpl() {
         em = Connection.entityManager;
-
     }
 
     @Override
-    public T save(T t) {
-        return em.merge(t);
-    }
-
-    @Override
-    public T update(T t) {
+    public T saveOrUpdate(T t) {
         return em.merge(t);
     }
 

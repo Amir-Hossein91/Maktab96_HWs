@@ -1,7 +1,16 @@
 package entity;
 
-import jakarta.persistence.*;
 
+import lombok.*;
+
+import javax.persistence.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
+@EqualsAndHashCode
 @Entity
 public class Course {
     @Id
