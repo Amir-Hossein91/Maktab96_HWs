@@ -3,6 +3,7 @@ package entity;
 
 import lombok.*;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.Set;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@DiscriminatorValue("student")
 public class Student extends Person{
     private String username;
     private String password;

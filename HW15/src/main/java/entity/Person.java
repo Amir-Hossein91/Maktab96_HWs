@@ -16,8 +16,8 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "Role" , discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("Person")
+@DiscriminatorColumn(name = "Person_Role" , discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("no role")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

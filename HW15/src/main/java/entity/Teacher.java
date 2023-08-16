@@ -4,6 +4,7 @@ import entity.enums.TeacherType;
 
 import lombok.*;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -16,6 +17,7 @@ import java.util.Set;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@DiscriminatorValue("teacher")
 public class Teacher extends Person{
     private String username;
     private String password;
