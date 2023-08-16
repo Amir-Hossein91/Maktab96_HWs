@@ -1,11 +1,11 @@
 package basics.BaseService;
 
+import exceptions.NotFoundException;
+
 import java.util.List;
 
 public interface BaseService<T> {
-    T saveOrUpdate(T t);
-//    void saveWithoutTransaction(T t);
     void delete(T t);
-    T findById (long id);
+    T findById (long id) throws NotFoundException;
     List<T> findAll();
 }

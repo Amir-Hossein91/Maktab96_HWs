@@ -1,10 +1,8 @@
 package utility;
 
-import connection.Connection;
 import repository.*;
 import service.impl.*;
 
-import javax.persistence.EntityManager;
 
 public class ApplicationContext {
     private static final CourseRepositroyImpl courseRepositroy;

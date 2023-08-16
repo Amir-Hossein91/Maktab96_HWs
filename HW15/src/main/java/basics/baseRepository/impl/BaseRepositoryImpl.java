@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 public class BaseRepositoryImpl<T> implements BaseRepository<T> {
@@ -18,8 +19,8 @@ public class BaseRepositoryImpl<T> implements BaseRepository<T> {
     }
 
     @Override
-    public T saveOrUpdate(T t) {
-        return em.merge(t);
+    public Optional<T> saveOrUpdate(T t) {
+        return Optional.ofNullable(em.merge(t));
     }
 
     @Override
@@ -28,12 +29,12 @@ public class BaseRepositoryImpl<T> implements BaseRepository<T> {
     }
 
     @Override
-    public T findById(long id) {
-        return em.find(className,id);
+    public Optional<T> findById(long id) {
+        return Optional.ofNullable(em.find(className,id));
     }
 
     @Override
-    public List<T> findAll() {
-        return em.createQuery("from " + className.getSimpleName(),className).getResultList();
+    public Optional<List<T>> findAll() {
+        return Optional.ofNullable(em.createQuery("from " + className.getSimpleName(),className).getResultList());
     }
 }

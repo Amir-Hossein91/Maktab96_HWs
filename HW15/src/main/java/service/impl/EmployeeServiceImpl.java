@@ -3,9 +3,11 @@ package service.impl;
 import basics.BaseService.impl.BaseServiceImpl;
 import entity.Employee;
 import entity.SalaryReport;
+import exceptions.NotSavedException;
 import repository.EmployeeRepositoryImpl;
 import service.EmployeeService;
 import utility.ApplicationContext;
+import utility.Constants;
 
 import java.util.List;
 
@@ -17,13 +19,24 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
 
     @Override
     public Employee saveOrUpdate(Employee employee, SalaryReport salaryReport) {
-        SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
-        transaction.begin();
-        salaryReportService.saveOrUpdate(salaryReport);
-        employee = repository.saveOrUpdate(employee).orElse(null);
-        transaction.commit();
+        try{
+            SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
+            transaction.begin();
+            //attention to the exception that could be thrown here...
+            salaryReport = salaryReportService.saveOrUpdate(salaryReport);
+            if(salaryReport == null)
+                throw new NotSavedException("???????????");
+            employee = repository.saveOrUpdate(employee).orElseThrow(() -> new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION));
+            transaction.commit();
+            return employee;
+        } catch (NotSavedException e){
+            transaction.rollback();
+            System.out.println(e.getMessage());
+        }
 
-        return employee;
+
+
+
     }
 
     @Override
@@ -33,14 +46,5 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
         transaction.commit();
     }
 
-    @Override
-    public Employee findById(long id) {
-        return repository.findById(id).orElse(null);
-    }
-
-    @Override
-    public List<Employee> findAll() {
-        return repository.findAll().orElse(null);
-    }
 
 }

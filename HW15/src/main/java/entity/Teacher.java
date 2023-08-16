@@ -3,6 +3,8 @@ package entity;
 import entity.enums.TeacherType;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -26,6 +28,7 @@ public class Teacher extends Person{
     private long fixedSalary;
     private long perHourSalary;
     @ManyToMany
+    @Cascade(value = CascadeType.DELETE)
     private Set<Course> presentedCourses;
     @ManyToMany
     private Set<Student> courseStudents;

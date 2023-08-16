@@ -1,10 +1,11 @@
 package basics.baseRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BaseRepository<T> {
-    T saveOrUpdate(T t);
+    Optional<T> saveOrUpdate(T t);
     void delete(T t);
-    T findById (long id);
-    List<T> findAll();
+    Optional<T> findById (long id);
+    Optional<List<T>> findAll();
 }
