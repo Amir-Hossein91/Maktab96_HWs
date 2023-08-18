@@ -38,7 +38,6 @@ public class StudentServiceImpl extends BaseServiceImpl<Student, StudentReposito
                 c = courseService.saveOrUpdate(c);
                 if(c==null)
                     throw new NotSavedException(Constants.STUDENT_SAVE_EXCEPTION);
-                student.getTakenUnits().add(c);
             }
             student = repository.saveOrUpdate(student).orElseThrow(() -> new NotSavedException(Constants.STUDENT_SAVE_EXCEPTION));
             transaction.commit();

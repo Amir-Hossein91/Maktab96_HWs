@@ -31,8 +31,8 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherReposito
     }
 
     @Override
-    public Teacher saveOrUpdate(Teacher teacher, List<Course> presentedCourses, SalaryReport salaryReport) {
-        SalaryReportService salaryReportService = ApplicationContext.salaryReportService;
+    public Teacher saveOrUpdate(Teacher teacher, List<Course> presentedCourses, SalaryReport<Teacher> salaryReport) {
+        SalaryReportService<Teacher> salaryReportService = ApplicationContext.teacherSalaryReportService;
         CourseServiceImpl courseService = ApplicationContext.courseService;
         try{
             transaction.begin();

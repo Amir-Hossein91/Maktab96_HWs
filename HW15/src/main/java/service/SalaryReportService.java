@@ -2,9 +2,10 @@ package service;
 
 import basics.BaseService.BaseService;
 import entity.SalaryReport;
+import entity.UniversityStaff;
 import exceptions.NotSavedException;
 
-public interface SalaryReportService extends BaseService<SalaryReport> {
+public interface SalaryReportService<T extends UniversityStaff> extends BaseService<SalaryReport<T>> {
 
-    SalaryReport saveOrUpdate(SalaryReport salaryReport) throws NotSavedException;
+    SalaryReport<T> saveOrUpdate(SalaryReport<T> salaryReport) throws NotSavedException;
 }

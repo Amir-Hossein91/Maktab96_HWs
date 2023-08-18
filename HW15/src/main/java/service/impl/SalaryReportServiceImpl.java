@@ -2,19 +2,20 @@ package service.impl;
 
 import basics.BaseService.impl.BaseServiceImpl;
 import entity.SalaryReport;
+import entity.UniversityStaff;
 import exceptions.NotSavedException;
 import repository.SalaryReportRepositoryImpl;
 import service.SalaryReportService;
 import utility.Constants;
 
-public class SalaryReportServiceImpl extends BaseServiceImpl<SalaryReport, SalaryReportRepositoryImpl> implements SalaryReportService {
+public class SalaryReportServiceImpl<T extends UniversityStaff> extends BaseServiceImpl<SalaryReport<T>, SalaryReportRepositoryImpl<T>> implements SalaryReportService<T> {
 
-    public SalaryReportServiceImpl(SalaryReportRepositoryImpl repository) {
+    public SalaryReportServiceImpl(SalaryReportRepositoryImpl<T> repository) {
         super(repository);
     }
 
     @Override
-    public SalaryReport saveOrUpdate(SalaryReport salaryReport) throws NotSavedException {
+    public SalaryReport<T> saveOrUpdate(SalaryReport<T> salaryReport) throws NotSavedException {
         try{
             if(!transaction.isActive()){
                 transaction.begin();
@@ -32,7 +33,7 @@ public class SalaryReportServiceImpl extends BaseServiceImpl<SalaryReport, Salar
     }
 
     @Override
-    public void delete(SalaryReport salaryReport) {
+    public void delete(SalaryReport<T> salaryReport) {
         try{
             if(!transaction.isActive()){
                 transaction.begin();

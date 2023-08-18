@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface TeacherService extends BaseService<Teacher> {
 
-    Teacher saveOrUpdate(Teacher teacher, List<Course> presentedCourses, SalaryReport salaryReport);
+    Teacher saveOrUpdate(Teacher teacher, List<Course> presentedCourses, SalaryReport<Teacher> salaryReport);
 }

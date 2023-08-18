@@ -9,8 +9,6 @@ import service.EmployeeService;
 import utility.ApplicationContext;
 import utility.Constants;
 
-import java.util.List;
-
 public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepositoryImpl> implements EmployeeService {
 
     public EmployeeServiceImpl(EmployeeRepositoryImpl repository) {
@@ -18,9 +16,9 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
     }
 
     @Override
-    public Employee saveOrUpdate(Employee employee, SalaryReport salaryReport) {
+    public Employee saveOrUpdate(Employee employee, SalaryReport<Employee> salaryReport) {
         try{
-            SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
+            SalaryReportServiceImpl<Employee> salaryReportService = ApplicationContext.employeeSalaryReportService;
             transaction.begin();
             salaryReport = salaryReportService.saveOrUpdate(salaryReport);
             if(salaryReport == null)
