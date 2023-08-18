@@ -22,4 +22,10 @@ public class SalaryReport {
     private StaffType owner;
     private Date reportDate;
     private long salaryAmount;
+
+    public SalaryReport(StaffType owner, Date reportDate, long salaryAmount) {
+        this.owner = owner;
+        this.reportDate = reportDate;
+        this.salaryAmount = salaryAmount;
+    }
 }
