@@ -26,7 +26,7 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, CourseRepositroyI
             } else
                 course = repository.saveOrUpdate(course).orElseThrow(() -> new NotSavedException(Constants.COURSE_SAVE_EXCEPTION));
             return course;
-        } catch (NotSavedException e){
+        } catch (Exception e){
             transaction.rollback();
             System.out.println(e.getMessage());
             return null;
@@ -35,12 +35,17 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, CourseRepositroyI
 
     @Override
     public void delete(Course course) {
-        if(!transaction.isActive()){
-            transaction.begin();
-            repository.delete(course);
-            transaction.commit();
-        } else
-            repository.delete(course);
+        try{
+            if(!transaction.isActive()){
+                transaction.begin();
+                repository.delete(course);
+                transaction.commit();
+            } else
+                repository.delete(course);
+        }catch (Exception e){
+            transaction.rollback();
+            System.out.println(e.getMessage());
+        }
     }
 
 }

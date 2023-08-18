@@ -2,10 +2,10 @@ package service.impl;
 
 import basics.BaseService.impl.BaseServiceImpl;
 import entity.SalaryReport;
+import exceptions.NotSavedException;
 import repository.SalaryReportRepositoryImpl;
 import service.SalaryReportService;
-
-import java.util.List;
+import utility.Constants;
 
 public class SalaryReportServiceImpl extends BaseServiceImpl<SalaryReport, SalaryReportRepositoryImpl> implements SalaryReportService {
 
@@ -14,25 +14,36 @@ public class SalaryReportServiceImpl extends BaseServiceImpl<SalaryReport, Salar
     }
 
     @Override
-    public SalaryReport saveOrUpdate(SalaryReport salaryReport) {
-        if(!transaction.isActive()){
-            transaction.begin();
-            salaryReport=repository.saveOrUpdate(salaryReport).orElse(null);
-            transaction.commit();
-        }else
-            salaryReport = repository.saveOrUpdate(salaryReport).orElse(null);
+    public SalaryReport saveOrUpdate(SalaryReport salaryReport) throws NotSavedException {
+        try{
+            if(!transaction.isActive()){
+                transaction.begin();
+                salaryReport=repository.saveOrUpdate(salaryReport).orElseThrow(() -> new NotSavedException(Constants.SALARY_REPORT_SAVE_EXCEPTION));
+                transaction.commit();
+            }else
+                salaryReport = repository.saveOrUpdate(salaryReport).orElseThrow(() -> new NotSavedException(Constants.SALARY_REPORT_SAVE_EXCEPTION));
+            return salaryReport;
+        } catch (Exception e){
+            transaction.rollback();
+            System.out.println(e.getMessage());
+            return null;
+        }
 
-        return salaryReport;
     }
 
     @Override
     public void delete(SalaryReport salaryReport) {
-        if(!transaction.isActive()){
-            transaction.begin();
-            repository.delete(salaryReport);
-            transaction.commit();
-        }else
-            repository.delete(salaryReport);
+        try{
+            if(!transaction.isActive()){
+                transaction.begin();
+                repository.delete(salaryReport);
+                transaction.commit();
+            }else
+                repository.delete(salaryReport);
+        } catch (Exception e){
+            transaction.rollback();
+            System.out.println(e.getMessage());
+        }
     }
 
 }

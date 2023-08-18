@@ -22,28 +22,29 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
         try{
             SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
             transaction.begin();
-            //attention to the exception that could be thrown here...
             salaryReport = salaryReportService.saveOrUpdate(salaryReport);
             if(salaryReport == null)
-                throw new NotSavedException("???????????");
+                throw new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION);
             employee = repository.saveOrUpdate(employee).orElseThrow(() -> new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION));
             transaction.commit();
             return employee;
-        } catch (NotSavedException e){
+        } catch (Exception e){
             transaction.rollback();
             System.out.println(e.getMessage());
+            return null;
         }
-
-
-
-
     }
 
     @Override
     public void delete(Employee employee) {
-        transaction.begin();
-        repository.delete(employee);
-        transaction.commit();
+       try{
+           transaction.begin();
+           repository.delete(employee);
+           transaction.commit();
+       }catch(Exception e){
+           transaction.rollback();
+           System.out.println(e.getMessage());
+       }
     }
 
 
