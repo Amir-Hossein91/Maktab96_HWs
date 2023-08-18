@@ -34,4 +34,36 @@ public class Teacher extends Person{
     private Set<Student> courseStudents;
     @OneToMany
     private Set<SalaryReport> salaryReport;
+
+    public Teacher(String firstname, String lastname, String nationalCode, String phoneNumber,
+                   String email, String username, String password, long teacherCode, TeacherType teacherType,
+                   long fixedSalary, long perHourSalary, Set<Course> presentedCourses,
+                   Set<Student> courseStudents, Set<SalaryReport> salaryReport) {
+        super(firstname, lastname, nationalCode, phoneNumber, email);
+        this.username = username;
+        this.password = password;
+        this.teacherCode = teacherCode;
+        this.teacherType = teacherType;
+        this.fixedSalary = fixedSalary;
+        this.perHourSalary = perHourSalary;
+        this.presentedCourses = presentedCourses;
+        this.courseStudents = courseStudents;
+        this.salaryReport = salaryReport;
+    }
+
+    public Teacher(long id,String firstname, String lastname, String nationalCode, String phoneNumber,
+                   String email, String username, String password, long teacherCode, TeacherType teacherType,
+                   long fixedSalary, long perHourSalary, Set<Course> presentedCourses,
+                   Set<Student> courseStudents, Set<SalaryReport> salaryReport) {
+        super(id,firstname, lastname, nationalCode, phoneNumber, email);
+        this.username = username;
+        this.password = password;
+        this.teacherCode = teacherCode;
+        this.teacherType = teacherType;
+        this.fixedSalary = fixedSalary;
+        this.perHourSalary = perHourSalary;
+        this.presentedCourses = presentedCourses;
+        this.courseStudents = courseStudents;
+        this.salaryReport = salaryReport;
+    }
 }

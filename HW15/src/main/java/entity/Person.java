@@ -27,4 +27,12 @@ public class Person {
     private String nationalCode;
     private String phoneNumber;
     private String email;
+
+    public Person(String firstname, String lastname, String nationalCode, String phoneNumber, String email) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.nationalCode = nationalCode;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
 }

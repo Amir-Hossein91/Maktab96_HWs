@@ -20,4 +20,9 @@ public class Course {
     private int units;
     @ManyToOne
     private Teacher teacher;
+
+    public Course(String title, int units) {
+        this.title = title;
+        this.units = units;
+    }
 }

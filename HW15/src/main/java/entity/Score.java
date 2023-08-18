@@ -23,4 +23,12 @@ public class Score {
     private int semesterNumber;
     private Float value;
     private boolean isPassed;
+
+    public Score(Course course, Student student, int semesterNumber, Float value, boolean isPassed) {
+        this.course = course;
+        this.student = student;
+        this.semesterNumber = semesterNumber;
+        this.value = value;
+        this.isPassed = isPassed;
+    }
 }

@@ -22,4 +22,15 @@ public class Employee extends Person{
     private long salary;
     @OneToMany
     private Set<SalaryReport> salaryReport;
+
+    public Employee(String firstname, String lastname, String nationalCode, String phoneNumber,
+                    String email, String username, String password, String employeeCode,
+                    long salary, Set<SalaryReport> salaryReport) {
+        super(firstname, lastname, nationalCode, phoneNumber, email);
+        this.username = username;
+        this.password = password;
+        this.employeeCode = employeeCode;
+        this.salary = salary;
+        this.salaryReport = salaryReport;
+    }
 }
