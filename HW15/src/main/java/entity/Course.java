@@ -1,6 +1,7 @@
 package entity;
 
 
+import entity.baseEntity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,19 +11,19 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Entity
-public class Course {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Course extends BaseEntity {
     private String title;
     private int units;
+    private int semesterNumber;
     @ManyToOne
     private Teacher teacher;
 
-    public Course(String title, int units) {
+    public Course(String title, int units, int semesterNumber) {
         this.title = title;
         this.units = units;
+        this.semesterNumber= semesterNumber;
+        teacher = new Teacher();
     }
 }

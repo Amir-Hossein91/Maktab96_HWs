@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.Set;
 
 @Getter
@@ -15,22 +16,17 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @DiscriminatorValue("employee")
-public class Employee extends Person{
-    private String username;
-    private String password;
+public class Employee extends UniversityStaff{
+
     private String employeeCode;
-    private long salary;
-    @OneToMany
-    private Set<SalaryReport> salaryReport;
+    @OneToOne
+    private SalaryReport<Employee> salaryReport;
 
     public Employee(String firstname, String lastname, String nationalCode, String phoneNumber,
-                    String email, String username, String password, String employeeCode,
-                    long salary, Set<SalaryReport> salaryReport) {
-        super(firstname, lastname, nationalCode, phoneNumber, email);
-        this.username = username;
-        this.password = password;
+                    String username, String password, String email, String employeeCode, long salary) {
+        super(firstname, lastname, nationalCode, phoneNumber, username, password, email);
         this.employeeCode = employeeCode;
-        this.salary = salary;
-        this.salaryReport = salaryReport;
+        setTotalSalary(salary);
+        salaryReport = new SalaryReport<>(this);
     }
 }

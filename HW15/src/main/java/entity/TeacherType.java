@@ -1,4 +1,4 @@
-package entity.enums;
+package entity;
 
 public enum TeacherType {
     FACULTY_MEMBER,

@@ -1,31 +1,25 @@
 package entity;
 
-import entity.enums.StaffType;
+import entity.baseEntity.BaseEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Entity
-public class SalaryReport {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private StaffType owner;
+public class SalaryReport<T extends UniversityStaff> extends BaseEntity {
+    @OneToOne
+    private T owner;
     private Date reportDate;
     private long salaryAmount;
 
-    public SalaryReport(StaffType owner, Date reportDate, long salaryAmount) {
-        this.owner = owner;
-        this.reportDate = reportDate;
-        this.salaryAmount = salaryAmount;
+    public SalaryReport(T owner) {
+       this.owner = owner;
+        reportDate = new Date();
+        salaryAmount = owner.getTotalSalary();
     }
 }

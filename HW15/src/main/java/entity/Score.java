@@ -1,6 +1,7 @@
 package entity;
 
 
+import entity.baseEntity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,25 +11,21 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Entity
-public class Score {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Score extends BaseEntity {
     @ManyToOne
     private Course course;
     @ManyToOne
     private Student student;
-    private int semesterNumber;
     private Float value;
     private boolean isPassed;
 
-    public Score(Course course, Student student, int semesterNumber, Float value, boolean isPassed) {
+    public Score(Course course, Student student, Float value) {
         this.course = course;
         this.student = student;
-        this.semesterNumber = semesterNumber;
         this.value = value;
-        this.isPassed = isPassed;
+        if(value >= 10)
+            isPassed = true;
     }
 }

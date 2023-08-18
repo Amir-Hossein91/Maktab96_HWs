@@ -1,15 +1,11 @@
 package entity;
 
-import entity.enums.TeacherType;
-
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -20,50 +16,38 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @DiscriminatorValue("teacher")
-public class Teacher extends Person{
-    private String username;
-    private String password;
+public class Teacher extends UniversityStaff{
     private long teacherCode;
     private TeacherType teacherType;
     private long fixedSalary;
     private long perHourSalary;
-    @ManyToMany
-    @Cascade(value = CascadeType.DELETE)
+    @OneToMany(mappedBy = "teacher")
     private Set<Course> presentedCourses;
-    @ManyToMany
-    private Set<Student> courseStudents;
-    @OneToMany
-    private Set<SalaryReport> salaryReport;
+    @OneToOne
+    private SalaryReport<Teacher> salaryReport;
+
 
     public Teacher(String firstname, String lastname, String nationalCode, String phoneNumber,
                    String email, String username, String password, long teacherCode, TeacherType teacherType,
-                   long fixedSalary, long perHourSalary, Set<Course> presentedCourses,
-                   Set<Student> courseStudents, Set<SalaryReport> salaryReport) {
-        super(firstname, lastname, nationalCode, phoneNumber, email);
-        this.username = username;
-        this.password = password;
+                   long fixedSalary, long perHourSalary) {
+        super(firstname, lastname, nationalCode, phoneNumber, username, password, email);
         this.teacherCode = teacherCode;
         this.teacherType = teacherType;
-        this.fixedSalary = fixedSalary;
+        if(teacherType == TeacherType.FACULTY_MEMBER)
+            this.fixedSalary = fixedSalary;
         this.perHourSalary = perHourSalary;
-        this.presentedCourses = presentedCourses;
-        this.courseStudents = courseStudents;
-        this.salaryReport = salaryReport;
+        presentedCourses = new HashSet<>();
+        calculateTotalSalary();
+        salaryReport = new SalaryReport<>(this);
     }
 
-    public Teacher(long id,String firstname, String lastname, String nationalCode, String phoneNumber,
-                   String email, String username, String password, long teacherCode, TeacherType teacherType,
-                   long fixedSalary, long perHourSalary, Set<Course> presentedCourses,
-                   Set<Student> courseStudents, Set<SalaryReport> salaryReport) {
-        super(id,firstname, lastname, nationalCode, phoneNumber, email);
-        this.username = username;
-        this.password = password;
-        this.teacherCode = teacherCode;
-        this.teacherType = teacherType;
-        this.fixedSalary = fixedSalary;
-        this.perHourSalary = perHourSalary;
-        this.presentedCourses = presentedCourses;
-        this.courseStudents = courseStudents;
-        this.salaryReport = salaryReport;
+    private void calculateTotalSalary(){
+       setTotalSalary(presentedCourses
+               .stream()
+               .map(Course::getUnits)
+               .reduce(0, Integer::sum)
+               * perHourSalary + fixedSalary);
     }
+
+
 }
