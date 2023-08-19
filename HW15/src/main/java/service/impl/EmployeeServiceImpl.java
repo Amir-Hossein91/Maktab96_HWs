@@ -16,19 +16,28 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
     }
 
     @Override
-    public Employee saveOrUpdate(Employee employee, SalaryReport<Employee> salaryReport) {
+    public Employee saveOrUpdate(Employee employee/*, SalaryReport salaryReport*/) {
+        SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
         try{
-            SalaryReportServiceImpl<Employee> salaryReportService = ApplicationContext.employeeSalaryReportService;
-            transaction.begin();
-            salaryReport = salaryReportService.saveOrUpdate(salaryReport);
-            if(salaryReport == null)
-                throw new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION);
-            employee = repository.saveOrUpdate(employee).orElseThrow(() -> new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION));
-            transaction.commit();
+            if(!transaction.isActive()){
+                transaction.begin();
+                employee = repository.saveOrUpdate(employee).orElseThrow(() -> new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION));
+                SalaryReport salaryReport = salaryReportService.saveOrUpdate(employee.getSalaryReport());
+                if(salaryReport == null)
+                    throw new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION);
+                transaction.commit();
+            }
+            else {
+                employee = repository.saveOrUpdate(employee).orElseThrow(() -> new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION));
+                SalaryReport salaryReport = salaryReportService.saveOrUpdate(employee.getSalaryReport());
+                if(salaryReport == null)
+                    throw new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION);
+            }
             return employee;
         } catch (Exception e){
             transaction.rollback();
             System.out.println(e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }

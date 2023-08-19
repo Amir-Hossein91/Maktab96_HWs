@@ -12,6 +12,7 @@ import utility.ApplicationContext;
 import utility.Constants;
 
 import java.util.List;
+import java.util.Set;
 
 public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherRepositoryImpl> implements TeacherService {
     public TeacherServiceImpl(TeacherRepositoryImpl repository) {
@@ -31,26 +32,42 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherReposito
     }
 
     @Override
-    public Teacher saveOrUpdate(Teacher teacher, List<Course> presentedCourses, SalaryReport<Teacher> salaryReport) {
-        SalaryReportService<Teacher> salaryReportService = ApplicationContext.teacherSalaryReportService;
+    public Teacher saveOrUpdate(Teacher teacher, List<Course> presentedCourses, SalaryReport salaryReport) {
+        SalaryReportService salaryReportService = ApplicationContext.salaryReportService;
         CourseServiceImpl courseService = ApplicationContext.courseService;
         try{
-            transaction.begin();
-            salaryReport = salaryReportService.saveOrUpdate(salaryReport);
-            if(salaryReport == null)
-                throw new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION);
-            for(Course c : presentedCourses){
-                c = courseService.saveOrUpdate(c);
-                if (c == null)
+            if(!transaction.isActive()){
+                repository.getEm().getTransaction().begin();
+                salaryReport = salaryReportService.saveOrUpdate(salaryReport);
+                if(salaryReport == null)
                     throw new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION);
-                teacher.getPresentedCourses().add(c);
+                for(Course c : presentedCourses){
+                    c = courseService.saveOrUpdate(c);
+                    if (c == null)
+                        throw new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION);
+                }
+                teacher = repository.saveOrUpdate(teacher).orElseThrow(() -> new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION));
+                repository.getEm().getTransaction().commit();
             }
-            teacher = repository.saveOrUpdate(teacher).orElseThrow(() -> new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION));
-            transaction.commit();
+            else {
+                salaryReport = salaryReportService.saveOrUpdate(salaryReport);
+                if(salaryReport == null)
+                    throw new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION);
+                for(Course c : presentedCourses){
+                    c = courseService.saveOrUpdate(c);
+                    if (c == null)
+                        throw new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION);
+                }
+                teacher = repository.saveOrUpdate(teacher).orElseThrow(() -> new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION));
+
+            }
+
             return teacher;
+
         }catch(Exception e){
-            transaction.rollback();
+            repository.getEm().getTransaction().rollback();
             System.out.println(e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
