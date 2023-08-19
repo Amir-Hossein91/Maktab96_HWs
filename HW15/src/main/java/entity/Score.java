@@ -14,9 +14,9 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Score extends BaseEntity {
-    @ManyToOne
+    @ManyToOne/*(cascade = CascadeType.PERSIST)*/
     private Course course;
-    @ManyToOne
+    @ManyToOne/*(cascade = CascadeType.PERSIST)*/
     private Student student;
     private Float value;
     private boolean isPassed;
