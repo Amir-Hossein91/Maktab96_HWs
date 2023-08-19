@@ -9,4 +9,5 @@ public interface BaseService<T extends BaseEntity> {
     void delete(T t);
     T findById (long id) throws NotFoundException;
     List<T> findAll();
+    boolean isValid(T t);
 }

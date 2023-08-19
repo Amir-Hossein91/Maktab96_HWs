@@ -19,6 +19,9 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
     public Employee saveOrUpdate(Employee employee/*, SalaryReport salaryReport*/) {
         SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
         try{
+            if(!isValid(employee)){
+                throw new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION);
+            }
             if(!transaction.isActive()){
                 transaction.begin();
                 employee = repository.saveOrUpdate(employee).orElseThrow(() -> new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION));
@@ -37,7 +40,6 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
         } catch (Exception e){
             transaction.rollback();
             System.out.println(e.getMessage());
-            e.printStackTrace();
             return null;
         }
     }

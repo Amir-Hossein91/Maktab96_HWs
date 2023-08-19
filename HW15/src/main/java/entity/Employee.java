@@ -1,8 +1,10 @@
 package entity;
 
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Getter
@@ -15,7 +17,8 @@ import java.util.Set;
 @DiscriminatorValue("employee")
 @SequenceGenerator(name = "idGenerator", sequenceName = "employeeSequence")
 public class Employee extends UniversityStaff{
-
+    @Column(unique = true)
+    @Pattern(regexp = "^[0-9]{6,8}$",message = "Invalid employeeCode format!")
     private String employeeCode;
     @OneToOne(cascade = CascadeType.REMOVE)
     private SalaryReport salaryReport;
