@@ -2,13 +2,14 @@ package basics.BaseService.impl;
 
 import basics.BaseService.BaseService;
 import basics.baseRepository.impl.BaseRepositoryImpl;
+import entity.baseEntity.BaseEntity;
 import exceptions.NotFoundException;
 
 import javax.persistence.EntityTransaction;
 import java.util.List;
 
 
-public abstract class BaseServiceImpl<T,R extends BaseRepositoryImpl<T>> implements BaseService<T> {
+public abstract class BaseServiceImpl<T extends BaseEntity,R extends BaseRepositoryImpl<T>> implements BaseService<T> {
 
     protected R repository;
     protected EntityTransaction transaction;
