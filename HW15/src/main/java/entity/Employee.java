@@ -2,10 +2,7 @@ package entity;
 
 import lombok.*;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Set;
 
 @Getter
@@ -16,17 +13,18 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @DiscriminatorValue("employee")
+@SequenceGenerator(name = "idGenerator", sequenceName = "employeeSequence")
 public class Employee extends UniversityStaff{
 
     private String employeeCode;
-    @OneToOne
-    private SalaryReport<Employee> salaryReport;
+    @OneToOne(cascade = CascadeType.REMOVE)
+    private SalaryReport salaryReport;
 
     public Employee(String firstname, String lastname, String nationalCode, String phoneNumber,
                     String username, String password, String email, String employeeCode, long salary) {
         super(firstname, lastname, nationalCode, phoneNumber, username, password, email);
         this.employeeCode = employeeCode;
         setTotalSalary(salary);
-        salaryReport = new SalaryReport<>(this);
+        salaryReport = new SalaryReport(this);
     }
 }
