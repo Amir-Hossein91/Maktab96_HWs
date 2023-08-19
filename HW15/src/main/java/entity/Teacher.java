@@ -1,7 +1,6 @@
 package entity;
 
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -44,7 +43,7 @@ public class Teacher extends UniversityStaff{
     private void calculateTotalSalary(){
        setTotalSalary(presentedCourses
                .stream()
-               .map(Course::getUnits)
+               .map(Course::getCredits)
                .reduce(0, Integer::sum)
                * perHourSalary + fixedSalary);
     }

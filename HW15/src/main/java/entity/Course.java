@@ -5,6 +5,7 @@ import entity.baseEntity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -15,8 +16,10 @@ import javax.persistence.*;
 @Entity
 @SequenceGenerator(name = "idGenerator", sequenceName = "courseSequence")
 public class Course extends BaseEntity {
+    @NotNull(message = "the course title can not be null!")
     private String title;
-    private int units;
+    @NotNull(message = "Specify the ")
+    private int credits;
     private int semesterNumber;
 //    @ManyToOne/*(cascade = CascadeType.MERGE)*/
 //    private Teacher teacher;
