@@ -9,4 +9,6 @@ public class Constants {
     public static final String PERSON_SAVE_EXCEPTION = "Could not save user!";
     public static final String STUDENT_SAVE_EXCEPTION = "Could not save the student!";
     public static final String TEACHER_SAVE_EXCEPTION = "Could not save the teacher!";
+
+    public static final int CURRENT_SEMESTER_NUMBER = 5;
 }
