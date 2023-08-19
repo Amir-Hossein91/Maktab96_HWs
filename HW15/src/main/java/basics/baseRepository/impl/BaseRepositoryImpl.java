@@ -2,6 +2,7 @@ package basics.baseRepository.impl;
 
 import basics.baseRepository.BaseRepository;
 import connection.Connection;
+import entity.baseEntity.BaseEntity;
 import lombok.Getter;
 
 import javax.persistence.EntityManager;
@@ -9,18 +10,26 @@ import java.util.List;
 import java.util.Optional;
 
 @Getter
-public class BaseRepositoryImpl<T> implements BaseRepository<T> {
+public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<T> {
 
-    private final EntityManager em;
+    private EntityManager em;
     private Class<T> className;
 
-    public BaseRepositoryImpl() {
+    public BaseRepositoryImpl(Class<T> className) {
+        this.className = className;
         em = Connection.entityManager;
     }
 
     @Override
     public Optional<T> saveOrUpdate(T t) {
-        return Optional.ofNullable(em.merge(t));
+        if(findById(t.getId()).isEmpty()){
+            em.persist(t);
+            return Optional.ofNullable(em.find(className,t.getId()));
+        } else {
+            t=em.find(className,t.getId());
+            return Optional.ofNullable(em.merge(t));
+        }
+
     }
 
     @Override
