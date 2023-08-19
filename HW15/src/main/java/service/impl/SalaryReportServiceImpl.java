@@ -1,39 +1,43 @@
 package service.impl;
 
 import basics.BaseService.impl.BaseServiceImpl;
+import entity.Employee;
 import entity.SalaryReport;
-import entity.UniversityStaff;
+import entity.Teacher;
 import exceptions.NotSavedException;
 import repository.SalaryReportRepositoryImpl;
 import service.SalaryReportService;
+import utility.ApplicationContext;
 import utility.Constants;
 
-public class SalaryReportServiceImpl<T extends UniversityStaff> extends BaseServiceImpl<SalaryReport<T>, SalaryReportRepositoryImpl<T>> implements SalaryReportService<T> {
+public class SalaryReportServiceImpl extends BaseServiceImpl<SalaryReport, SalaryReportRepositoryImpl> implements SalaryReportService {
 
-    public SalaryReportServiceImpl(SalaryReportRepositoryImpl<T> repository) {
+    public SalaryReportServiceImpl(SalaryReportRepositoryImpl repository) {
         super(repository);
     }
 
     @Override
-    public SalaryReport<T> saveOrUpdate(SalaryReport<T> salaryReport) throws NotSavedException {
+    public SalaryReport saveOrUpdate(SalaryReport salaryReport) throws NotSavedException {
         try{
             if(!transaction.isActive()){
                 transaction.begin();
                 salaryReport=repository.saveOrUpdate(salaryReport).orElseThrow(() -> new NotSavedException(Constants.SALARY_REPORT_SAVE_EXCEPTION));
                 transaction.commit();
-            }else
+            } else{
                 salaryReport = repository.saveOrUpdate(salaryReport).orElseThrow(() -> new NotSavedException(Constants.SALARY_REPORT_SAVE_EXCEPTION));
+            }
             return salaryReport;
         } catch (Exception e){
             transaction.rollback();
             System.out.println(e.getMessage());
+            e.printStackTrace();
             return null;
         }
 
     }
 
     @Override
-    public void delete(SalaryReport<T> salaryReport) {
+    public void delete(SalaryReport salaryReport) {
         try{
             if(!transaction.isActive()){
                 transaction.begin();

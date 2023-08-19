@@ -2,6 +2,7 @@ package entity;
 
 import entity.baseEntity.BaseEntity;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,13 +12,14 @@ import java.util.Date;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class SalaryReport<T extends UniversityStaff> extends BaseEntity {
+@SequenceGenerator(name = "idGenerator", sequenceName = "salaryReportSequence")
+public class SalaryReport extends BaseEntity {
     @OneToOne
-    private T owner;
+    private UniversityStaff owner;
     private Date reportDate;
     private long salaryAmount;
 
-    public SalaryReport(T owner) {
+    public SalaryReport(UniversityStaff owner) {
        this.owner = owner;
         reportDate = new Date();
         salaryAmount = owner.getTotalSalary();

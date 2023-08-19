@@ -5,7 +5,7 @@ import entity.SalaryReport;
 import entity.UniversityStaff;
 import exceptions.NotSavedException;
 
-public interface SalaryReportService<T extends UniversityStaff> extends BaseService<SalaryReport<T>> {
+public interface SalaryReportService extends BaseService<SalaryReport> {
 
-    SalaryReport<T> saveOrUpdate(SalaryReport<T> salaryReport) throws NotSavedException;
+    SalaryReport saveOrUpdate(SalaryReport salaryReport) throws NotSavedException;
 }
