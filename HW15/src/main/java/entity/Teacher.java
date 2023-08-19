@@ -2,7 +2,6 @@ package entity;
 
 import lombok.*;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -16,15 +15,16 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @DiscriminatorValue("teacher")
+@SequenceGenerator(name = "idGenerator", sequenceName = "teacherSequence")
 public class Teacher extends UniversityStaff{
     private long teacherCode;
     private TeacherType teacherType;
     private long fixedSalary;
     private long perHourSalary;
-    @OneToMany(mappedBy = "teacher")
+    @ManyToMany/*(mappedBy = "teacher" , cascade = CascadeType.PERSIST)*/
     private Set<Course> presentedCourses;
-    @OneToOne
-    private SalaryReport<Teacher> salaryReport;
+    @OneToOne(cascade = CascadeType.REMOVE)
+    private SalaryReport salaryReport;
 
 
     public Teacher(String firstname, String lastname, String nationalCode, String phoneNumber,
@@ -38,7 +38,7 @@ public class Teacher extends UniversityStaff{
         this.perHourSalary = perHourSalary;
         presentedCourses = new HashSet<>();
         calculateTotalSalary();
-        salaryReport = new SalaryReport<>(this);
+        salaryReport = new SalaryReport(this);
     }
 
     private void calculateTotalSalary(){
