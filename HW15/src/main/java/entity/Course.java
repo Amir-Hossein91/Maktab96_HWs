@@ -13,17 +13,18 @@ import javax.persistence.*;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@SequenceGenerator(name = "idGenerator", sequenceName = "courseSequence")
 public class Course extends BaseEntity {
     private String title;
     private int units;
     private int semesterNumber;
-    @ManyToOne
-    private Teacher teacher;
+//    @ManyToOne/*(cascade = CascadeType.MERGE)*/
+//    private Teacher teacher;
 
-    public Course(String title, int units, int semesterNumber) {
-        this.title = title;
-        this.units = units;
-        this.semesterNumber= semesterNumber;
-        teacher = new Teacher();
-    }
+//    public Course(String title, int units, int semesterNumber) {
+//        this.title = title;
+//        this.units = units;
+//        this.semesterNumber= semesterNumber;
+//        teacher = new Teacher();
+//    }
 }
