@@ -18,13 +18,13 @@ import java.util.Set;
 @Entity
 @DiscriminatorValue("student")
 public class Student extends Person{
-    private long studentCode;
+    private String studentCode;
     private int entranceSemesterNumber;
     private int unitsLimit;
 
     public Student(String firstname, String lastname, String nationalCode,
                    String phoneNumber, String username, String password, String email,
-                   long studentCode, int entranceSemesterNumber) {
+                   String studentCode, int entranceSemesterNumber) {
         super(firstname, lastname, nationalCode, phoneNumber, username, password, email);
         this.studentCode = studentCode;
         this.entranceSemesterNumber = entranceSemesterNumber;

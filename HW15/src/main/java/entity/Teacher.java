@@ -16,7 +16,7 @@ import java.util.Set;
 @DiscriminatorValue("teacher")
 @SequenceGenerator(name = "idGenerator", sequenceName = "teacherSequence")
 public class Teacher extends UniversityStaff{
-    private long teacherCode;
+    private String teacherCode;
     private TeacherType teacherType;
     private long fixedSalary;
     private long perHourSalary;
@@ -27,7 +27,7 @@ public class Teacher extends UniversityStaff{
 
 
     public Teacher(String firstname, String lastname, String nationalCode, String phoneNumber,
-                   String email, String username, String password, long teacherCode, TeacherType teacherType,
+                   String email, String username, String password, String teacherCode, TeacherType teacherType,
                    long fixedSalary, long perHourSalary) {
         super(firstname, lastname, nationalCode, phoneNumber, username, password, email);
         this.teacherCode = teacherCode;
