@@ -1,7 +1,10 @@
 package entity;
 
 import entity.baseEntity.BaseEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,7 +15,7 @@ import java.util.GregorianCalendar;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
+/*(callSuper = true)*/
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @SequenceGenerator(name = "idGenerator", sequenceName = "salaryReportSequence")
@@ -30,5 +33,11 @@ public class SalaryReport extends BaseEntity {
        Calendar calendar = new GregorianCalendar();
        reportDate =calendar.getTime();
        salaryAmount = owner.getTotalSalary();
+    }
+
+    public String toString() {
+        return "SalaryReport(reportDate=" + this.getReportDate() +
+                ", salaryAmount=" + this.getSalaryAmount() +
+                ")";
     }
 }
