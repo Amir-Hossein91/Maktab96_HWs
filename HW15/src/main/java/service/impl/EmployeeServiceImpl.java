@@ -3,6 +3,7 @@ package service.impl;
 import basics.BaseService.impl.BaseServiceImpl;
 import entity.Employee;
 import entity.SalaryReport;
+import exceptions.NotFoundException;
 import exceptions.NotSavedException;
 import repository.EmployeeRepositoryImpl;
 import service.EmployeeService;
@@ -56,5 +57,14 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
        }
     }
 
+    public SalaryReport getSalaryReport(Employee employee){
+        SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
+        try {
+            return salaryReportService.getSalaryReport(employee);
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
 }
