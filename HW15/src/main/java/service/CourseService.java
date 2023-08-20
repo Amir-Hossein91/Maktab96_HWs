@@ -6,5 +6,5 @@ import exceptions.NotSavedException;
 
 public interface CourseService extends BaseService<Course> {
 
-    Course saveOrUpdate(Course course) throws NotSavedException;
+    Course saveOrUpdate(Course course);
 }

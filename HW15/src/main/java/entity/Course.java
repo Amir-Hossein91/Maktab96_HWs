@@ -3,12 +3,14 @@ package entity;
 
 import entity.baseEntity.BaseEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.Range;
 import utility.Constants;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@SuperBuilder
 @Getter
 @Setter
 @NoArgsConstructor

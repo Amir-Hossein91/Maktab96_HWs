@@ -17,7 +17,7 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
     }
 
     @Override
-    public Employee saveOrUpdate(Employee employee/*, SalaryReport salaryReport*/) {
+    public Employee saveOrUpdate(Employee employee, SalaryReport salaryReport) {
         SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
         try{
             if(!isValid(employee)){
@@ -25,15 +25,15 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
             }
             if(!transaction.isActive()){
                 transaction.begin();
+                salaryReport = salaryReportService.saveOrUpdate(salaryReport);
                 employee = repository.saveOrUpdate(employee).orElseThrow(() -> new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION));
-                SalaryReport salaryReport = salaryReportService.saveOrUpdate(employee.getSalaryReport());
                 if(salaryReport == null)
                     throw new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION);
                 transaction.commit();
             }
             else {
+                salaryReport = salaryReportService.saveOrUpdate(salaryReport);
                 employee = repository.saveOrUpdate(employee).orElseThrow(() -> new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION));
-                SalaryReport salaryReport = salaryReportService.saveOrUpdate(employee.getSalaryReport());
                 if(salaryReport == null)
                     throw new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION);
             }

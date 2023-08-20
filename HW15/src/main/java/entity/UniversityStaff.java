@@ -1,9 +1,11 @@
 package entity;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
 
+@SuperBuilder
 @Entity
 @Getter
 @Setter

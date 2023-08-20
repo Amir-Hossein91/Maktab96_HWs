@@ -2,6 +2,7 @@ package basics.baseRepository.impl;
 
 import basics.baseRepository.BaseRepository;
 import connection.Connection;
+import entity.SalaryReport;
 import entity.baseEntity.BaseEntity;
 import lombok.Getter;
 
@@ -22,14 +23,19 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
 
     @Override
     public Optional<T> saveOrUpdate(T t) {
+//        if(t instanceof SalaryReport){
+//            if(findById(t.getId()).isEmpty())
+//                return Optional.empty();
+//            else
+//                return Optional.ofNullable(em.merge(t));
+//        }
         if(findById(t.getId()).isEmpty()){
             em.persist(t);
             return Optional.ofNullable(em.find(className,t.getId()));
-        } else {
+        } else{
 //            t=em.find(className,t.getId());
             return Optional.ofNullable(em.merge(t));
         }
-
     }
 
     @Override

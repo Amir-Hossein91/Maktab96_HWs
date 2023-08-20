@@ -7,5 +7,5 @@ import exceptions.NotSavedException;
 
 public interface SalaryReportService extends BaseService<SalaryReport> {
 
-    SalaryReport saveOrUpdate(SalaryReport salaryReport) throws NotSavedException;
+    SalaryReport saveOrUpdate(SalaryReport salaryReport);
 }

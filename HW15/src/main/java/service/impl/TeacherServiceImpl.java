@@ -33,11 +33,11 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherReposito
 
     @Override
     public Teacher saveOrUpdate(Teacher teacher, List<Course> presentedCourses, SalaryReport salaryReport) {
-        SalaryReportService salaryReportService = ApplicationContext.salaryReportService;
+        SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
         CourseServiceImpl courseService = ApplicationContext.courseService;
         try{
             if(!transaction.isActive()){
-                repository.getEm().getTransaction().begin();
+                transaction.begin();
                 salaryReport = salaryReportService.saveOrUpdate(salaryReport);
                 if(salaryReport == null)
                     throw new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION);
@@ -47,7 +47,7 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherReposito
                         throw new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION);
                 }
                 teacher = repository.saveOrUpdate(teacher).orElseThrow(() -> new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION));
-                repository.getEm().getTransaction().commit();
+                transaction.commit();
             }
             else {
                 salaryReport = salaryReportService.saveOrUpdate(salaryReport);

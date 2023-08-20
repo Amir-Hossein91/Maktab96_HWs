@@ -1,20 +1,18 @@
-import entity.Course;
-import entity.SalaryReport;
-import entity.Student;
-import entity.Teacher;
-import entity.enums.StaffType;
-import entity.enums.TeacherType;
-import service.impl.*;
-import utility.ApplicationContext;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
+import com.sun.xml.bind.v2.runtime.reflect.opt.Const;
+import entity.*;
+import exceptions.NotFoundException;
+import service.impl.*;
+import ui.Menu;
+import utility.ApplicationContext;
+import utility.Constants;
+import utility.Printer;
+
+import javax.swing.plaf.TableHeaderUI;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class Main {
-
     private static final CourseServiceImpl courseService = ApplicationContext.courseService;
     private static final EmployeeServiceImpl employeeService = ApplicationContext.employeeService;
     private static final PersonServiceImpl personService = ApplicationContext.personService;
@@ -24,29 +22,63 @@ public class Main {
     private static final TeacherServiceImpl teacherService = ApplicationContext.teacherService;
 
     public static void main(String[] args) {
-        SalaryReport salaryReport = new SalaryReport(StaffType.EMPLOYEE,new Date(),10_000_000);
-        SalaryReport salaryReport1 = new SalaryReport(StaffType.TEACHER,new Date(), 15000000);
 
-        Teacher teacher1 = new Teacher(5,"amir","ahmadi","3060113947","09359087710","amir@yahoo.com","amirahmadi",
-                "123456",14021, TeacherType.FACULTY_MEMBER,10000000,1000000,
-                new HashSet<Course>(),new HashSet<Student>(),new HashSet<SalaryReport>());
-        List<Course> presentedCourses = new ArrayList<>();
-        Course course1 = new Course("physics",2);
-        Course course2 = new Course("Programming",3);
-        presentedCourses.add(course1);
-        presentedCourses.add(course2);
+//        Course course1 = new Course("java programming",3,4);
+//        Course course2 = new Course("physics",2,4);
+//        Teacher teacher1 = new Teacher("amirhossein","ahmadinezhad","3060113947","09359087710","amir_ahmadi9034@yahoo.com"
+//        ,"AmirHossein","123456","14020528", TeacherType.FACULTY_MEMBER,10_000_000,1_000_000);
+//        teacher1.getPresentedCourses().add(course1);
+//        teacher1.getPresentedCourses().add(course2);
+//
+//        Person person1 = new Person("ali","heydari","646546","0654654","Aliiii","65464","ali@gmail.com");
+//        Person person2 = new Person("amir","lskjdf","646546","0654654","Alilskdfjiii","65464","alsdfsi@gmail.com");
+//
+//        Student student1 = new Student("masood","Jafari","6546565","6465465","Massssood","6354165","lksdf",
+//                "6354354",1);
+//
+//        SalaryReport salaryReport1 = new SalaryReport(teacher1);
+//
+//        Employee employee1 = new Employee("admin","admin","0000000000","09000000000","admin",
+//                "Admin00","admin@admin.com","14020501",0);
+//        Teacher teacher3 = new Teacher("admin","admin","0000000001","09000000001","adminn@admin.com","adminn",
+//                "Admin01","14020502",TeacherType.FACULTY_MEMBER,0,0);
+////
+//        SalaryReport salaryReport2 = new SalaryReport(employee1);
+//
+//        Score score1 = new Score(course1,student1,17.06F);
+//
+//        Printer printer = new Printer();
+//        printer.printMenu(Constants.TEACHER_MAIN_MENU);
+//        printer.printMenu(Constants.EMPLOYEE_TEACHER_MENU);
+//
+//
+//        try{
+//            personService.saveOrUpdate(person1);
+//            personService.saveOrUpdate(person2);
+//            courseService.saveOrUpdate(course1);
+//            teacherService.saveOrUpdate(teacher3,teacher3.getPresentedCourses().stream().toList(),teacher3.getSalaryReport());
+//            studentService.saveOrUpdate(student1,teacher1.getPresentedCourses().stream().toList());
+////            salaryReportService.saveOrUpdate(salaryReport1);
+////            salaryReportService.saveOrUpdate(salaryReport2);
+//            employeeService.saveOrUpdate(employee1/*,employee1.getSalaryReport()*/);
+//            scoreService.saveOrUpdate(score1,student1,course1);
+//            List<Person> all = personService.findAll();
+//            for(Person p: all){
+//                p.setPassword("147258369");
+//                personService.saveOrUpdate(p);
+//            }
+//
+//        }catch(Exception e){
+//            System.out.println(e.getMessage());
+//        }
 
-        Student student1 = new Student(2,"ali","mozaffari","5654165","65654654","lkhsdflk",
-                "aliMozaffari","123456",140215,4021,50,14,20, new HashSet<>(presentedCourses),
-                new HashSet<>(presentedCourses), 15,16);
+        Menu menu = new Menu();
+        menu.begin();
 
-        try{
-            studentService.saveOrUpdate(student1,presentedCourses);
-            teacherService.saveOrUpdate(teacher1,presentedCourses,salaryReport);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-            System.out.println(e.getCause());
-        }
-
+//        try {
+//            System.out.println(personService.findById(1));
+//        } catch (NotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 }

@@ -18,8 +18,8 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, CourseRepositroyI
     }
 
     @Override
-    public Course saveOrUpdate(Course course) throws NotSavedException {
-        TeacherServiceImpl teacherService = ApplicationContext.teacherService;
+    public Course saveOrUpdate(Course course) {
+//        TeacherServiceImpl teacherService = ApplicationContext.teacherService;
         try{
             if(!transaction.isActive()){
                 transaction.begin();

@@ -21,7 +21,7 @@ public class SalaryReportServiceImpl extends BaseServiceImpl<SalaryReport, Salar
     }
 
     @Override
-    public SalaryReport saveOrUpdate(SalaryReport salaryReport) throws NotSavedException {
+    public SalaryReport saveOrUpdate(SalaryReport salaryReport) {
         try{
             if(!transaction.isActive()){
                 transaction.begin();
