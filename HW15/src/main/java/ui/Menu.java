@@ -114,6 +114,7 @@ public class Menu {
         }
     }
 
+
     private void showAllStudents(){
         List<String> list = studentService.findAll().stream().map(Objects::toString).toList();
         printer.printResult("ALL STUDENTS LIST",list);
