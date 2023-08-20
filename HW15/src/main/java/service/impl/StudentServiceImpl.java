@@ -28,29 +28,25 @@ public class StudentServiceImpl extends BaseServiceImpl<Student, StudentReposito
         } catch(Exception e){
             transaction.rollback();
             System.out.println(e.getMessage());
+            throw e;
         }
     }
 
     @Override
-    public Student saveOrUpdate(Student student, List<Course> courses) throws NotSavedException {
-        CourseServiceImpl courseService = ApplicationContext.courseService;
-        TeacherService teacherService = ApplicationContext.teacherService;
+    public Student saveOrUpdate(Student student){
         try{
-            transaction.begin();
-            for(Course c : courses) {
-//                c = courseService.saveOrUpdate(c);
-//                Teacher teacher = teacherService.saveOrUpdate(c.getTeacher(),c.getTeacher().getPresentedCourses().stream().toList(),c.getTeacher().getSalaryReport());
-                if(c==null /*|| teacher == null*/)
-                    throw new NotSavedException(Constants.STUDENT_SAVE_EXCEPTION);
+            if(!transaction.isActive()){
+                transaction.begin();
+                student = repository.saveOrUpdate(student).orElseThrow(() -> new NotSavedException(Constants.STUDENT_SAVE_EXCEPTION));
+                transaction.commit();
             }
+            else
+                student = repository.saveOrUpdate(student).orElseThrow(() -> new NotSavedException(Constants.STUDENT_SAVE_EXCEPTION));
 
-            student = repository.saveOrUpdate(student).orElseThrow(() -> new NotSavedException(Constants.STUDENT_SAVE_EXCEPTION));
-            transaction.commit();
             return student;
         } catch (Exception e){
             transaction.rollback();
             System.out.println(e.getMessage());
-            e.printStackTrace();
             return null;
         }
     }
