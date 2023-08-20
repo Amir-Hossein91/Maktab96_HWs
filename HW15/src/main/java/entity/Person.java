@@ -23,10 +23,10 @@ import javax.validation.constraints.Pattern;
 @DiscriminatorColumn(name = "Person_Role" , discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("no role")
 public class Person extends BaseEntity {
-    @Pattern(regexp = "[a-zA-Z\\s]",message = "Invalid name format")
+    @Pattern(regexp = "^[a-zA-Z\s]{3,}$",message = "Invalid name format")
     @NotNull(message = "Specify the name")
     private String firstname;
-    @Pattern(regexp = "[a-zA-Z\\s]",message = "Invalid last name format")
+    @Pattern(regexp = "^[a-zA-Z\s]{3,}$",message = "Invalid last name format")
     @NotNull(message = "Specify the last name")
     private String lastname;
     @Pattern(regexp = "[0-9]{10}", message = "Invalid national code number")
@@ -36,7 +36,7 @@ public class Person extends BaseEntity {
     @Pattern(regexp = "09[0-9]{9}", message = "Invalid phone number format")
     @Column(unique = true)
     private String phoneNumber;
-    @Pattern(regexp = "[^\\s]", message = "Username can not contain character 'space'")
+    @Pattern(regexp = "^[^\s]{3,}$", message = "Username can not contain character 'space'")
     @Column(unique = true)
     @NotNull(message = "Specify a valid username")
     private String username;
