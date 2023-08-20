@@ -26,7 +26,7 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
             em.persist(t);
             return Optional.ofNullable(em.find(className,t.getId()));
         } else {
-            t=em.find(className,t.getId());
+//            t=em.find(className,t.getId());
             return Optional.ofNullable(em.merge(t));
         }
 
