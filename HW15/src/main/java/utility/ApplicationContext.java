@@ -3,8 +3,12 @@ package utility;
 import repository.*;
 import service.impl.*;
 
+import java.util.Scanner;
+
 
 public class ApplicationContext {
+    public static Scanner scanner;
+    public static Printer printer;
     private static final CourseRepositroyImpl courseRepositroy;
     private static final EmployeeRepositoryImpl employeeRepository;
     private static final PersonRepositoryImpl personRepository;
@@ -21,6 +25,8 @@ public class ApplicationContext {
     public static final TeacherServiceImpl teacherService;
 
     static {
+        scanner = new Scanner(System.in);
+        printer = new Printer();
         courseRepositroy = new CourseRepositroyImpl();
         employeeRepository = new EmployeeRepositoryImpl();
         personRepository = new PersonRepositoryImpl();
