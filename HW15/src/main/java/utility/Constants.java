@@ -7,8 +7,10 @@ public class Constants {
     public static final String SCORE_SAVE_EXCEPTION = "Could not save the score!";
     public static final String COURSE_SAVE_EXCEPTION = "Could not save the course!";
     public static final String COURSE_NOT_PRESENTED = "Course is not presented in this semester!";
+    public static final String DID_NOT_PRESENT_COURSE = "You have not presented this course in current semester!";
     public static final String COURSE_TAKEN = "You have already taken this course in current semester!";
     public static final String COURSE_PASSED = "You have already passed the course!";
+    public static final String COURSE_WITHOUT_STUDENT = "No students have taken this course!";
     public static final String EMPLOYEE_SAVE_EXCEPTION = "Could not save the employee!";
     public static final String SALARY_REPORT_SAVE_EXCEPTION = "Could not save the salary report!";
     public static final String PERSON_SAVE_EXCEPTION = "Could not save user!";
