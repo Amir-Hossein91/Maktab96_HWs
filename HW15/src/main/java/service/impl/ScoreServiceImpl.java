@@ -11,7 +11,7 @@ import service.ScoreService;
 import utility.ApplicationContext;
 import utility.Constants;
 
-import javax.persistence.Query;
+import java.util.List;
 
 public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl> implements ScoreService {
 
@@ -77,5 +77,9 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl
             System.out.println(e.getMessage());
             return true;
         }
+    }
+
+    public List<Score> getCourseScores(Course course){
+        return repository.getCourseScores(course);
     }
 }

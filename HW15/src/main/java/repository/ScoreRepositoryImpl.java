@@ -43,4 +43,11 @@ public class ScoreRepositoryImpl extends BaseRepositoryImpl<Score> {
         return !query.getResultList().isEmpty();
 //        return false;
     }
+
+    public List<Score> getCourseScores(Course course){
+        String jpql = "select s from Score s where s.course=:course";
+        Query query = getEm().createQuery(jpql,Score.class);
+        query.setParameter("course",course);
+        return query.getResultList();
+    }
 }

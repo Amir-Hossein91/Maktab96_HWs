@@ -2,15 +2,12 @@ package ui;
 
 import entity.*;
 import exceptions.NotFoundException;
-import exceptions.NotSavedException;
 import service.impl.*;
 import utility.ApplicationContext;
 import utility.Constants;
 import utility.Printer;
 
-import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Menu {
 
@@ -549,7 +546,7 @@ public class Menu {
             switch (choice) {
                 case 1 -> showTeacherInfoMenu();
                 case 2 -> showTeacherCourseMenu();
-//                case 3 -> setScores();
+                case 3 -> setScores((Teacher) user);
                 case 4 -> getTeacherSalaryReport((Teacher) user);
                 case 5 -> {
                     return;
@@ -685,6 +682,37 @@ public class Menu {
     private void getTeacherSalaryReport(Teacher teacher){
         printer.printResult("TEACHER SALARY REPORT", List.of(teacherService.getSalaryReport(teacher).toString()));
     }
+
+    private void setScores(Teacher teacher){
+        printer.getInput("Course id");
+        long courseId = input.nextLong();
+        Map<String,Float> studentsScores = new HashMap<>();
+        try {
+            Course course = courseService.findById(courseId);
+            if(!teacher.getPresentedCourses().contains(course))
+                throw new NotFoundException(Constants.DID_NOT_PRESENT_COURSE);
+            List<Score> courseScores = scoreService.getCourseScores(course);
+            if(courseScores.isEmpty())
+                throw new NotFoundException(Constants.COURSE_WITHOUT_STUDENT);
+            courseScores.stream()
+                    .map(Score::getStudent)
+                    .forEach(student -> {
+                        printer.getInput(student.getFirstname() + " " + student.getLastname() +
+                                "(studentCode: " + student.getStudentCode() + ")" );
+                        Float value = input.nextFloat();
+                        studentsScores.put(student.getStudentCode(),value);
+                    });
+            courseScores.forEach(score -> {
+                score.setValue(studentsScores.get(score.getStudent().getStudentCode()));
+                if(score.getValue()>=10)
+                    score.setPassed(true);
+                scoreService.saveOrUpdate(score,score.getStudent(),score.getCourse());
+            });
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void showStudentMenu() {
@@ -695,7 +723,7 @@ public class Menu {
             switch (choice) {
                 case 1 -> showStudentInfoMenu();
                 case 2 -> getCourse((Student) user);
-//                case 3 -> showStudentCurrentSemesterCourse();
+//                case 3 -> showStudentCurrentSemesterCourses();
 //                case 4 -> showStudentAllCourses();
                 case 5 -> {
                     return;
