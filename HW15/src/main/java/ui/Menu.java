@@ -723,8 +723,8 @@ public class Menu {
             switch (choice) {
                 case 1 -> showStudentInfoMenu();
                 case 2 -> getCourse((Student) user);
-//                case 3 -> showStudentCurrentSemesterCourses();
-//                case 4 -> showStudentAllCourses();
+                case 3 -> showStudentCurrentSemesterCourses();
+                case 4 -> showStudentAllCourses();
                 case 5 -> {
                     return;
                 }
@@ -812,6 +812,15 @@ public class Menu {
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void showStudentCurrentSemesterCourses(){
+        List<String> result = courseService.getCurrentSemesterCourses((Student) user).stream().map(Objects::toString).toList();
+        printer.printResult("YOUR CURRENT SEMESTER COURSES",result);
+    }
+
+    private void showStudentAllCourses(){
+        printer.printResult("YOUR COURSE HISTORY", scoreService.getCourseHistory((Student) user));
     }
 
 }

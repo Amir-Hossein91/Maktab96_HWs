@@ -60,7 +60,7 @@ public class Main {
 //            studentService.saveOrUpdate(student1,teacher1.getPresentedCourses().stream().toList());
 ////            salaryReportService.saveOrUpdate(salaryReport1);
 ////            salaryReportService.saveOrUpdate(salaryReport2);
-//            employeeService.saveOrUpdate(employee1/*,employee1.getSalaryReport()*/);
+//            employeeService.saveOrUpdate(employee1,employee1.getSalaryReport());
 //            scoreService.saveOrUpdate(score1,student1,course1);
 //            List<Person> all = personService.findAll();
 //            for(Person p: all){

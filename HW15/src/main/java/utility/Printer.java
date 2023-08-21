@@ -38,7 +38,7 @@ public class Printer {
 
     public void printResult(String title, List<String> result){
         String titleBorder = "************************************";
-        String endOfResult = "------------------------------------";
+        String endOfResult = "************************************";
         System.out.println();
         System.out.println(titleBorder);
         int shift = (titleBorder.length() - title.length())/2;
