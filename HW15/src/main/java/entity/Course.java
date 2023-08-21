@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @SequenceGenerator(name = "idGenerator", sequenceName = "courseSequence")
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"title","credits","semesterNumber"})})
 public class Course extends BaseEntity {
     @NotNull(message = "the course title can not be null!")
     private String title;
