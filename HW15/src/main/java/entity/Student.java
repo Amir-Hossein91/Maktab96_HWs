@@ -6,9 +6,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import java.util.HashSet;
-import java.util.Set;
 
 @SuperBuilder
 @Getter
@@ -22,7 +19,7 @@ import java.util.Set;
 public class Student extends Person{
     private String studentCode;
     private int entranceSemesterNumber;
-    private int unitsLimit;
+    private int creditsLimit;
 
     public Student(String firstname, String lastname, String nationalCode,
                    String phoneNumber, String username, String password, String email,
@@ -30,7 +27,11 @@ public class Student extends Person{
         super(firstname, lastname, nationalCode, phoneNumber, username, password, email);
         this.studentCode = studentCode;
         this.entranceSemesterNumber = entranceSemesterNumber;
-        unitsLimit = 20;
+        creditsLimit = 20;
+    }
+
+    public boolean isAllowed(int courseCredit, int currentCredit){
+        return (courseCredit + currentCredit) <= creditsLimit;
     }
 
 }
