@@ -24,7 +24,7 @@ public class Score extends BaseEntity {
     public Score(Course course, Student student) {
         this.course = course;
         this.student = student;
-        value = -1F;
+        value = null;
         isPassed = false;
     }
 }
