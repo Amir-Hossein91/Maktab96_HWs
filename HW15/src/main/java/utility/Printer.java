@@ -7,6 +7,7 @@ public class Printer {
     public void printMenu(String[] menu){
         String titleBorder = "====================================";
         String endOfMenu = "------------------------------------";
+        System.out.println();
         System.out.println(titleBorder);
         int shift = (titleBorder.length() - menu[0].length())/2;
         for (int i =1; i<= shift; i++)
@@ -38,6 +39,7 @@ public class Printer {
     public void printResult(String title, List<String> result){
         String titleBorder = "************************************";
         String endOfResult = "------------------------------------";
+        System.out.println();
         System.out.println(titleBorder);
         int shift = (titleBorder.length() - title.length())/2;
         for (int i =1; i<= shift; i++)
