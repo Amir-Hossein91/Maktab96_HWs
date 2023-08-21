@@ -22,7 +22,7 @@ public class Employee extends UniversityStaff{
     @Column(unique = true)
     @Pattern(regexp = "^[0-9]{6,8}$",message = "Invalid employeeCode format!")
     private String employeeCode;
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "owner", cascade = CascadeType.REMOVE)
     private SalaryReport salaryReport;
 
     public Employee(String firstname, String lastname, String nationalCode, String phoneNumber,
