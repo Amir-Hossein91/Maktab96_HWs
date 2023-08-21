@@ -95,4 +95,9 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl
         }
         return result;
     }
+
+    public List<String> getCourseHistory(Student student){
+        List<Score> scores = repository.getCourseHistory(student);
+       return scores.stream().map(score -> score.getCourse().toString() +" ,score = " + score.getValue()).toList();
+    }
 }

@@ -58,4 +58,11 @@ public class ScoreRepositoryImpl extends BaseRepositoryImpl<Score> {
         query.setParameter("semNo",Constants.CURRENT_SEMESTER_NUMBER-1);
         return query.getResultList();
     }
+
+    public List<Score> getCourseHistory(Student student){
+        String jpql = "select s from Score s where s.student=:student";
+        Query query = getEm().createQuery(jpql,Score.class);
+        query.setParameter("student",student);
+        return query.getResultList();
+    }
 }
