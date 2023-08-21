@@ -11,6 +11,7 @@ public class Constants {
     public static final String COURSE_TAKEN = "You have already taken this course in current semester!";
     public static final String COURSE_PASSED = "You have already passed the course!";
     public static final String COURSE_WITHOUT_STUDENT = "No students have taken this course!";
+    public static final String NO_COURSE_PREVIOUS_SEMESTER = "student had no courses in previous semester! (Credit limit = 20)";
     public static final String EMPLOYEE_SAVE_EXCEPTION = "Could not save the employee!";
     public static final String SALARY_REPORT_SAVE_EXCEPTION = "Could not save the salary report!";
     public static final String PERSON_SAVE_EXCEPTION = "Could not save user!";

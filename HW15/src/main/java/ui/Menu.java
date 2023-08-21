@@ -800,6 +800,10 @@ public class Menu {
         try {
             Course course = courseService.findById(courseId);
             int currentCredits = scoreService.getCurrentSemesterCredits(student);
+            if (currentCredits==0) {
+                student.setCreditsLimit(studentService.calculatePreviouSemesterAverage(student));
+                studentService.saveOrUpdate(student);
+            }
             if(student.isAllowed(course.getCredits(),currentCredits) && !scoreService.isTaken(course,student) && !scoreService.isPassed(course,student)){
                 Score score = new Score(course,student);
                 scoreService.saveOrUpdate(score,score.getStudent(),score.getCourse());
