@@ -2,8 +2,10 @@ package service.impl;
 
 import basics.BaseService.impl.BaseServiceImpl;
 import entity.Course;
+import entity.Employee;
 import entity.SalaryReport;
 import entity.Teacher;
+import exceptions.NotFoundException;
 import exceptions.NotSavedException;
 import repository.TeacherRepositoryImpl;
 import service.SalaryReportService;
@@ -68,6 +70,16 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherReposito
             repository.getEm().getTransaction().rollback();
             System.out.println(e.getMessage());
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    public SalaryReport getSalaryReport(Teacher teacher){
+        SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
+        try {
+            return salaryReportService.getSalaryReport(teacher);
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }
