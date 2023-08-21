@@ -21,11 +21,10 @@ public class Score extends BaseEntity {
     private Float value;
     private boolean isPassed;
 
-    public Score(Course course, Student student, Float value) {
+    public Score(Course course, Student student) {
         this.course = course;
         this.student = student;
-        this.value = value;
-        if(value >= 10)
-            isPassed = true;
+        value = -1F;
+        isPassed = false;
     }
 }

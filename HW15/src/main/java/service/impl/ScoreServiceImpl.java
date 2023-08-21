@@ -11,6 +11,8 @@ import service.ScoreService;
 import utility.ApplicationContext;
 import utility.Constants;
 
+import javax.persistence.Query;
+
 public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl> implements ScoreService {
 
     public ScoreServiceImpl(ScoreRepositoryImpl repository) {
@@ -35,6 +37,8 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl
         try{
             courseService.findById(course.getId());
             studentService.findById(student.getId());
+            if(course.getSemesterNumber()!= Constants.CURRENT_SEMESTER_NUMBER)
+                throw new NotSavedException(Constants.COURSE_NOT_PRESENTED);
             transaction.begin();
             score = repository.saveOrUpdate(score).orElseThrow(() -> new NotSavedException(Constants.SCORE_SAVE_EXCEPTION));
             transaction.commit();
@@ -46,6 +50,32 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl
             transaction.rollback();
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    public int getCurrentSemesterCredits(Student student){
+        return repository.getCurrentSemesterCredits(student);
+    }
+
+    public boolean isTaken(Course course,Student student){
+        try{
+            if(repository.isTaken(course,student))
+                throw new NotSavedException(Constants.COURSE_TAKEN);
+            return false;
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return true;
+        }
+    }
+
+    public boolean isPassed(Course course,Student student){
+        try{
+            if(repository.isPassed(course, student))
+                throw new NotSavedException(Constants.COURSE_PASSED);
+            return false;
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+            return true;
         }
     }
 }
