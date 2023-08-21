@@ -2,6 +2,7 @@ package service.impl;
 
 import basics.BaseService.impl.BaseServiceImpl;
 import entity.Course;
+import entity.Student;
 import exceptions.NotFoundException;
 import exceptions.NotSavedException;
 import repository.CourseRepositroyImpl;
@@ -51,6 +52,10 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, CourseRepositroyI
             transaction.rollback();
             System.out.println(e.getMessage());
         }
+    }
+
+    public List<Course> getCurrentSemesterCourses(Student student){
+        return repository.getCurrentSemesterCourses(student);
     }
 
 }
