@@ -2,6 +2,7 @@ package service.impl;
 
 import basics.BaseService.impl.BaseServiceImpl;
 import entity.Course;
+import entity.Score;
 import entity.Student;
 import entity.Teacher;
 import exceptions.NotSavedException;
@@ -49,5 +50,20 @@ public class StudentServiceImpl extends BaseServiceImpl<Student, StudentReposito
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public Float calculatePreviouSemesterAverage (Student student){
+        ScoreServiceImpl scoreService = ApplicationContext.scoreService;
+        List<Score> scores = scoreService.getPreviousSemesterScores(student);
+        if (scores==null)
+            return 0F;
+        float totalCredits = scores.stream()
+                .map(Score::getCourse)
+                .map(Course::getCredits)
+                .reduce(0,Integer::sum);
+        float sum = scores.stream()
+                .map(score-> score.getCourse().getCredits() * score.getValue())
+                .reduce(0F,Float::sum);
+        return sum/totalCredits;
     }
 }

@@ -82,4 +82,17 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl
     public List<Score> getCourseScores(Course course){
         return repository.getCourseScores(course);
     }
+
+    public List<Score> getPreviousSemesterScores(Student student){
+        List<Score> result = repository.getPreviousSemesterScores(student);
+        if(result.isEmpty()) {
+            try {
+                throw new NotFoundException(Constants.NO_COURSE_PREVIOUS_SEMESTER);
+            } catch (NotFoundException e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
+        }
+        return result;
+    }
 }

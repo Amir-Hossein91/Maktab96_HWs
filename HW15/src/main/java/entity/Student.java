@@ -27,11 +27,18 @@ public class Student extends Person{
         super(firstname, lastname, nationalCode, phoneNumber, username, password, email);
         this.studentCode = studentCode;
         this.entranceSemesterNumber = entranceSemesterNumber;
-        creditsLimit = 20;
+        creditsLimit = 10;
     }
 
     public boolean isAllowed(int courseCredit, int currentCredit){
         return (courseCredit + currentCredit) <= creditsLimit;
+    }
+
+    public void setCreditsLimit(Float previousAvg){
+        if (previousAvg >= 18.00)
+            creditsLimit = 24;
+        else
+            creditsLimit = 20;
     }
 
 }
