@@ -13,6 +13,8 @@ import service.TeacherService;
 import utility.ApplicationContext;
 import utility.Constants;
 
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
@@ -76,10 +78,17 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherReposito
         }
     }
 
-    public SalaryReport getSalaryReport(Teacher teacher){
+    public String getSalaryReport(Teacher teacher){
         SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
+        String name = teacher.getFirstname() + " " + teacher.getLastname();
+        String creditsCount = String.valueOf(teacher.getPresentedCourses().stream()
+                .map(Course::getCredits)
+                .reduce(0,Integer::sum));
+        String date = new SimpleDateFormat("dd/MM/yyyy").format(new GregorianCalendar().getTime());
         try {
-            return salaryReportService.getSalaryReport(teacher);
+            return "Report date:\n\t" + date + "\nTeacher name:\n\t" + name
+                    + "\nTotal number of course credits:\n\t" + creditsCount
+                    + "\nTotal salary:\n\t" + salaryReportService.getSalaryReport(teacher).toString();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;

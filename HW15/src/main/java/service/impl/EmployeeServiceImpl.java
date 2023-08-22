@@ -10,6 +10,10 @@ import service.EmployeeService;
 import utility.ApplicationContext;
 import utility.Constants;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepositoryImpl> implements EmployeeService {
 
     public EmployeeServiceImpl(EmployeeRepositoryImpl repository) {
@@ -57,10 +61,11 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
        }
     }
 
-    public SalaryReport getSalaryReport(Employee employee){
+    public String getSalaryReport(Employee employee){
         SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
+        String date = new SimpleDateFormat("dd/MM/yyyy").format(new GregorianCalendar().getTime());
         try {
-            return salaryReportService.getSalaryReport(employee);
+            return "Report date:\n\t" + date + "\nTotal salary:\n\t " + salaryReportService.getSalaryReport(employee).toString();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
