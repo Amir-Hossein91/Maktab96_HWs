@@ -27,6 +27,9 @@ public class PersonServiceImpl extends BaseServiceImpl<Person, PersonRepositoryI
     @Override
     public Person saveOrUpdate(Person person) {
         try{
+            if(!isValid(person)){
+                throw new NotSavedException(Constants.PERSON_SAVE_EXCEPTION);
+            }
             transaction.begin();
             person = repository.saveOrUpdate(person).orElseThrow(() -> new NotSavedException(Constants.PERSON_SAVE_EXCEPTION));
             transaction.commit();
@@ -40,10 +43,6 @@ public class PersonServiceImpl extends BaseServiceImpl<Person, PersonRepositoryI
     }
 
     public Person findUser(String username, String password) throws NotFoundException {
-        try{
        return repository.findUser(username,password).orElseThrow(()->new NotFoundException("Username or password is incorrect"));
-        } catch (NoResultException e){
-            throw new NotFoundException("Username or password is incorrect");
-        }
     }
 }

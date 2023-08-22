@@ -23,6 +23,9 @@ public class SalaryReportServiceImpl extends BaseServiceImpl<SalaryReport, Salar
     @Override
     public SalaryReport saveOrUpdate(SalaryReport salaryReport) {
         try{
+            if(!isValid(salaryReport)){
+                throw new NotSavedException(Constants.SALARY_REPORT_SAVE_EXCEPTION);
+            }
             if(!transaction.isActive()){
                 transaction.begin();
                 salaryReport=repository.saveOrUpdate(salaryReport).orElseThrow(() -> new NotSavedException(Constants.SALARY_REPORT_SAVE_EXCEPTION));
@@ -34,7 +37,6 @@ public class SalaryReportServiceImpl extends BaseServiceImpl<SalaryReport, Salar
         } catch (Exception e){
             transaction.rollback();
             System.out.println(e.getMessage());
-            e.printStackTrace();
             return null;
         }
     }

@@ -35,6 +35,9 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl
         StudentServiceImpl studentService = ApplicationContext.studentService;
         CourseServiceImpl courseService = ApplicationContext.courseService;
         try{
+            if(!isValid(score)){
+                throw new NotSavedException(Constants.SCORE_SAVE_EXCEPTION);
+            }
             courseService.findById(course.getId());
             studentService.findById(student.getId());
             if(course.getSemesterNumber()!= Constants.CURRENT_SEMESTER_NUMBER)
@@ -84,20 +87,27 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl
     }
 
     public List<Score> getPreviousSemesterScores(Student student){
-        List<Score> result = repository.getPreviousSemesterScores(student);
-        if(result.isEmpty()) {
-            try {
+        try {
+            List<Score> result = repository.getPreviousSemesterScores(student);
+            if(result.isEmpty())
                 throw new NotFoundException(Constants.NO_COURSE_PREVIOUS_SEMESTER);
-            } catch (NotFoundException e) {
-                System.out.println(e.getMessage());
-                return null;
-            }
+            return result;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-        return result;
+
+
     }
 
     public List<String> getCourseHistory(Student student){
-        List<Score> scores = repository.getCourseHistory(student);
-       return scores.stream().map(score -> score.getCourse().toString() +" ,score = " + score.getValue()).toList();
+        try{
+            List<Score> scores = repository.getCourseHistory(student);
+           return scores.stream().map(score -> score.getCourse().toString() +
+                   " ,score = " + score.getValue()).toList();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

@@ -38,6 +38,9 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherReposito
         SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
         CourseServiceImpl courseService = ApplicationContext.courseService;
         try{
+            if(!isValid(teacher)){
+                throw new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION);
+            }
             if(!transaction.isActive()){
                 transaction.begin();
                 salaryReport = salaryReportService.saveOrUpdate(salaryReport);
@@ -67,9 +70,8 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherReposito
             return teacher;
 
         }catch(Exception e){
-            repository.getEm().getTransaction().rollback();
+            transaction.rollback();
             System.out.println(e.getMessage());
-            e.printStackTrace();
             return null;
         }
     }
@@ -78,7 +80,7 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherReposito
         SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
         try {
             return salaryReportService.getSalaryReport(teacher);
-        } catch (NotFoundException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }

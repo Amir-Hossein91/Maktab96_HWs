@@ -61,7 +61,7 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
         SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
         try {
             return salaryReportService.getSalaryReport(employee);
-        } catch (NotFoundException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }

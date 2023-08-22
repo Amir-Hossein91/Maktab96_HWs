@@ -22,6 +22,9 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, CourseRepositroyI
     public Course saveOrUpdate(Course course) {
 //        TeacherServiceImpl teacherService = ApplicationContext.teacherService;
         try{
+            if(!isValid(course)){
+                throw new NotSavedException(Constants.COURSE_SAVE_EXCEPTION);
+            }
             if(!transaction.isActive()){
                 transaction.begin();
 //                teacherService.saveOrUpdate(course.getTeacher());
@@ -33,8 +36,6 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, CourseRepositroyI
         } catch (Exception e){
             transaction.rollback();
             System.out.println(e.getMessage());
-            System.out.println(e.getClass());
-            e.printStackTrace();
             return null;
         }
     }

@@ -4,11 +4,9 @@ import basics.BaseService.impl.BaseServiceImpl;
 import entity.Course;
 import entity.Score;
 import entity.Student;
-import entity.Teacher;
 import exceptions.NotSavedException;
 import repository.StudentRepositoryImpl;
 import service.StudentService;
-import service.TeacherService;
 import utility.ApplicationContext;
 import utility.Constants;
 
@@ -36,6 +34,9 @@ public class StudentServiceImpl extends BaseServiceImpl<Student, StudentReposito
     @Override
     public Student saveOrUpdate(Student student){
         try{
+            if(!isValid(student)){
+                throw new NotSavedException(Constants.STUDENT_SAVE_EXCEPTION);
+            }
             if(!transaction.isActive()){
                 transaction.begin();
                 student = repository.saveOrUpdate(student).orElseThrow(() -> new NotSavedException(Constants.STUDENT_SAVE_EXCEPTION));
@@ -52,18 +53,23 @@ public class StudentServiceImpl extends BaseServiceImpl<Student, StudentReposito
         }
     }
 
-    public Float calculatePreviouSemesterAverage (Student student){
+    public Float calculatePreviousSemesterAverage(Student student){
         ScoreServiceImpl scoreService = ApplicationContext.scoreService;
-        List<Score> scores = scoreService.getPreviousSemesterScores(student);
-        if (scores==null)
+        try{
+            List<Score> scores = scoreService.getPreviousSemesterScores(student);
+            if (scores==null)
+                return 0F;
+            float totalCredits = scores.stream()
+                    .map(Score::getCourse)
+                    .map(Course::getCredits)
+                    .reduce(0,Integer::sum);
+            float sum = scores.stream()
+                    .map(score-> score.getCourse().getCredits() * score.getValue())
+                    .reduce(0F,Float::sum);
+            return sum/totalCredits;
+        } catch (Exception e){
+            System.out.println(e.getMessage());
             return 0F;
-        float totalCredits = scores.stream()
-                .map(Score::getCourse)
-                .map(Course::getCredits)
-                .reduce(0,Integer::sum);
-        float sum = scores.stream()
-                .map(score-> score.getCourse().getCredits() * score.getValue())
-                .reduce(0F,Float::sum);
-        return sum/totalCredits;
+        }
     }
 }
