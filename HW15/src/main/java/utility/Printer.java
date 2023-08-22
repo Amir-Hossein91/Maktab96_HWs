@@ -49,4 +49,18 @@ public class Printer {
         result.forEach(System.out::println);
         System.out.println(endOfResult);
     }
+
+    public void printResult(String title, String result){
+        String titleBorder = "************************************";
+        String endOfResult = "************************************";
+        System.out.println();
+        System.out.println(titleBorder);
+        int shift = (titleBorder.length() - title.length())/2;
+        for (int i =1; i<= shift; i++)
+            System.out.print(" ");
+        System.out.println(title);
+        System.out.println(titleBorder);
+        System.out.println(result);
+        System.out.println(endOfResult);
+    }
 }

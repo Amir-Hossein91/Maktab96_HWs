@@ -93,7 +93,7 @@ public class Menu {
     }
 
     private void getEmployeeSalaryReport(Employee employee) {
-        printer.printResult("EMPLOYEE SALARY REPORT", List.of(employeeService.getSalaryReport(employee).toString()));
+        printer.printResult("EMPLOYEE SALARY REPORT",employeeService.getSalaryReport(employee).toString());
     }
 
     ////////////////////////////////////EMPLOYEE_STUDENT_MENU/////////////////////////////////////////
@@ -169,7 +169,7 @@ public class Menu {
                     .studentCode(studentCode).entranceSemesterNumber(entranceSemesterNumber).build();
             student = studentService.saveOrUpdate(student);
             if (student != null)
-                printer.printResult("STUDENT INFORMATION UPDATED", List.of(student.toString()));
+                printer.printResult("STUDENT INFORMATION UPDATED",student.toString());
         } catch (NotFoundException e) {
             printer.printError(e.getMessage());
         }
@@ -205,7 +205,7 @@ public class Menu {
                 emailAddress, studentCode, entranceSemesterNumber);
         student = studentService.saveOrUpdate(student);
         if (student != null)
-            printer.printResult("STUDENT REGISTERED", List.of(student.toString()));
+            printer.printResult("STUDENT REGISTERED", student.toString());
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -295,7 +295,7 @@ public class Menu {
             salaryReport.setSalaryAmount(teacher.getTotalSalary());
             teacherService.saveOrUpdate(teacher, teacher.getPresentedCourses().stream().toList(), teacher.getSalaryReport());
             if (teacher != null)
-                printer.printResult("TEACHER INFORMATION UPDATED", List.of(teacher.toString()));
+                printer.printResult("TEACHER INFORMATION UPDATED", teacher.toString());
         } catch (NotFoundException e) {
             printer.printError(e.getMessage());
         }
@@ -337,7 +337,7 @@ public class Menu {
                 password, teacherCode, teacherType, fixedSalary, perCreditSalary);
         teacher = teacherService.saveOrUpdate(teacher, teacher.getPresentedCourses().stream().toList(), teacher.getSalaryReport());
         if (teacher != null)
-            printer.printResult("TEACHER REGISTERED", List.of(teacher.toString()));
+            printer.printResult("TEACHER REGISTERED", teacher.toString());
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -419,7 +419,7 @@ public class Menu {
             salaryReport.setSalaryAmount(employee.getTotalSalary());
             employeeService.saveOrUpdate(employee, employee.getSalaryReport());
             if (employee != null)
-                printer.printResult("EMPLOYEE INFORMATION UPDATED", List.of(employee.toString()));
+                printer.printResult("EMPLOYEE INFORMATION UPDATED", employee.toString());
         } catch (NotFoundException e) {
             printer.printError(e.getMessage());
         }
@@ -456,7 +456,7 @@ public class Menu {
                 emailAddress, employeeCode, salary);
         employee = employeeService.saveOrUpdate(employee, employee.getSalaryReport());
         if (employee != null)
-            printer.printResult("EMPLOYEE REGISTERED", List.of(employee.toString()));
+            printer.printResult("EMPLOYEE REGISTERED", employee.toString());
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -515,7 +515,7 @@ public class Menu {
             Course course = Course.builder().id(id).title(title).credits(credits).semesterNumber(semesterNumber).build();
             courseService.saveOrUpdate(course);
             if (course != null)
-                printer.printResult("COURSE INFORMATION UPDATED", List.of(course.toString()));
+                printer.printResult("COURSE INFORMATION UPDATED", course.toString());
         } catch (NotFoundException e) {
             printer.printError(e.getMessage());
         }
@@ -534,7 +534,7 @@ public class Menu {
         Course course = new Course(title, credits, semesterNumber);
         course = courseService.saveOrUpdate(course);
         if (course != null)
-            printer.printResult("COURSE REGISTERED", List.of(course.toString()));
+            printer.printResult("COURSE REGISTERED", course.toString());
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -575,7 +575,7 @@ public class Menu {
     private void showTeacherAccount() {
         try {
             Teacher teacher = teacherService.findById(user.getId());
-            printer.printResult("YOUR ACCOUNT INFO", List.of(teacher.toString()));
+            printer.printResult("YOUR ACCOUNT INFO",teacher.toString());
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -616,7 +616,7 @@ public class Menu {
                     .presentedCourses(presentedCourses).salaryReport(salaryReport).build();
             teacherService.saveOrUpdate(teacher, teacher.getPresentedCourses().stream().toList(), teacher.getSalaryReport());
             if (teacher != null)
-                printer.printResult("ACCOUNT INFORMATION UPDATED", List.of(teacher.toString()));
+                printer.printResult("ACCOUNT INFORMATION UPDATED", teacher.toString());
         } catch (NotFoundException e) {
             printer.printError(e.getMessage());
         }
@@ -680,7 +680,7 @@ public class Menu {
     }
 
     private void getTeacherSalaryReport(Teacher teacher){
-        printer.printResult("TEACHER SALARY REPORT", List.of(teacherService.getSalaryReport(teacher).toString()));
+        printer.printResult("TEACHER SALARY REPORT", teacherService.getSalaryReport(teacher).toString());
     }
 
     private void setScores(Teacher teacher){
@@ -752,7 +752,7 @@ public class Menu {
     private void showStudentAccount() {
         try {
             Student student = studentService.findById(user.getId());
-            printer.printResult("YOUR ACCOUNT INFO", List.of(student.toString()));
+            printer.printResult("YOUR ACCOUNT INFO", student.toString());
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -787,7 +787,7 @@ public class Menu {
                     .studentCode(studentCode).entranceSemesterNumber(entranceSemesterNumber).build();
             student = studentService.saveOrUpdate(student);
             if (student != null)
-                printer.printResult("ACCOUNT INFORMATION UPDATED", List.of(student.toString()));
+                printer.printResult("ACCOUNT INFORMATION UPDATED", student.toString());
         } catch (NotFoundException e) {
             printer.printError(e.getMessage());
         }
