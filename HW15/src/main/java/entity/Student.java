@@ -3,9 +3,13 @@ package entity;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.validator.constraints.Range;
+import utility.Constants;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.validation.constraints.Pattern;
 
 @SuperBuilder
 @Getter
@@ -17,7 +21,10 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("student")
 public class Student extends Person{
+    @Column(unique = true)
+    @Pattern(regexp = "^[0-9]{6,9}$",message = "Invalid student code format!")
     private String studentCode;
+    @Range(max = Constants.CURRENT_SEMESTER_NUMBER, message = "Invalid entrance semester number!")
     private int entranceSemesterNumber;
     private int creditsLimit;
 

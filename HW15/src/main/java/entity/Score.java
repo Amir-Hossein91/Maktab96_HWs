@@ -3,6 +3,7 @@ package entity;
 
 import entity.baseEntity.BaseEntity;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 
@@ -18,6 +19,7 @@ public class Score extends BaseEntity {
     private Course course;
     @ManyToOne/*(cascade = CascadeType.PERSIST)*/
     private Student student;
+    @Range(min = 0, max = 20, message = "Score value must be between 0 to 20")
     private Float value;
     private boolean isPassed;
 

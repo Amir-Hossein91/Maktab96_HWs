@@ -2,8 +2,10 @@ package entity;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,9 +20,13 @@ import java.util.Set;
 @DiscriminatorValue("teacher")
 @SequenceGenerator(name = "idGenerator", sequenceName = "teacherSequence")
 public class Teacher extends UniversityStaff{
+    @Column(unique = true)
+    @Pattern(regexp = "^[0-9]{6,9}$",message = "Invalid teacher Code format!")
     private String teacherCode;
     private TeacherType teacherType;
+    @Range(min = 0, message = "Salary can not be negative!")
     private long fixedSalary;
+    @Range(min = 0, message = "Salary can not be negative!")
     private long perCreditSalary;
     @OneToMany/*(mappedBy = "teacher" , cascade = CascadeType.PERSIST)*/
     private Set<Course> presentedCourses;
