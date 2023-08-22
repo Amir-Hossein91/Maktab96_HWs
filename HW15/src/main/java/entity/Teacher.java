@@ -14,7 +14,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @DiscriminatorValue("teacher")
@@ -57,4 +56,16 @@ public class Teacher extends UniversityStaff{
     }
 
 
+    public String toString() {
+        return "Teacher(" +
+                super.toString() +
+                ", teacherCode = " +
+                this.getTeacherCode() +
+                ", teacherType = " +
+                this.getTeacherType() +
+                ", fixedSalary = " +
+                this.getFixedSalary() +
+                ", perCreditSalary = " +
+                this.getPerCreditSalary() + ")";
+    }
 }

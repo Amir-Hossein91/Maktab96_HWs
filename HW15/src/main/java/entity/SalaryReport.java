@@ -25,11 +25,10 @@ public class SalaryReport extends BaseEntity {
 
     public SalaryReport(UniversityStaff owner) {
        this.owner = owner;
-       Calendar calendar = new GregorianCalendar();
        salaryAmount = owner.getTotalSalary();
     }
 
     public String toString() {
-        return "SalaryReport(salaryAmount=" + this.getSalaryAmount() + ")";
+        return  this.getSalaryAmount() + "";
     }
 }

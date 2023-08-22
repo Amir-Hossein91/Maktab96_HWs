@@ -2,18 +2,15 @@ package entity;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import java.util.Set;
 
 @SuperBuilder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @DiscriminatorValue("employee")
@@ -31,5 +28,12 @@ public class Employee extends UniversityStaff{
         this.employeeCode = employeeCode;
         setTotalSalary(salary);
         salaryReport = new SalaryReport(this);
+    }
+
+    public String toString() {
+        return "Employee(" +
+                super.toString() +
+                ", employeeCode = " +
+                this.getEmployeeCode() + ")";
     }
 }

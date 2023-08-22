@@ -7,7 +7,10 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.Range;
 import utility.Constants;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @SuperBuilder
@@ -15,7 +18,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @SequenceGenerator(name = "idGenerator", sequenceName = "courseSequence")
@@ -29,13 +31,11 @@ public class Course extends BaseEntity {
     @NotNull(message = "Specify the semester in which the course is being presented!")
     @Range(min = 1, max = Constants.CURRENT_SEMESTER_NUMBER, message = "Invalid semester number")
     private int semesterNumber;
-//    @ManyToOne/*(cascade = CascadeType.MERGE)*/
-//    private Teacher teacher;
 
-//    public Course(String title, int units, int semesterNumber) {
-//        this.title = title;
-//        this.units = units;
-//        this.semesterNumber= semesterNumber;
-//        teacher = new Teacher();
-//    }
+    public String toString() {
+        return super.toString() +
+                ", title = " + this.getTitle() +
+                ", credits = " + this.getCredits() +
+                ", semesterNumber = " + this.getSemesterNumber();
+    }
 }

@@ -6,7 +6,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -16,7 +15,6 @@ import javax.validation.constraints.Pattern;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -50,4 +48,21 @@ public class Person extends BaseEntity {
     @Column(unique = true)
     private String email;
 
+    public String toString() {
+        return super.toString() +
+                ", firstname = " +
+                this.getFirstname() +
+                ", lastname = " +
+                this.getLastname() +
+                ", nationalCode = " +
+                this.getNationalCode() +
+                ", phoneNumber = " +
+                this.getPhoneNumber() +
+                ", username = " +
+                this.getUsername() +
+                ", password = " +
+                this.getPassword() +
+                ", email = " +
+                this.getEmail();
+    }
 }

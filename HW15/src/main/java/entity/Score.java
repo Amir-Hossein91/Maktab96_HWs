@@ -5,13 +5,13 @@ import entity.baseEntity.BaseEntity;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Score extends BaseEntity {
@@ -28,5 +28,13 @@ public class Score extends BaseEntity {
         this.student = student;
         value = null;
         isPassed = false;
+    }
+
+    public String toString() {
+        return super.toString() +
+                ", course = [" + this.getCourse() + "]" +
+                ", student = [" + this.getStudent() + "]" +
+                ", value = " + this.getValue() +
+                ", isPassed = " + this.isPassed();
     }
 }

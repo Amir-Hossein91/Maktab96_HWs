@@ -11,7 +11,6 @@ import javax.persistence.MappedSuperclass;
 @SuperBuilder
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,4 +19,8 @@ public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO , generator = "idGenerator")
     protected long id;
+
+    public String toString() {
+        return "id = " + this.getId();
+    }
 }

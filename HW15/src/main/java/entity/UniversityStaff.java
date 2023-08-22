@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class UniversityStaff extends Person{
 
@@ -20,5 +19,11 @@ public class UniversityStaff extends Person{
     public UniversityStaff(String firstname, String lastname, String nationalCode,
                            String phoneNumber, String username, String password, String email) {
         super(firstname, lastname, nationalCode, phoneNumber, username, password, email);
+    }
+
+    public String toString() {
+        return super.toString() +
+                ", totalSalary = " +
+                this.getTotalSalary();
     }
 }

@@ -16,7 +16,6 @@ import javax.validation.constraints.Pattern;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @DiscriminatorValue("student")
@@ -48,4 +47,15 @@ public class Student extends Person{
             creditsLimit = 20;
     }
 
+    public String toString() {
+        return "Student(" +
+                super.toString() +
+                ", studentCode = " +
+                this.getStudentCode() +
+                ", entranceSemesterNumber = " +
+                this.getEntranceSemesterNumber() +
+                ", creditsLimit = " +
+                this.getCreditsLimit() +
+                ")";
+    }
 }
