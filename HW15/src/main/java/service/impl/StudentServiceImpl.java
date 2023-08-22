@@ -14,8 +14,11 @@ import java.util.List;
 
 public class StudentServiceImpl extends BaseServiceImpl<Student, StudentRepositoryImpl> implements StudentService {
 
+    private final ScoreServiceImpl scoreService;
+
     public StudentServiceImpl(StudentRepositoryImpl repository) {
         super(repository);
+        scoreService = ApplicationContext.scoreService;
     }
 
     @Override
@@ -54,7 +57,6 @@ public class StudentServiceImpl extends BaseServiceImpl<Student, StudentReposito
     }
 
     public Float calculatePreviousSemesterAverage(Student student){
-        ScoreServiceImpl scoreService = ApplicationContext.scoreService;
         try{
             List<Score> scores = scoreService.getPreviousSemesterScores(student);
             if (scores==null)

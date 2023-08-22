@@ -16,13 +16,15 @@ import java.util.GregorianCalendar;
 
 public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepositoryImpl> implements EmployeeService {
 
+    private final SalaryReportServiceImpl salaryReportService;
+
     public EmployeeServiceImpl(EmployeeRepositoryImpl repository) {
         super(repository);
+        salaryReportService = ApplicationContext.salaryReportService;
     }
 
     @Override
     public Employee saveOrUpdate(Employee employee, SalaryReport salaryReport) {
-        SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
         try{
             if(!isValid(employee)){
                 throw new NotSavedException(Constants.EMPLOYEE_SAVE_EXCEPTION);
@@ -62,7 +64,6 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
     }
 
     public String getSalaryReport(Employee employee){
-        SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
         String date = new SimpleDateFormat("dd/MM/yyyy").format(new GregorianCalendar().getTime());
         try {
             return "Report date:\n\t" + date + "\nTotal salary:\n\t " + salaryReportService.getSalaryReport(employee).toString();

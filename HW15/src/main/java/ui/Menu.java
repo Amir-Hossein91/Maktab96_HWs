@@ -104,7 +104,7 @@ public class Menu {
     }
 
     private void getEmployeeSalaryReport(Employee employee) {
-        printer.printResult("EMPLOYEE SALARY REPORT",employeeService.getSalaryReport(employee).toString());
+        printer.printResult("EMPLOYEE SALARY REPORT",employeeService.getSalaryReport(employee));
     }
 
     ////////////////////////////////////EMPLOYEE_STUDENT_MENU/////////////////////////////////////////
@@ -747,7 +747,7 @@ public class Menu {
     }
 
     private void getTeacherSalaryReport(Teacher teacher){
-        printer.printResult("TEACHER SALARY REPORT", teacherService.getSalaryReport(teacher).toString());
+        printer.printResult("TEACHER SALARY REPORT", teacherService.getSalaryReport(teacher));
     }
 
     private void setScores(Teacher teacher){

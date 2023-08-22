@@ -19,8 +19,14 @@ import java.util.List;
 import java.util.Set;
 
 public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherRepositoryImpl> implements TeacherService {
+
+    private final SalaryReportServiceImpl salaryReportService;
+    private final CourseServiceImpl courseService;
+
     public TeacherServiceImpl(TeacherRepositoryImpl repository) {
         super(repository);
+        salaryReportService = ApplicationContext.salaryReportService;
+        courseService = ApplicationContext.courseService;
     }
 
     @Override
@@ -37,8 +43,6 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherReposito
 
     @Override
     public Teacher saveOrUpdate(Teacher teacher, List<Course> presentedCourses, SalaryReport salaryReport) {
-        SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
-        CourseServiceImpl courseService = ApplicationContext.courseService;
         try{
             if(!isValid(teacher)){
                 throw new NotSavedException(Constants.TEACHER_SAVE_EXCEPTION);
@@ -79,7 +83,6 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherReposito
     }
 
     public String getSalaryReport(Teacher teacher){
-        SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
         String name = teacher.getFirstname() + " " + teacher.getLastname();
         String creditsCount = String.valueOf(teacher.getPresentedCourses().stream()
                 .map(Course::getCredits)
