@@ -33,7 +33,14 @@ public class Printer {
     }
 
     public void printError(String msg){
-        System.out.println(">>>> " + msg + " <<<<");
+        if(msg == null){
+            System.out.println();
+            System.out.println(">>>> Wrong entry! <<<<");
+        }
+        else{
+            System.out.println();
+            System.out.println(">>>> " + msg + " <<<<");
+        }
     }
 
     public void printResult(String title, List<String> result){

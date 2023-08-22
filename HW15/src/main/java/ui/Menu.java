@@ -41,15 +41,20 @@ public class Menu {
     public void begin() {
 
         while (true) {
-            printer.printMenu(Constants.LOGIN_MENU);
-            int choice = input.nextInt();
-            input.nextLine();
-            switch (choice) {
-                case 1 -> login();
-                case 2 -> {
-                    return;
+            try{
+                printer.printMenu(Constants.LOGIN_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> login();
+                    case 2 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
                 }
-                default -> printer.printError("Wrong entry!");
+            } catch (Exception e){
+                printer.printError(e.getMessage());
+                input.nextLine();
             }
         }
     }
@@ -75,20 +80,26 @@ public class Menu {
 
     private void showEmployeeMenu() {
         while (true) {
-            printer.printMenu(Constants.EMPLOYEE_MAIN_MENU);
-            int choice = input.nextInt();
-            input.nextLine();
-            switch (choice) {
-                case 1 -> showEmployeeStudentsMenu();
-                case 2 -> showEmployeeTeacherMenu();
-                case 3 -> showEmployeeEmployeeMenu();
-                case 4 -> showEmployeeCourseMenu();
-                case 5 -> getEmployeeSalaryReport((Employee) user);
-                case 6 -> {
-                    return;
+            try{
+                printer.printMenu(Constants.EMPLOYEE_MAIN_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> showEmployeeStudentsMenu();
+                    case 2 -> showEmployeeTeacherMenu();
+                    case 3 -> showEmployeeEmployeeMenu();
+                    case 4 -> showEmployeeCourseMenu();
+                    case 5 -> getEmployeeSalaryReport((Employee) user);
+                    case 6 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
                 }
-                default -> printer.printError("Wrong entry!");
+            } catch (Exception e){
+                printer.printError(e.getMessage());
+                input.nextLine();
             }
+
         }
     }
 
@@ -99,19 +110,25 @@ public class Menu {
     ////////////////////////////////////EMPLOYEE_STUDENT_MENU/////////////////////////////////////////
     private void showEmployeeStudentsMenu() {
         while (true) {
-            printer.printMenu(Constants.EMPLOYEE_STUDENT_MENU);
-            int choice = input.nextInt();
-            input.nextLine();
-            switch (choice) {
-                case 1 -> registerStudent();
-                case 2 -> updateStudentInformation();
-                case 3 -> removeStudent();
-                case 4 -> showAllStudents();
-                case 5 -> {
-                    return;
+            try{
+                printer.printMenu(Constants.EMPLOYEE_STUDENT_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> registerStudent();
+                    case 2 -> updateStudentInformation();
+                    case 3 -> removeStudent();
+                    case 4 -> showAllStudents();
+                    case 5 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
                 }
-                default -> printer.printError("Wrong entry!");
+            } catch (Exception e){
+                printer.printError(e.getMessage());
+                input.nextLine();
             }
+
         }
     }
 
@@ -216,18 +233,23 @@ public class Menu {
 ////////////////////////////////////EMPLOYEE_TEACHER_MENU/////////////////////////////////////////
     private void showEmployeeTeacherMenu() {
         while (true) {
-            printer.printMenu(Constants.EMPLOYEE_TEACHER_MENU);
-            int choice = input.nextInt();
-            input.nextLine();
-            switch (choice) {
-                case 1 -> addTeacher();
-                case 2 -> updateTeacherInformation();
-                case 3 -> removeTeacher();
-                case 4 -> showAllTeachers();
-                case 5 -> {
-                    return;
+            try{
+                printer.printMenu(Constants.EMPLOYEE_TEACHER_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> addTeacher();
+                    case 2 -> updateTeacherInformation();
+                    case 3 -> removeTeacher();
+                    case 4 -> showAllTeachers();
+                    case 5 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
                 }
-                default -> printer.printError("Wrong entry!");
+            } catch (Exception e){
+                printer.printError(e.getMessage());
+                input.nextLine();
             }
         }
     }
@@ -352,18 +374,23 @@ public class Menu {
 ////////////////////////////////////EMPLOYEE_EMPLOYEE_MENU/////////////////////////////////////////
     private void showEmployeeEmployeeMenu() {
         while (true) {
-            printer.printMenu(Constants.EMPLOYEE_EMPLOYEE_MENU);
-            int choice = input.nextInt();
-            input.nextLine();
-            switch (choice) {
-                case 1 -> addEmployee();
-                case 2 -> updateEmployeeInformation();
-                case 3 -> removeEmployee();
-                case 4 -> showAllEmployees();
-                case 5 -> {
-                    return;
+            try{
+                printer.printMenu(Constants.EMPLOYEE_EMPLOYEE_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> addEmployee();
+                    case 2 -> updateEmployeeInformation();
+                    case 3 -> removeEmployee();
+                    case 4 -> showAllEmployees();
+                    case 5 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
                 }
-                default -> printer.printError("Wrong entry!");
+            } catch (Exception e){
+                printer.printError(e.getMessage());
+                input.nextLine();
             }
         }
     }
@@ -475,18 +502,23 @@ public class Menu {
 ////////////////////////////////////EMPLOYEE_COURSE_MENU/////////////////////////////////////////
     private void showEmployeeCourseMenu() {
         while (true) {
-            printer.printMenu(Constants.EMPLOYEE_COURSE_MENU);
-            int choice = input.nextInt();
-            input.nextLine();
-            switch (choice) {
-                case 1 -> addCourse();
-                case 2 -> updateCourseInformation();
-                case 3 -> removeCourse();
-                case 4 -> showAllCourses();
-                case 5 -> {
-                    return;
+            try{
+                printer.printMenu(Constants.EMPLOYEE_COURSE_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> addCourse();
+                    case 2 -> updateCourseInformation();
+                    case 3 -> removeCourse();
+                    case 4 -> showAllCourses();
+                    case 5 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
                 }
-                default -> printer.printError("Wrong entry!");
+            } catch (Exception e){
+                printer.printError(e.getMessage());
+                input.nextLine();
             }
         }
     }
@@ -556,34 +588,44 @@ public class Menu {
 
     private void showTeacherMenu() {
         while (true) {
-            printer.printMenu(Constants.TEACHER_MAIN_MENU);
-            int choice = input.nextInt();
-            input.nextLine();
-            switch (choice) {
-                case 1 -> showTeacherInfoMenu();
-                case 2 -> showTeacherCourseMenu();
-                case 3 -> setScores((Teacher) user);
-                case 4 -> getTeacherSalaryReport((Teacher) user);
-                case 5 -> {
-                    return;
+            try{
+                printer.printMenu(Constants.TEACHER_MAIN_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> showTeacherInfoMenu();
+                    case 2 -> showTeacherCourseMenu();
+                    case 3 -> setScores((Teacher) user);
+                    case 4 -> getTeacherSalaryReport((Teacher) user);
+                    case 5 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
                 }
-                default -> printer.printError("Wrong entry!");
+            } catch (Exception e){
+                printer.printError(e.getMessage());
+                input.nextLine();
             }
         }
     }
 
     private void showTeacherInfoMenu() {
         while (true) {
-            printer.printMenu(Constants.TEACHER_ACCOUNT_MENU);
-            int choice = input.nextInt();
-            input.nextLine();
-            switch (choice) {
-                case 1 -> showTeacherAccount();
-                case 2 -> updateTeacherAccount();
-                case 3 -> {
-                    return;
+            try{
+                printer.printMenu(Constants.TEACHER_ACCOUNT_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> showTeacherAccount();
+                    case 2 -> updateTeacherAccount();
+                    case 3 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
                 }
-                default -> printer.printError("Wrong entry!");
+            } catch (Exception e){
+                printer.printError(e.getMessage());
+                input.nextLine();
             }
         }
     }
@@ -640,17 +682,22 @@ public class Menu {
 
     private void showTeacherCourseMenu() {
         while (true) {
-            printer.printMenu(Constants.TEACHER_COURSE_MENU);
-            int choice = input.nextInt();
-            input.nextLine();
-            switch (choice) {
-                case 1 -> showPresentedCoursesList();
-                case 2 -> addPresentedCourse((Teacher)user);
-                case 3 -> removePresentedCourse((Teacher) user);
-                case 4 -> {
-                    return;
+            try{
+                printer.printMenu(Constants.TEACHER_COURSE_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> showPresentedCoursesList();
+                    case 2 -> addPresentedCourse((Teacher)user);
+                    case 3 -> removePresentedCourse((Teacher) user);
+                    case 4 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
                 }
-                default -> printer.printError("Wrong entry!");
+            } catch (Exception e){
+                printer.printError(e.getMessage());
+                input.nextLine();
             }
         }
     }
@@ -736,34 +783,44 @@ public class Menu {
 
     private void showStudentMenu() {
         while (true) {
-            printer.printMenu(Constants.STUDENT_MAIN_MENU);
-            int choice = input.nextInt();
-            input.nextLine();
-            switch (choice) {
-                case 1 -> showStudentInfoMenu();
-                case 2 -> getCourse((Student) user);
-                case 3 -> showStudentCurrentSemesterCourses();
-                case 4 -> showStudentAllCourses();
-                case 5 -> {
-                    return;
+            try{
+                printer.printMenu(Constants.STUDENT_MAIN_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> showStudentInfoMenu();
+                    case 2 -> getCourse((Student) user);
+                    case 3 -> showStudentCurrentSemesterCourses();
+                    case 4 -> showStudentAllCourses();
+                    case 5 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
                 }
-                default -> printer.printError("Wrong entry!");
+            } catch (Exception e){
+                printer.printError(e.getMessage());
+                input.nextLine();
             }
         }
     }
 
     private void showStudentInfoMenu() {
         while (true) {
-            printer.printMenu(Constants.TEACHER_ACCOUNT_MENU);
-            int choice = input.nextInt();
-            input.nextLine();
-            switch (choice) {
-                case 1 -> showStudentAccount();
-                case 2 -> updateStudentAccount();
-                case 3 -> {
-                    return;
+            try{
+                printer.printMenu(Constants.TEACHER_ACCOUNT_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> showStudentAccount();
+                    case 2 -> updateStudentAccount();
+                    case 3 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
                 }
-                default -> printer.printError("Wrong entry!");
+            } catch (Exception e){
+                printer.printError(e.getMessage());
+                input.nextLine();
             }
         }
     }
