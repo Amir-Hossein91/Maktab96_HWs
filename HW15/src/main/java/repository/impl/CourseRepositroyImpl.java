@@ -3,14 +3,11 @@ package repository.impl;
 import basics.baseRepository.impl.BaseRepositoryImpl;
 import entity.Course;
 import entity.Student;
-import entity.Teacher;
 import repository.CourseRepository;
 import utility.Constants;
 
 import javax.persistence.Query;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 public class CourseRepositroyImpl extends BaseRepositoryImpl<Course> implements CourseRepository {
     public CourseRepositroyImpl() {

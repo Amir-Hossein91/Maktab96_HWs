@@ -15,9 +15,9 @@ import javax.persistence.ManyToOne;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Score extends BaseEntity {
-    @ManyToOne/*(cascade = CascadeType.PERSIST)*/
+    @ManyToOne
     private Course course;
-    @ManyToOne/*(cascade = CascadeType.PERSIST)*/
+    @ManyToOne
     private Student student;
     @Range(min = 0, max = 20, message = "Score value must be between 0 to 20")
     private Float value;

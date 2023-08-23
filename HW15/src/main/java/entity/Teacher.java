@@ -27,7 +27,7 @@ public class Teacher extends UniversityStaff{
     private long fixedSalary;
     @Range(min = 0, message = "Salary can not be negative!")
     private long perCreditSalary;
-    @OneToMany(/*, mappedBy = "teacher" , cascade = CascadeType.PERSIST*/)
+    @OneToMany
     private Set<Course> presentedCourses;
     @OneToOne(mappedBy = "owner", cascade = CascadeType.REMOVE)
     private SalaryReport salaryReport;

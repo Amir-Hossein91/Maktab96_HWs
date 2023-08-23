@@ -20,6 +20,7 @@ import javax.validation.constraints.Pattern;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "Person_Role" , discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("no role")
+
 public class Person extends BaseEntity {
     @Pattern(regexp = "^[a-zA-Z\s]{3,}$",message = "Invalid name format")
     @NotNull(message = "Specify the name")

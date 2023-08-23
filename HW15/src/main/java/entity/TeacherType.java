@@ -10,7 +10,7 @@ public enum TeacherType {
     private int value;
     private static Map<Integer,TeacherType> map = new HashMap<>();
 
-    private TeacherType(int value){
+    TeacherType(int value){
         this.value = value;
     }
 

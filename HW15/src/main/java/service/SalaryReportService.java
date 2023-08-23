@@ -4,7 +4,6 @@ import basics.BaseService.BaseService;
 import entity.SalaryReport;
 import entity.UniversityStaff;
 import exceptions.NotFoundException;
-import exceptions.NotSavedException;
 
 public interface SalaryReportService extends BaseService<SalaryReport> {
 

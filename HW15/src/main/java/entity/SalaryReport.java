@@ -5,15 +5,11 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-/*(callSuper = true)*/
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @SequenceGenerator(name = "idGenerator", sequenceName = "salaryReportSequence")

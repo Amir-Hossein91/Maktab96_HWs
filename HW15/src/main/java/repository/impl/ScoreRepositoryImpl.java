@@ -9,7 +9,6 @@ import utility.Constants;
 
 import javax.persistence.Query;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class ScoreRepositoryImpl extends BaseRepositoryImpl<Score> implements ScoreRepository {
     public ScoreRepositoryImpl() {
