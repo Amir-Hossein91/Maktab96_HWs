@@ -15,13 +15,8 @@ import java.util.List;
 
 public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl> implements ScoreService {
 
-    private final StudentServiceImpl studentService;
-    private final CourseServiceImpl courseService;
-
     public ScoreServiceImpl(ScoreRepositoryImpl repository) {
         super(repository);
-        studentService = ApplicationContext.studentService;
-        courseService = ApplicationContext.courseService;
     }
 
 
@@ -37,6 +32,8 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl
 
     @Override
     public Score saveOrUpdate(Score score, Student student, Course course) {
+        StudentServiceImpl studentService = ApplicationContext.studentService;
+        CourseServiceImpl courseService = ApplicationContext.courseService;
         try{
             if(!isValid(score)){
                 throw new NotSavedException(Constants.SCORE_SAVE_EXCEPTION);

@@ -2,6 +2,7 @@ package ui;
 
 import entity.*;
 import exceptions.NotFoundException;
+import exceptions.NotSavedException;
 import service.impl.*;
 import utility.ApplicationContext;
 import utility.Constants;
@@ -717,6 +718,8 @@ public class Menu {
             printer.getInput("Course id");
             int courseId = input.nextInt();
             Course addedCourse = courseService.findById(courseId);
+            if(addedCourse.getSemesterNumber()!=Constants.CURRENT_SEMESTER_NUMBER)
+                throw new NotSavedException(Constants.NOT_CURRENT_SEMESTER_COURSE);
             teacher.getPresentedCourses().add(addedCourse);
             teacher.calculateTotalSalary();
             teacher.getSalaryReport().setSalaryAmount(teacher.getTotalSalary());
@@ -874,7 +877,8 @@ public class Menu {
         try {
             printer.getInput("Course id");
             long courseId = input.nextLong();
-            Course course = courseService.findById(courseId);
+            courseService.findById(courseId);
+            Course course = courseService.findIfPresented(courseId);
             int currentCredits = scoreService.getCurrentSemesterCredits(student);
             if (currentCredits==0) {
                 student.setCreditsLimit(studentService.calculatePreviousSemesterAverage(student));
