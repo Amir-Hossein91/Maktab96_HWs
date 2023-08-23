@@ -10,4 +10,5 @@ import java.util.List;
 public interface StudentService extends BaseService<Student> {
 
     Student saveOrUpdate(Student student) throws NotSavedException;
+    Float calculatePreviousSemesterAverage(Student student);
 }

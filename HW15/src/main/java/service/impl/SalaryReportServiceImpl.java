@@ -1,18 +1,13 @@
 package service.impl;
 
 import basics.BaseService.impl.BaseServiceImpl;
-import entity.Employee;
 import entity.SalaryReport;
-import entity.Teacher;
 import entity.UniversityStaff;
 import exceptions.NotFoundException;
 import exceptions.NotSavedException;
-import repository.SalaryReportRepositoryImpl;
+import repository.impl.SalaryReportRepositoryImpl;
 import service.SalaryReportService;
-import utility.ApplicationContext;
 import utility.Constants;
-
-import java.util.Optional;
 
 public class SalaryReportServiceImpl extends BaseServiceImpl<SalaryReport, SalaryReportRepositoryImpl> implements SalaryReportService {
 
@@ -56,6 +51,7 @@ public class SalaryReportServiceImpl extends BaseServiceImpl<SalaryReport, Salar
         }
     }
 
+    @Override
     public SalaryReport getSalaryReport(UniversityStaff user) throws NotFoundException {
         return repository.getSalaryReport(user).orElseThrow(() -> new NotFoundException("Salary report not found!"));
     }

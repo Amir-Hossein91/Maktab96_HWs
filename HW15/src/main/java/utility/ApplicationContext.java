@@ -1,6 +1,6 @@
 package utility;
 
-import repository.*;
+import repository.impl.*;
 import service.impl.*;
 
 import java.util.Scanner;

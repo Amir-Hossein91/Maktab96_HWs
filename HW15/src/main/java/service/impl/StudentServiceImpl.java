@@ -5,7 +5,7 @@ import entity.Course;
 import entity.Score;
 import entity.Student;
 import exceptions.NotSavedException;
-import repository.StudentRepositoryImpl;
+import repository.impl.StudentRepositoryImpl;
 import service.StudentService;
 import utility.ApplicationContext;
 import utility.Constants;
@@ -54,6 +54,7 @@ public class StudentServiceImpl extends BaseServiceImpl<Student, StudentReposito
         }
     }
 
+    @Override
     public Float calculatePreviousSemesterAverage(Student student){
         ScoreServiceImpl scoreService = ApplicationContext.scoreService;
         try{

@@ -2,13 +2,10 @@ package service.impl;
 
 import basics.BaseService.impl.BaseServiceImpl;
 import entity.Course;
-import entity.Employee;
 import entity.SalaryReport;
 import entity.Teacher;
-import exceptions.NotFoundException;
 import exceptions.NotSavedException;
-import repository.TeacherRepositoryImpl;
-import service.SalaryReportService;
+import repository.impl.TeacherRepositoryImpl;
 import service.TeacherService;
 import utility.ApplicationContext;
 import utility.Constants;
@@ -16,7 +13,6 @@ import utility.Constants;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Set;
 
 public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherRepositoryImpl> implements TeacherService {
 
@@ -80,6 +76,7 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher, TeacherReposito
         }
     }
 
+    @Override
     public String getSalaryReport(Teacher teacher){
         SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
 

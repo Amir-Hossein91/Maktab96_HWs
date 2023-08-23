@@ -6,7 +6,7 @@ import entity.Score;
 import entity.Student;
 import exceptions.NotFoundException;
 import exceptions.NotSavedException;
-import repository.ScoreRepositoryImpl;
+import repository.impl.ScoreRepositoryImpl;
 import service.ScoreService;
 import utility.ApplicationContext;
 import utility.Constants;
@@ -56,10 +56,12 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl
         }
     }
 
+    @Override
     public int getCurrentSemesterCredits(Student student){
         return repository.getCurrentSemesterCredits(student);
     }
 
+    @Override
     public boolean isTaken(Course course,Student student){
         try{
             if(repository.isTaken(course,student))
@@ -71,6 +73,7 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl
         }
     }
 
+    @Override
     public boolean isPassed(Course course,Student student){
         try{
             if(repository.isPassed(course, student))
@@ -82,10 +85,12 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl
         }
     }
 
+    @Override
     public List<Score> getCourseScores(Course course){
         return repository.getCourseScores(course);
     }
 
+    @Override
     public List<Score> getPreviousSemesterScores(Student student){
         try {
             List<Score> result = repository.getPreviousSemesterScores(student);
@@ -100,6 +105,7 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score, ScoreRepositoryImpl
 
     }
 
+    @Override
     public List<String> getCourseHistory(Student student){
         try{
             List<Score> scores = repository.getCourseHistory(student);

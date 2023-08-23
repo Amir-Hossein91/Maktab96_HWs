@@ -6,7 +6,7 @@ import entity.Student;
 import entity.Teacher;
 import exceptions.NotFoundException;
 import exceptions.NotSavedException;
-import repository.CourseRepositroyImpl;
+import repository.impl.CourseRepositroyImpl;
 import service.CourseService;
 import utility.ApplicationContext;
 import utility.Constants;
@@ -22,14 +22,12 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, CourseRepositroyI
 
     @Override
     public Course saveOrUpdate(Course course) {
-//        TeacherServiceImpl teacherService = ApplicationContext.teacherService;
         try{
             if(!isValid(course)){
                 throw new NotSavedException(Constants.COURSE_SAVE_EXCEPTION);
             }
             if(!transaction.isActive()){
                 transaction.begin();
-//                teacherService.saveOrUpdate(course.getTeacher());
                 course = repository.saveOrUpdate(course).orElseThrow(() -> new NotSavedException(Constants.COURSE_SAVE_EXCEPTION));
                 transaction.commit();
             } else
@@ -57,10 +55,12 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, CourseRepositroyI
         }
     }
 
+    @Override
     public List<Course> getCurrentSemesterCourses(Student student){
         return repository.getCurrentSemesterCourses(student);
     }
 
+    @Override
     public Course findIfPresented (long courseId) throws NotFoundException{
         TeacherServiceImpl teacherService = ApplicationContext.teacherService;
 

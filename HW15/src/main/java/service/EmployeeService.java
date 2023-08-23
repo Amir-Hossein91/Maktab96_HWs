@@ -7,4 +7,5 @@ import entity.SalaryReport;
 public interface EmployeeService extends BaseService<Employee> {
 
     Employee saveOrUpdate(Employee employee, SalaryReport salaryReport);
+    String getSalaryReport(Employee employee);
 }

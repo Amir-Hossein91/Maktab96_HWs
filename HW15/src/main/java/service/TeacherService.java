@@ -11,5 +11,6 @@ import java.util.Set;
 public interface TeacherService extends BaseService<Teacher> {
 
     Teacher saveOrUpdate(Teacher teacher, List<Course> presentedCourses, SalaryReport salaryReport);
+    String getSalaryReport(Teacher teacher);
 
 }

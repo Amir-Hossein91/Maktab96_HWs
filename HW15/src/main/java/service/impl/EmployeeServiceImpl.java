@@ -3,15 +3,13 @@ package service.impl;
 import basics.BaseService.impl.BaseServiceImpl;
 import entity.Employee;
 import entity.SalaryReport;
-import exceptions.NotFoundException;
 import exceptions.NotSavedException;
-import repository.EmployeeRepositoryImpl;
+import repository.impl.EmployeeRepositoryImpl;
 import service.EmployeeService;
 import utility.ApplicationContext;
 import utility.Constants;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepositoryImpl> implements EmployeeService {
@@ -62,6 +60,7 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee, EmployeeRepos
        }
     }
 
+    @Override
     public String getSalaryReport(Employee employee){
         SalaryReportServiceImpl salaryReportService = ApplicationContext.salaryReportService;
         String date = new SimpleDateFormat("dd/MM/yyyy").format(new GregorianCalendar().getTime());

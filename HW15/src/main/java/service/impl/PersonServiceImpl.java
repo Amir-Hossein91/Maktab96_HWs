@@ -4,12 +4,9 @@ import basics.BaseService.impl.BaseServiceImpl;
 import entity.Person;
 import exceptions.NotFoundException;
 import exceptions.NotSavedException;
-import repository.PersonRepositoryImpl;
+import repository.impl.PersonRepositoryImpl;
 import service.PersonService;
 import utility.Constants;
-
-import javax.persistence.NoResultException;
-import java.util.List;
 
 public class PersonServiceImpl extends BaseServiceImpl<Person, PersonRepositoryImpl> implements PersonService {
 
@@ -42,6 +39,7 @@ public class PersonServiceImpl extends BaseServiceImpl<Person, PersonRepositoryI
         }
     }
 
+    @Override
     public Person findUser(String username, String password) throws NotFoundException {
        return repository.findUser(username,password).orElseThrow(()->new NotFoundException("Username or password is incorrect"));
     }
