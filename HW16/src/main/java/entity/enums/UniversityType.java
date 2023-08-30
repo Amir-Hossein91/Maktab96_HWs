@@ -1,7 +1,7 @@
-package entity;
+package entity.enums;
 
 public enum UniversityType {
-    GOVERNMENTAL,
+    STATE,
     NON_PROFITED,
     PARDIS,
     PAYAM_E_NOOR,
