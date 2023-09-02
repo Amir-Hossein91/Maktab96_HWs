@@ -49,5 +49,5 @@ public class Student extends BaseEntity {
     private Date graduateYear;
     @OneToMany(mappedBy = "loaner")
     private List<Loan> loans;
-    private Date loanRegesterDate;
+    private Date loanRegisterDate;
 }
