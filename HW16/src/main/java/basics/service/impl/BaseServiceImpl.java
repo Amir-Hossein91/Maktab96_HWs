@@ -8,10 +8,14 @@ import exceptions.NotFoundException;
 import exceptions.NotSavedException;
 import utility.ApplicationContext;
 import utility.Printer;
+import validation.EntityValidator;
 
 import javax.persistence.EntityTransaction;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class BaseServiceImpl<R extends BaseRepositoryImpl<T>,T extends BaseEntity> implements BaseService<T> {
 
@@ -28,6 +32,8 @@ public class BaseServiceImpl<R extends BaseRepositoryImpl<T>,T extends BaseEntit
     @Override
     public T saveOrUpdate(T t) {
         try{
+            if(!isValid(t))
+                return null;
             if(!transaction.isActive()){
                 transaction.begin();
                 t = repository.saveOrUpdate(t).orElseThrow(()-> new NotSavedException("\nCould not save " + repository.getClassname().getSimpleName()));
@@ -47,6 +53,8 @@ public class BaseServiceImpl<R extends BaseRepositoryImpl<T>,T extends BaseEntit
     @Override
     public void delete(T t) {
         try{
+            if(!isValid(t))
+                return;
             if(!transaction.isActive()){
                 transaction.begin();
                 repository.delete(t);
@@ -82,5 +90,18 @@ public class BaseServiceImpl<R extends BaseRepositoryImpl<T>,T extends BaseEntit
             printer.printError(e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public boolean isValid(T t) {
+        Validator validator = EntityValidator.validator;
+        Set<ConstraintViolation<T>> violations = validator.validate(t, repository.getClassname());
+        if(!violations.isEmpty()){
+            for(ConstraintViolation<T> c : violations)
+                printer.printError(c.getMessage());
+            return false;
+        }
+        return true;
+
     }
 }
