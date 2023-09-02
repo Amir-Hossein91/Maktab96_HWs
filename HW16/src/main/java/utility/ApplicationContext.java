@@ -1,6 +1,5 @@
 package utility;
 
-import connection.Connection;
 import entity.BankAccount;
 import entity.Debt;
 import entity.Loan;

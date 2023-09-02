@@ -12,7 +12,6 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO , generator = "idGenerator")
