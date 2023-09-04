@@ -20,6 +20,9 @@ public class Constants {
     public static final String INVALID_ENTRANCE_YEAR_FORMAT = "Invalid entrance year format!";
     public static final String INVALID_HOUSE_RENT_CONTRACT_NUMBER_FORMAT = "House rent contract number must have 6 to 9 digits!";
     public static final String INVALID_ADDRESS_FORMAT = "Invalid address format!";
+    public static final String INCORRECT_USERNAME_OR_PASSWORD = "Username or password is incorrect!";
+    public static final String LOAN_REGISTER_TIME_OUT = "Can't register for a loan after graduation year!";
+    public static final String REPAY_TIME_OUT = "Can't repay a loan until after graduation!";
 
     public static final Character[] UPPER_CASE_CHARACTERS = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
     public static final Character[] LOWER_CASE_CHARACTERS = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
@@ -28,4 +31,5 @@ public class Constants {
 
 
     public static final String[] REGISTRY_MENU = {"LOGIN/REGISTER MENU","Register","Login","Exit"};
+    public static final String[] STUDENT_LOAN_MENU = {"STUDENT LOAN MENU","Loan Register","loan Repay","Logout"};
 }
