@@ -140,6 +140,14 @@ public class StudentServiceImpl extends BaseServiceImpl<StudentRepositoryImpl, S
     }
 
     @Override
+    public void showUsernameAndPassword(Student student) {
+        if(student != null){
+            printer.printResult("USERNAME", student.getUsername());
+            printer.printResult("PASSWORD", student.getPassword());
+        }
+    }
+
+    @Override
     public void checkUsernameAndPassword() {
 
     }
