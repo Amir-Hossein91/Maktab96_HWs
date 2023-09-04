@@ -29,17 +29,20 @@ public class Printer {
     }
 
     public void printMessage(String msg){
-        System.out.println("******" + msg + "******");
+        System.out.println();
+        System.out.println("***" + msg + "***");
     }
 
     public void printError(String msg){
         if(msg == null){
             System.out.println();
             System.out.println(">>>> Wrong entry! <<<<");
+            System.out.println();
         }
         else{
             System.out.println();
             System.out.println(">>>> " + msg + " <<<<");
+            System.out.println();
         }
     }
 
@@ -69,5 +72,22 @@ public class Printer {
         System.out.println(titleBorder);
         System.out.println(result);
         System.out.println(endOfResult);
+    }
+
+    public void printListWithSelect(List<String> list){
+        System.out.println("------------------------------------");
+        for(int i = 0; i<list.size(); i++){
+            System.out.println(i+1 + ") " + list.get(i));
+        }
+        System.out.println("------------------------------------");
+        System.out.print("Select -> ");
+    }
+
+    public void printListWithoutSelect(List<String> list){
+        System.out.println("------------------------------------");
+        for(int i = 0; i<list.size(); i++){
+            System.out.println(i+1 + ") " + list.get(i));
+        }
+        System.out.println("------------------------------------");
     }
 }

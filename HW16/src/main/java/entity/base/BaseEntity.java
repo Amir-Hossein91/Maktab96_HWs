@@ -15,5 +15,5 @@ import javax.persistence.*;
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO , generator = "idGenerator")
-    protected Long id;
+    protected long id;
 }

@@ -15,6 +15,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 public class BaseServiceImpl<R extends BaseRepositoryImpl<T>,T extends BaseEntity> implements BaseService<T> {
@@ -22,11 +23,13 @@ public class BaseServiceImpl<R extends BaseRepositoryImpl<T>,T extends BaseEntit
     protected R repository;
     protected EntityTransaction transaction;
     protected Printer printer;
+    protected Scanner input;
 
     public BaseServiceImpl (R repository){
         this.repository = repository;
         transaction = Connection.entityManager.getTransaction();
         printer = ApplicationContext.printer;
+        input = new Scanner(System.in);
     }
 
     @Override
@@ -41,11 +44,15 @@ public class BaseServiceImpl<R extends BaseRepositoryImpl<T>,T extends BaseEntit
             }
             else
                 t = repository.saveOrUpdate(t).orElseThrow(()-> new NotSavedException("\nCould not save " + repository.getClassname().getSimpleName()));
+            if(t != null)
+                printer.printMessage(repository.getClassname().getSimpleName()  + " saved successfully!");
             return t;
         } catch (Exception e){
             if(transaction.isActive())
                 transaction.rollback();
             printer.printError(e.getMessage());
+            e.getStackTrace();
+            input.nextLine();
             return null;
         }
     }
@@ -95,13 +102,12 @@ public class BaseServiceImpl<R extends BaseRepositoryImpl<T>,T extends BaseEntit
     @Override
     public boolean isValid(T t) {
         Validator validator = EntityValidator.validator;
-        Set<ConstraintViolation<T>> violations = validator.validate(t, repository.getClassname());
+        Set<ConstraintViolation<T>> violations = validator.validate(t);
         if(!violations.isEmpty()){
             for(ConstraintViolation<T> c : violations)
                 printer.printError(c.getMessage());
             return false;
         }
         return true;
-
     }
 }
