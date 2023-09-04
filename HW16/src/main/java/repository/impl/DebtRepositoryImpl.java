@@ -1,4 +1,4 @@
-package repository;
+package repository.impl;
 
 import basics.repository.impl.BaseRepositoryImpl;
 import entity.Debt;
