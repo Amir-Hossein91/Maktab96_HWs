@@ -7,10 +7,10 @@ import entity.enums.Province;
 import entity.enums.UniversityType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.validator.constraints.Range;
 import utility.Constants;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.text.SimpleDateFormat;
@@ -49,7 +49,7 @@ public class Student extends BaseEntity {
     private String studentNumber;
     @Enumerated(value = EnumType.STRING)
     private UniversityType universityType;
-    @Pattern(regexp = "[12][\\d]{3}", message = Constants.INVALID_ENTRANCE_YEAR_FORMAT)
+    @Range(min = 1900 , max = 2999, message = Constants.INVALID_ENTRANCE_YEAR_FORMAT )
     private int entranceYear;
     @Enumerated(value = EnumType.STRING)
     private AcademicGrade academicGrade;
@@ -74,6 +74,7 @@ public class Student extends BaseEntity {
     private int graduateYear;
     @OneToMany(mappedBy = "loanee")
     private List<Loan> loans;
+    @Column(unique = true)
     private String username;
     private String password;
 
