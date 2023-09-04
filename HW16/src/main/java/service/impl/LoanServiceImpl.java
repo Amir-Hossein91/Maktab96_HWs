@@ -1,4 +1,4 @@
-package service;
+package service.impl;
 
 import basics.service.impl.BaseServiceImpl;
 import entity.Loan;

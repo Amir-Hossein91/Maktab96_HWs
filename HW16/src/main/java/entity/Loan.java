@@ -6,9 +6,7 @@ import entity.enums.LoanType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 import java.util.Date;
 
 @SuperBuilder
@@ -21,9 +19,12 @@ import java.util.Date;
 @Entity
 @SequenceGenerator(name = "idGenerator" , sequenceName = "loan_Sequence")
 public class Loan extends BaseEntity {
+    @Enumerated(value = EnumType.STRING)
     private LoanType loanType;
     private Long amount;
+    @Enumerated(value = EnumType.STRING)
     private Availability availability;
     @ManyToOne
-    private Student loaner;
+    private Student loanee;
+    private Date registrationDate;
 }
