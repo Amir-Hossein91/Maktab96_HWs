@@ -1,8 +1,6 @@
 package ui;
 
 import entity.Student;
-import exceptions.InvalidDateException;
-import exceptions.NotSavedException;
 import service.impl.BankAccountServiceImpl;
 import service.impl.DebtServiceImpl;
 import service.impl.LoanServiceImpl;
@@ -35,9 +33,16 @@ public class Menu {
                         Student student = new Student();
                         studentService.validateAndSetInformation(student);
                         studentService.setUsernameAndPassword(student);
-                        studentService.saveOrUpdate(student);
+                        student = studentService.saveOrUpdate(student);
+                        studentService.showUsernameAndPassword(student);
                     }
-                    case 2 -> showLoginMenu();
+                    case 2 -> {
+                        String username = studentService.getUsername();
+                        String password = studentService.getPassword();
+                        Student student = studentService.checkUsernameAndPassword(username, password);
+                        if(student != null)
+                            showUserMenu(student);
+                    }
                     case 3 -> {
                         return;
                     }
@@ -52,11 +57,38 @@ public class Menu {
                 System.out.println(Arrays.toString(e.getStackTrace()));
             }
         }
-
-
     }
 
-    public void showLoginMenu() {
+    public void showUserMenu(Student student) {
+        while (true) {
+            try {
+                printer.printMenu(Constants.STUDENT_LOAN_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> {
+                        if(studentService.canRegister(student)){
 
+                        }
+                    }
+                    case 2 -> {
+                        if(studentService.canRepay(student)){
+
+                        }
+                    }
+                    case 3 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
+                }
+            } catch (Exception e) {
+                if (e instanceof InputMismatchException)
+                    printer.printError("Wrong entry!");
+                else
+                    printer.printError(e.getMessage());
+                input.nextLine();
+                System.out.println(Arrays.toString(e.getStackTrace()));
+            }
+        }
     }
 }
