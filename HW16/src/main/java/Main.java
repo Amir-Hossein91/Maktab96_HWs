@@ -1,24 +1,32 @@
+import entity.Loan;
 import entity.Student;
-import entity.enums.Province;
-import entity.enums.ResidenceStatus;
-import exceptions.InvalidDateException;
-import exceptions.NotSavedException;
-import repository.StudentRepositoryImpl;
+import entity.enums.LoanType;
+import jdk.dynalink.linker.LinkerServices;
+import service.LoanService;
+import service.StudentService;
 import ui.Menu;
 import utility.ApplicationContext;
-import utility.Constants;
 import utility.Printer;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.SimpleFormatter;
 
 public class Main {
     public static void main(String[] args) {
-        Printer printer = new Printer();
+//        Printer printer = new Printer();
         Menu menu = new Menu();
         menu.showRegistryMenu();
-        menu.showLoginMenu();
+//        LoanService loanService = ApplicationContext.loanService;
+//        StudentService studentService = ApplicationContext.studentService;
+//        Student student = studentService.findByNationalCode("3060113947");
+////        System.out.println(student.getId());
+//        Map<LoanType,Long> loans = new HashMap<>();
+//        /*Collection<Loan> loanList = */loanService.getPossibleLoans(student).values().forEach(loan -> {
+//            loans.put(loan.getLoanType(), loan.getAmount());
+//        });
+
+//        printer.printListWithoutSelect(loans.entrySet().stream().map(Object::toString).toList());
+
+//        System.out.println(ApplicationContext.currentDateCalendar.get(Calendar.MONTH));
 
 
 //        StudentRepositoryImpl studentRepository = new StudentRepositoryImpl(Student.class);
