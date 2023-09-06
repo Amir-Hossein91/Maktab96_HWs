@@ -23,7 +23,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @SequenceGenerator(name = "idGenerator" , sequenceName = "student_Sequence")
@@ -72,8 +71,8 @@ public class Student extends BaseEntity {
     @Size(min = 3, max = 100, message = Constants.INVALID_ADDRESS_FORMAT)
     private String houseAddress;
     private int graduateYear;
-    @OneToMany(mappedBy = "loanee")
-    private List<Loan> loans;
+    @OneToMany(mappedBy = "borrower")
+    private List<Loan> takenLoans;
     @Column(unique = true)
     private String username;
     private String password;
@@ -86,4 +85,31 @@ public class Student extends BaseEntity {
         return Integer.parseInt(new SimpleDateFormat("yyyy").format(birthDate));
     }
 
+    public String toString() {
+        return "Student(firstname=" + this.getFirstname() +
+                ", lastname=" + this.getLastname() +
+                ", fathername=" + this.getFathername() +
+                ", mothername=" + this.getMothername() +
+                ", identityCode=" + this.getIdentityCode() +
+                ", nationalCode=" + this.getNationalCode() +
+                ", birthDate=" + this.getBirthDate() +
+                ", studentNumber=" + this.getStudentNumber() +
+                ", universityType=" + this.getUniversityType() +
+                ", entranceYear=" + this.getEntranceYear() +
+                ", academicGrade=" + this.getAcademicGrade() +
+                ", acceptanceType=" + this.getAcceptanceType() +
+//                ", bankAccount=" + this.getBankAccount() +
+                ", province=" + this.getProvince() +
+                ", isMarried=" + this.isMarried() +
+                ", spouseFirstName=" + this.getSpouseFirstName() +
+                ", spouseLastName=" + this.getSpouseLastName() +
+                ", spouseNationalCode=" + this.getSpouseNationalCode() +
+                ", inDorm=" + this.isInDorm() +
+                ", houseContractNumber=" + this.getHouseContractNumber() +
+                ", houseAddress=" + this.getHouseAddress() +
+                ", graduateYear=" + this.getGraduateYear() +
+                ", takenLoans=" + this.getTakenLoans() +
+                ", username=" + this.getUsername() +
+                ", password=" + this.getPassword() + ")";
+    }
 }

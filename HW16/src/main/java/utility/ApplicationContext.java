@@ -16,7 +16,7 @@ import service.impl.StudentServiceImpl;
 import java.util.*;
 
 public class ApplicationContext {
-    public final static GregorianCalendar gregorianCalendar;
+    public final static GregorianCalendar currentDateCalendar;
     public final static Date currentDate ;
     public final static Printer printer;
     private final static BankAccountRepositoryImpl bankAccountRepository;
@@ -30,8 +30,8 @@ public class ApplicationContext {
     public final static Map<Integer,Character[]> passwordCharactersMap;
 
     static{
-        gregorianCalendar = new GregorianCalendar(2020,Calendar.APRIL,19);
-        currentDate = gregorianCalendar.getTime();
+        currentDateCalendar = new GregorianCalendar(2023,1,17);
+        currentDate = currentDateCalendar.getTime();
         printer = new Printer();
         bankAccountRepository = new BankAccountRepositoryImpl(BankAccount.class);
         studentRepository = new StudentRepositoryImpl(Student.class);
