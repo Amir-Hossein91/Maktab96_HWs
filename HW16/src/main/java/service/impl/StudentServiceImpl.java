@@ -115,19 +115,40 @@ public class StudentServiceImpl extends BaseServiceImpl<StudentRepositoryImpl, S
     }
 
     @Override
-    public boolean canRegister(Student student) throws NotProperTimeException {
-        boolean result = ApplicationContext.gregorianCalendar.get(Calendar.YEAR) <= student.getGraduateYear();
-        if(!result)
+    public boolean isGraduated(Student student) throws NotProperTimeException {
+        boolean result = ApplicationContext.currentDateCalendar.get(Calendar.YEAR) > student.getGraduateYear();
+        if(result)
             throw new NotProperTimeException(Constants.LOAN_REGISTER_TIME_OUT);
-        return result;
+        return false;
     }
 
     @Override
     public boolean canRepay(Student student) throws NotProperTimeException {
-        boolean result = ApplicationContext.gregorianCalendar.get(Calendar.YEAR) > student.getGraduateYear();
+        boolean result = ApplicationContext.currentDateCalendar.get(Calendar.YEAR) > student.getGraduateYear();
         if(!result)
             throw new NotProperTimeException(Constants.REPAY_TIME_OUT);
-        return result;
+        return true;
+    }
+
+    @Override
+    public boolean isRegistrationOpen() throws InvalidDateException {
+        int currentMonth = ApplicationContext.currentDateCalendar.get(Calendar.MONTH);
+        int currentDay = ApplicationContext.currentDateCalendar.get(Calendar.DATE);
+        if(currentMonth == Constants.oddCoursesRegisterMonth && Constants.oddCourseRegisterDays.contains(currentDay))
+            return true;
+        if(currentMonth == Constants.evenCourseRegisterMonth && Constants.evenCourseRegisterDays.contains(currentDay))
+            return true;
+        throw new InvalidDateException(Constants.NOT_IN_REGITRATION_PERIOD);
+    }
+
+    @Override
+    public Student findByNationalCode(String nationalCode) {
+        return repository.findByNationalCode(nationalCode);
+    }
+
+    @Override
+    public BankAccount findBankAccount(Student student) {
+        return repository.findBankAccount(student);
     }
 
     public Date setDate() {
@@ -141,7 +162,7 @@ public class StudentServiceImpl extends BaseServiceImpl<StudentRepositoryImpl, S
             printer.getInput("Day of birth");
             int day = input.nextInt();
             input.nextLine();
-            int diff = ApplicationContext.gregorianCalendar.get(Calendar.YEAR) - year;
+            int diff = ApplicationContext.currentDateCalendar.get(Calendar.YEAR) - year;
             if(diff < 15)
                 throw new InvalidDateException(Constants.INVALID_AGE_EXCEPTION);
             if(year<0 || month<0 || day<0 || month>12 || day>31)
