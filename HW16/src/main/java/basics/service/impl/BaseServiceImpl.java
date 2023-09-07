@@ -3,6 +3,8 @@ package basics.service.impl;
 import basics.repository.impl.BaseRepositoryImpl;
 import basics.service.BaseService;
 import connection.Connection;
+import entity.BankAccount;
+import entity.Debt;
 import entity.base.BaseEntity;
 import exceptions.NotFoundException;
 import exceptions.NotSavedException;
@@ -44,7 +46,7 @@ public class BaseServiceImpl<R extends BaseRepositoryImpl<T>,T extends BaseEntit
             }
             else
                 t = repository.saveOrUpdate(t).orElseThrow(()-> new NotSavedException("\nCould not save " + repository.getClassname().getSimpleName()));
-            if(t != null)
+            if(t != null && !(t instanceof BankAccount) && !(t instanceof Debt) )
                 printer.printMessage(repository.getClassname().getSimpleName()  + " saved successfully!");
             return t;
         } catch (Exception e){
