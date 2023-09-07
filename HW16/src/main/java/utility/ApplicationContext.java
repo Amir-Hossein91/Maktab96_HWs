@@ -22,7 +22,7 @@ public class ApplicationContext {
     private final static BankAccountRepositoryImpl bankAccountRepository;
     private final static StudentRepositoryImpl studentRepository;
     private final static LoanRepositoryImpl loanRepository;
-    private final static DebtRepositoryImpl debtRepository;
+    public final static DebtRepositoryImpl debtRepository;
     public final static BankAccountServiceImpl bankAccountService;
     public final static StudentServiceImpl studentService;
     public final static LoanServiceImpl loanService;
@@ -30,7 +30,7 @@ public class ApplicationContext {
     public final static Map<Integer,Character[]> passwordCharactersMap;
 
     static{
-        currentDateCalendar = new GregorianCalendar(2023,1,17);
+        currentDateCalendar = new GregorianCalendar(2023,9,26);
         currentDate = currentDateCalendar.getTime();
         printer = new Printer();
         bankAccountRepository = new BankAccountRepositoryImpl(BankAccount.class);
