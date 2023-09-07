@@ -2,6 +2,7 @@ package service.impl;
 
 import basics.service.impl.BaseServiceImpl;
 import entity.BankAccount;
+import entity.Debt;
 import entity.Loan;
 import entity.Student;
 import entity.enums.AcceptanceType;
@@ -10,7 +11,6 @@ import entity.enums.UniversityType;
 import exceptions.NotSavedException;
 import repository.impl.LoanRepositoryImpl;
 import service.LoanService;
-import service.StudentService;
 import utility.ApplicationContext;
 
 import java.util.ArrayList;
@@ -22,11 +22,15 @@ public class LoanServiceImpl extends BaseServiceImpl<LoanRepositoryImpl, Loan> i
 
     private final StudentServiceImpl studentService;
     private final BankAccountServiceImpl bankAccountService;
+    private final DebtServiceImpl debtService;
 
     public LoanServiceImpl(LoanRepositoryImpl repository) {
         super(repository);
         studentService = ApplicationContext.studentService;
         bankAccountService = ApplicationContext.bankAccountService;
+        // for a reason which I couldn't understand, the following line ends in a null pointer exception!!
+//        debtService = ApplicationContext.debtService;
+        debtService = new DebtServiceImpl(ApplicationContext.debtRepository);
     }
 
     public Loan saveOrUpdate(Loan loan){
@@ -36,6 +40,10 @@ public class LoanServiceImpl extends BaseServiceImpl<LoanRepositoryImpl, Loan> i
                 BankAccount bankAccount = studentService.findBankAccount(loan.getBorrower());
                 bankAccount.setBalance(bankAccount.getBalance() + loan.getAmount());
                 bankAccountService.saveOrUpdate(bankAccount);
+                List<Debt> debts = debtService.calculateDebts(loan);
+                for (Debt d : debts){
+                    debtService.saveOrUpdate(d);
+                }
                 loan = repository.saveOrUpdate(loan).orElseThrow(()-> new NotSavedException("\nCould not save Loan!"));
                 transaction.commit();
             }
@@ -43,6 +51,10 @@ public class LoanServiceImpl extends BaseServiceImpl<LoanRepositoryImpl, Loan> i
                 BankAccount bankAccount = studentService.findBankAccount(loan.getBorrower());
                 bankAccount.setBalance(bankAccount.getBalance() + loan.getAmount());
                 bankAccountService.saveOrUpdate(bankAccount);
+                List<Debt> debts = debtService.calculateDebts(loan);
+                for (Debt d : debts){
+                    debtService.saveOrUpdate(d);
+                }
                 loan = repository.saveOrUpdate(loan).orElseThrow(() -> new NotSavedException("\nCould not save Loan!"));
             }
             if(loan != null)
@@ -53,7 +65,7 @@ public class LoanServiceImpl extends BaseServiceImpl<LoanRepositoryImpl, Loan> i
                 transaction.rollback();
             printer.printError(e.getMessage());
             e.getStackTrace();
-            input.nextLine();
+//            input.nextLine();
             return null;
         }
     }
@@ -108,7 +120,6 @@ public class LoanServiceImpl extends BaseServiceImpl<LoanRepositoryImpl, Loan> i
         List<Loan> loans = getLoansOf(student);
         List<LoanType> loanTypes = loans.stream().map(Loan::getLoanType).toList();
         if(loans.isEmpty() || !loanTypes.contains(loanType)) {
-            System.out.println(loans);
             return false;
         }
         else {
