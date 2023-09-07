@@ -20,8 +20,13 @@ import java.util.Date;
 
 public class Debt extends BaseEntity {
     private Date dueDate;
-    private Long amount;
+    private Double amount;
     @ManyToOne
     private Loan loan;
     private boolean isPaid;
+
+    public Debt (Loan loan){
+        this.loan = loan;
+        this.isPaid = false;
+    }
 }
