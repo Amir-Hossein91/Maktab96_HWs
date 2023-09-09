@@ -1,17 +1,27 @@
 package service.impl;
 
 import basics.service.impl.BaseServiceImpl;
+import entity.BankAccount;
 import entity.Debt;
 import entity.Loan;
+import entity.Student;
+import exceptions.NotFoundException;
 import repository.impl.DebtRepositoryImpl;
 import service.DebtService;
+import utility.ApplicationContext;
+import utility.Constants;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
 public class DebtServiceImpl extends BaseServiceImpl<DebtRepositoryImpl, Debt> implements DebtService {
+
+    private final BankAccountServiceImpl bankAccountService;
+
     public DebtServiceImpl(DebtRepositoryImpl repository) {
         super(repository);
+        bankAccountService = ApplicationContext.bankAccountService;
     }
 
     @Override
@@ -43,6 +53,87 @@ public class DebtServiceImpl extends BaseServiceImpl<DebtRepositoryImpl, Debt> i
             }
         }
         return debts;
+    }
+
+    @Override
+    public List<Debt> getPaidDebts(Student student) {
+        try{
+            return repository.getPaidDebts(student).orElseThrow(()->new NotFoundException(Constants.NO_PAID_DEBTS));
+        } catch (Exception e){
+            printer.printError(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<Debt> getUnpaidDebts(Student student) {
+        try{
+            return repository.getUnpaidDebts(student).orElseThrow(()->new NotFoundException(Constants.NO_UNPAID_DEBTS));
+        } catch (Exception e){
+            printer.printError(e.getMessage());
+            return null;
+        }
+    }
+
+
+    @Override
+    public List<Debt> getMonthlyUnpaidDebts(Student student) {
+        printer.printMessage("Specify the year and month of debts");
+        printer.getInput("Year");
+        int year = input.nextInt();
+        input.nextLine();
+        printer.getInput("Month");
+        int month = input.nextInt();
+        try {
+            return repository.getMonthlyUnpaidDebts(student,year,month).orElseThrow(() -> new NotFoundException(Constants.NO_SPECIFIED_MONTH_UNPAID_DEBTS));
+        } catch (Exception e) {
+            printer.printError(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public void payDebt(Student student) {
+        printer.printMessage("Enter bank account information");
+        printer.getInput("Card number");
+        String cardNumber = input.next();
+        input.nextLine();
+        printer.getInput("CVV2");
+        String cvv2 = input.next();
+        input.nextLine();
+        printer.getInput("Expiration month");
+        int month = input.nextInt();
+        input.nextLine();
+        printer.getInput("Expiration year");
+        int year = input.nextInt();
+        input.nextLine();
+        try {
+            BankAccount bankAccount = bankAccountService.findByCardNumber(cardNumber);
+            if(!bankAccount.getCvv2().equals(cvv2) || bankAccount.getExpirationMonth() != month || bankAccount.getExpirationYear() != year)
+                throw new NotFoundException(Constants.INVALID_CARD_PROPERTIES);
+            List<String> result = new ArrayList<>();
+            getUnpaidDebts(student).forEach(debt ->
+                    result.add(debt.getId() + "- " + new SimpleDateFormat("yyyy/MM/dd").format(debt.getDueDate())
+                            + "\t" + debt.getLoan().getLoanType() + "\t" + debt.getAmount()));
+            printer.printMessage("Choose debt id");
+            printer.printListWithoutSelect(result);
+            printer.getInput("Debt id");
+            long debtId = input.nextLong();
+            input.nextLine();
+            Debt debt = findById(debtId);
+            if(debt != null){
+                bankAccount.setBalance(bankAccount.getBalance() - debt.getAmount());
+                debt.setPaid(true);
+                debt.setPaidDate(ApplicationContext.currentDate);
+                bankAccountService.saveOrUpdate(bankAccount);
+                saveOrUpdate(debt);
+            }
+
+        } catch (Exception e) {
+            if(transaction.isActive())
+                transaction.rollback();
+            printer.printError(e.getMessage());
+        }
     }
 
     private Date calculateDueDate(Loan loan, int monthNumber){

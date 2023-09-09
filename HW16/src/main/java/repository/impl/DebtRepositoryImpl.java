@@ -2,9 +2,47 @@ package repository.impl;
 
 import basics.repository.impl.BaseRepositoryImpl;
 import entity.Debt;
+import entity.Student;
+import repository.DebtRepository;
 
-public class DebtRepositoryImpl extends BaseRepositoryImpl<Debt> {
+import javax.persistence.Query;
+import java.util.List;
+import java.util.Optional;
+
+public class DebtRepositoryImpl extends BaseRepositoryImpl<Debt> implements DebtRepository {
     public DebtRepositoryImpl(Class<Debt> classname) {
         super(classname);
+    }
+
+    @Override
+    public Optional<List<Debt>> getPaidDebts(Student student) {
+        String hql = "select d from Debt d join Loan l on d.loan.id = l.id where l.borrower.id =:s and d.isPaid =:p";
+        Query query = entityManager.createQuery(hql, Debt.class);
+        query.setParameter("s",student.getId());
+        query.setParameter("p", true);
+        return Optional.ofNullable(query.getResultList());
+    }
+
+    @Override
+    public Optional<List<Debt>> getUnpaidDebts(Student student) {
+        String hql = "select d from Debt d join Loan l on d.loan.id = l.id where l.borrower.id =:s and d.isPaid =:p";
+        Query query = entityManager.createQuery(hql, Debt.class);
+        query.setParameter("s",student.getId());
+        query.setParameter("p", false);
+        return Optional.ofNullable(query.getResultList());
+    }
+
+
+    @Override
+    public Optional<List<Debt>> getMonthlyUnpaidDebts(Student student, int year, int month) {
+        String hql = "select d from Debt d join Loan l on d.loan.id = l.id where l.borrower.id =:s and " +
+                "d.isPaid =:p and year(d.dueDate) =:y and month(d.dueDate) =:m";
+        Query query = entityManager.createQuery(hql, Debt.class);
+        query.setParameter("s",student.getId());
+        query.setParameter("p", false);
+        query.setParameter("y", year);
+        query.setParameter("m", month);
+
+        return Optional.ofNullable(query.getResultList());
     }
 }
