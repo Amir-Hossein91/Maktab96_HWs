@@ -24,6 +24,7 @@ public class Debt extends BaseEntity {
     @ManyToOne
     private Loan loan;
     private boolean isPaid;
+    private Date paidDate;
 
     public Debt (Loan loan){
         this.loan = loan;
