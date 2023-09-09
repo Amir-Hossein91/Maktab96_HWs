@@ -23,6 +23,7 @@ public class BankAccount extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private Bank bank;
     @Pattern(regexp = "^[0-9]{16}$", message = Constants.INVALID_CARD_NUMBER_EXCEPTION)
+    @Column(unique = true)
     private String cardNumber;
     @Pattern(regexp = "^[0-9]{3,4}$", message = Constants.INVALID_CVV2_NUMBER_EXCEPTION)
     private String cvv2;
@@ -33,5 +34,5 @@ public class BankAccount extends BaseEntity {
     @OneToOne(mappedBy = "bankAccount")
     private Student owner;
     @Range(min = 0)
-    private Long balance;
+    private Double balance;
 }
