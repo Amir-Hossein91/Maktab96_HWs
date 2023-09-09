@@ -3,8 +3,10 @@ package service.impl;
 import basics.service.impl.BaseServiceImpl;
 import entity.BankAccount;
 import entity.enums.Bank;
+import exceptions.NotFoundException;
 import repository.impl.BankAccountRepositoryImpl;
 import service.BankAccountService;
+import utility.Constants;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -34,12 +36,18 @@ public class BankAccountServiceImpl extends BaseServiceImpl<BankAccountRepositor
             bankAccount.setExpirationYear(input.nextInt());
             input.nextLine();
             printer.getInput("Initial balance");
-            bankAccount.setBalance(input.nextLong());
+            bankAccount.setBalance(input.nextDouble());
             input.nextLine();
             return bankAccount;
         } catch (Exception e){
             printer.printError(e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public BankAccount findByCardNumber(String cardNumber) throws NotFoundException {
+            return repository.findByCardNumber(cardNumber).orElseThrow(() -> new NotFoundException(Constants.NO_BANKACCOUNT_FOUND));
+
     }
 }
