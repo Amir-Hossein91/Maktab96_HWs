@@ -11,6 +11,7 @@ import utility.ApplicationContext;
 import utility.Constants;
 import utility.Printer;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Menu {
@@ -75,7 +76,7 @@ public class Menu {
                     }
                     case 2 -> {
                         if(studentService.canRepay(student)){
-
+                            showRepayMenu(student);
                         }
                     }
                     case 3 -> {
@@ -117,6 +118,56 @@ public class Menu {
                         input.nextLine();
                     }
                     case 3 -> {
+                        return;
+                    }
+                    default -> printer.printError("Wrong entry!");
+                }
+            } catch (Exception e) {
+                if (e instanceof InputMismatchException)
+                    printer.printError("Wrong entry!");
+                else
+                    printer.printError(e.getMessage());
+                input.nextLine();
+                System.out.println(Arrays.toString(e.getStackTrace()));
+            }
+        }
+    }
+
+    public void showRepayMenu(Student student){
+        while (true) {
+            try {
+                printer.printMenu(Constants.REPAY_MENU);
+                int choice = input.nextInt();
+                input.nextLine();
+                switch (choice) {
+                    case 1 -> {
+                        List<String> result = new ArrayList<>();
+                        debtService.getPaidDebts(student).forEach(debt -> {
+                            result.add(debt.getId() + "- type = " + debt.getLoan().getLoanType() + "\t"
+                                    + new SimpleDateFormat("yyyy/MM/dd").format(debt.getPaidDate()));
+                        });
+                        printer.printResult("Paid Debts",result);
+                    }
+                    case 2 -> {
+                        List<String> result = new ArrayList<>();
+                        debtService.getUnpaidDebts(student).forEach(debt ->
+                            result.add(debt.getId() + "- " + new SimpleDateFormat("yyyy/MM/dd").format(debt.getDueDate())
+                            +"\t" + debt.getLoan().getLoanType() + "\t" + debt.getAmount()));
+
+                        printer.printResult("Unpaid Debts",result);
+                    }
+                    case 3 -> {
+                        List<String> result = new ArrayList<>();
+                        debtService.getMonthlyUnpaidDebts(student).forEach(debt -> {
+                            result.add(debt.getId() + "- " + new SimpleDateFormat("yyyy/MM/dd").format(debt.getDueDate())
+                                    + "\t" + debt.getAmount());
+                        });
+                        printer.printResult("Specified month unpaid Debts",result);
+                    }
+                    case 4 -> {
+                        debtService.payDebt(student);
+                    }
+                    case 5 -> {
                         return;
                     }
                     default -> printer.printError("Wrong entry!");
