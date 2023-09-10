@@ -115,8 +115,7 @@ public class DebtServiceImpl extends BaseServiceImpl<DebtRepositoryImpl, Debt> i
             getUnpaidDebts(student).forEach(debt ->
                     result.add(debt.getId() + "- " + new SimpleDateFormat("yyyy/MM/dd").format(debt.getDueDate())
                             + "\t" + debt.getLoan().getLoanType() + "\t" + debt.getAmount()));
-            printer.printMessage("Choose debt id");
-            printer.printListWithoutSelect(result);
+            printer.printResult("Choose debt id", result);
             printer.getInput("Debt id");
             long debtId = input.nextLong();
             input.nextLine();
