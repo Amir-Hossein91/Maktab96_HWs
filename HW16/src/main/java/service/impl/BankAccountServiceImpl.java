@@ -4,6 +4,7 @@ import basics.service.impl.BaseServiceImpl;
 import entity.BankAccount;
 import entity.enums.Bank;
 import exceptions.NotFoundException;
+import net.bytebuddy.implementation.bytecode.Throw;
 import repository.impl.BankAccountRepositoryImpl;
 import service.BankAccountService;
 import utility.Constants;
@@ -47,7 +48,11 @@ public class BankAccountServiceImpl extends BaseServiceImpl<BankAccountRepositor
 
     @Override
     public BankAccount findByCardNumber(String cardNumber) throws NotFoundException {
-            return repository.findByCardNumber(cardNumber).orElseThrow(() -> new NotFoundException(Constants.NO_BANKACCOUNT_FOUND));
+        try{
+            return repository.findByCardNumber(cardNumber).orElseThrow(()-> new NotFoundException(Constants.NO_BANKACCOUNT_FOUND));
+        } catch (Exception e){
+            throw new NotFoundException(Constants.NO_BANKACCOUNT_FOUND);
+        }
 
     }
 }
