@@ -1,6 +1,5 @@
 package service.impl;
 
-import entity.BankAccount;
 import entity.Loan;
 import entity.Student;
 import entity.enums.LoanType;
