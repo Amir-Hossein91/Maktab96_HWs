@@ -3,7 +3,6 @@ package ui;
 import entity.Debt;
 import entity.Loan;
 import entity.Student;
-import service.impl.BankAccountServiceImpl;
 import service.impl.DebtServiceImpl;
 import service.impl.LoanServiceImpl;
 import service.impl.StudentServiceImpl;
