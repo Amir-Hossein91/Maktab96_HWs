@@ -33,6 +33,7 @@ public class Constants {
     public static final String NO_BANKACCOUNT_FOUND = "No bank account found with this card number!";
     public static final String INVALID_CARD_PROPERTIES = "Invalid card properties!";
     public static final String INVALID_LOAN_ID = "Invalid loan id!";
+    public static final String INVALID_STUDENT_ID = "No bank account attached to this id!";
 
     public static final Character[] UPPER_CASE_CHARACTERS = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
     public static final Character[] LOWER_CASE_CHARACTERS = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
