@@ -14,9 +14,7 @@ import service.LoanService;
 import utility.ApplicationContext;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LoanServiceImpl extends BaseServiceImpl<LoanRepositoryImpl, Loan> implements LoanService {
 
@@ -64,8 +62,6 @@ public class LoanServiceImpl extends BaseServiceImpl<LoanRepositoryImpl, Loan> i
             if(transaction.isActive())
                 transaction.rollback();
             printer.printError(e.getMessage());
-            e.getStackTrace();
-//            input.nextLine();
             return null;
         }
     }

@@ -17,7 +17,6 @@ import java.util.*;
 public class Menu {
     private final Printer printer = ApplicationContext.printer;
     private final Scanner input = new Scanner(System.in);
-    private final BankAccountServiceImpl bankAccountService = ApplicationContext.bankAccountService;
     private final StudentServiceImpl studentService = ApplicationContext.studentService;
     private final LoanServiceImpl loanService = ApplicationContext.loanService;
     private final DebtServiceImpl debtService = ApplicationContext.debtService;
