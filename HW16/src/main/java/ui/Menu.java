@@ -100,11 +100,10 @@ public class Menu {
             try {
                 printer.printMenu(Constants.LOAN_REGISTER_MENU);
 
-                Map<Integer, Loan> possibleLoans = loanService.getPossibleLoans(student);
-                Map<LoanType,Long> LoansAndAmount = new HashMap<>();
-                possibleLoans.values().forEach(loan ->
-                        LoansAndAmount.put(loan.getLoanType(), loan.getAmount()));
-                List<String> toBePrinted = LoansAndAmount.entrySet().stream().map(Object::toString).sorted().toList();
+                List<Loan> possibleLoans = loanService.getPossibleLoans(student);
+                List<String> toBePrinted = new ArrayList<>();
+                possibleLoans.forEach(loan ->
+                       toBePrinted.add(loan.getLoanType() + "\t" + loan.getAmount()));
 
                 int choice = input.nextInt();
                 input.nextLine();
@@ -113,7 +112,7 @@ public class Menu {
                         printer.printListWithoutSelect(toBePrinted);
                     case 2 -> {
                         printer.printListWithSelect(toBePrinted);
-                        Loan loan = loanService.chooseLoan(possibleLoans.get(input.nextInt()));
+                        Loan loan = loanService.chooseLoan(possibleLoans.get(input.nextInt()-1));
                         loanService.saveOrUpdate(loan);
                         input.nextLine();
                     }

@@ -77,18 +77,15 @@ public class LoanServiceImpl extends BaseServiceImpl<LoanRepositoryImpl, Loan> i
     }
 
     @Override
-    public Map<Integer,Loan> getPossibleLoans(Student student) {
+    public List<Loan> getPossibleLoans(Student student) {
         List<Loan> possibleLoans = new ArrayList<>();
-        Map<Integer,Loan> finalLoans = new HashMap<>();
         if(isHouseLoanPossible(student))
             possibleLoans.add(new Loan(LoanType.HOUSE_RENT,student));
         if(isEducationalLoanPossible(student))
             possibleLoans.add(new Loan(LoanType.EDUCATIONAL,student));
         if(isTuitionLoanPossible(student))
             possibleLoans.add(new Loan(LoanType.TUITION,student));
-        for(int i = 1; i <= possibleLoans.size(); i++)
-            finalLoans.put(i,possibleLoans.get(i-1));
-        return finalLoans;
+        return possibleLoans;
     }
 
     private boolean isHouseLoanPossible(Student student){
