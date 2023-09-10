@@ -1,5 +1,6 @@
 package ui;
 
+import entity.Debt;
 import entity.Loan;
 import entity.Student;
 import entity.enums.LoanType;
@@ -108,8 +109,28 @@ public class Menu {
                 int choice = input.nextInt();
                 input.nextLine();
                 switch (choice) {
-                    case 1 ->
-                        printer.printListWithoutSelect(toBePrinted);
+                    case 1 ->{
+                        List<Loan> loans = loanService.getLoansOf(student);
+                        List<String> loanStringList = new ArrayList<>();
+                        loans.forEach(loan -> loanStringList.add("id: " + loan.getId() + " - type: "
+                                + loan.getLoanType() + " - registered in:  "
+                                + new SimpleDateFormat("yyyy/MM/dd").format(loan.getRegistrationDate())
+                                + " - amount: " + loan.getAmount()));
+                        printer.printResult("Select each of the taken loans to see debts",loanStringList);
+                        printer.getInput("Loan id");
+                        Long loanId = input.nextLong();
+                        input.nextLine();
+                        if (loans.stream().map(Loan::getId).toList().contains(loanId)){
+                            List<Debt> debts = debtService.findByLoanId(loanId);
+                            List<String> debtsStringList = new ArrayList<>();
+                            debts.forEach(debt ->
+                                    debtsStringList.add("id: " + debt.getId() + " - due date: " +
+                                            new SimpleDateFormat("yyyy/MM/dd").format(debt.getDueDate()) +
+                                            " - amount: " + debt.getAmount()));
+                            printer.printResult("Debts of loan by id of " + loanId,debtsStringList);
+                        } else
+                            printer.printError(Constants.INVALID_LOAN_ID);
+                    }
                     case 2 -> {
                         printer.printListWithSelect(toBePrinted);
                         Loan loan = loanService.chooseLoan(possibleLoans.get(input.nextInt()-1));
@@ -142,7 +163,7 @@ public class Menu {
                     case 1 -> {
                         List<String> result = new ArrayList<>();
                         debtService.getPaidDebts(student).forEach(debt -> {
-                            result.add(debt.getId() + "- type = " + debt.getLoan().getLoanType() + "\t"
+                            result.add(debt.getId() + " - type = " + debt.getLoan().getLoanType() + "\t"
                                     + new SimpleDateFormat("yyyy/MM/dd").format(debt.getPaidDate()));
                         });
                         printer.printResult("Paid Debts",result);
