@@ -3,7 +3,6 @@ package ui;
 import entity.Debt;
 import entity.Loan;
 import entity.Student;
-import entity.enums.LoanType;
 import service.impl.BankAccountServiceImpl;
 import service.impl.DebtServiceImpl;
 import service.impl.LoanServiceImpl;
@@ -56,7 +55,6 @@ public class Menu {
                 else
                     printer.printError(e.getMessage());
                 input.nextLine();
-                System.out.println(Arrays.toString(e.getStackTrace()));
             }
         }
     }
@@ -91,7 +89,6 @@ public class Menu {
                 else
                     printer.printError(e.getMessage());
                 input.nextLine();
-                System.out.println(Arrays.toString(e.getStackTrace()));
             }
         }
     }
@@ -148,7 +145,6 @@ public class Menu {
                 else
                     printer.printError(e.getMessage());
                 input.nextLine();
-                System.out.println(Arrays.toString(e.getStackTrace()));
             }
         }
     }
@@ -198,7 +194,6 @@ public class Menu {
                 else
                     printer.printError(e.getMessage());
                 input.nextLine();
-                System.out.println(Arrays.toString(e.getStackTrace()));
             }
         }
     }
