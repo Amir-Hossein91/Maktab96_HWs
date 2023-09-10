@@ -4,6 +4,7 @@ import basics.service.BaseService;
 import entity.BankAccount;
 import entity.Student;
 import exceptions.InvalidDateException;
+import exceptions.NotFoundException;
 import exceptions.NotProperTimeException;
 
 public interface StudentService extends BaseService<Student> {
@@ -15,5 +16,5 @@ public interface StudentService extends BaseService<Student> {
     boolean canRepay(Student student) throws NotProperTimeException;
     boolean isRegistrationOpen() throws InvalidDateException;
     Student findByNationalCode (String nationalCode);
-    BankAccount findBankAccount(Student student);
+    BankAccount findBankAccount(Student student) throws NotFoundException;
 }

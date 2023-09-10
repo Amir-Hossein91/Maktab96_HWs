@@ -5,6 +5,7 @@ import entity.BankAccount;
 import entity.Student;
 import entity.enums.*;
 import exceptions.InvalidDateException;
+import exceptions.NotFoundException;
 import exceptions.NotProperTimeException;
 import repository.impl.StudentRepositoryImpl;
 import service.StudentService;
@@ -147,8 +148,14 @@ public class StudentServiceImpl extends BaseServiceImpl<StudentRepositoryImpl, S
     }
 
     @Override
-    public BankAccount findBankAccount(Student student) {
-        return repository.findBankAccount(student);
+    public BankAccount findBankAccount(Student student) throws NotFoundException {
+        try{
+            return repository.findBankAccount(student);
+        } catch (Exception e){
+            throw new NotFoundException(Constants.INVALID_STUDENT_ID);
+        }
+
+
     }
 
     public Date setDate() {
