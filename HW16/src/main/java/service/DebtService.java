@@ -14,4 +14,5 @@ public interface DebtService extends BaseService<Debt> {
     List<Debt> getUnpaidDebts (Student student);
     List<Debt> getMonthlyUnpaidDebts(Student student);
     void payDebt(Student student);
+    List<Debt> findByLoanId(Long loanId);
 }

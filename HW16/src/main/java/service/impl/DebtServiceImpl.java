@@ -135,6 +135,16 @@ public class DebtServiceImpl extends BaseServiceImpl<DebtRepositoryImpl, Debt> i
         }
     }
 
+    @Override
+    public List<Debt> findByLoanId(Long loanId) {
+        try {
+            return repository.findByLoanId(loanId).orElseThrow(() -> new NotFoundException(Constants.INVALID_LOAN_ID));
+        } catch (Exception e) {
+            printer.printError(e.getMessage());
+            return null;
+        }
+    }
+
     private Date calculateDueDate(Loan loan, int monthNumber){
         int year = loan.getBorrower().getGraduateYear()+1;
         Date date = loan.getRegistrationDate();

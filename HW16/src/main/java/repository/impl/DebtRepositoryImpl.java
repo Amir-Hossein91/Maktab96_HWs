@@ -42,7 +42,14 @@ public class DebtRepositoryImpl extends BaseRepositoryImpl<Debt> implements Debt
         query.setParameter("p", false);
         query.setParameter("y", year);
         query.setParameter("m", month);
+        return Optional.ofNullable(query.getResultList());
+    }
 
+    @Override
+    public Optional<List<Debt>> findByLoanId(Long loanId) {
+        String hql = "select d from Debt d  where d.loan.id =:l";
+        Query query = entityManager.createQuery(hql, Debt.class);
+        query.setParameter("l",loanId);
         return Optional.ofNullable(query.getResultList());
     }
 }

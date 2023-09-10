@@ -11,4 +11,5 @@ public interface DebtRepository extends BaseRepository<Debt> {
     Optional<List<Debt>> getPaidDebts(Student student);
     Optional<List<Debt>> getUnpaidDebts(Student student);
     Optional<List<Debt>> getMonthlyUnpaidDebts(Student student, int year, int month);
+    Optional<List<Debt>> findByLoanId(Long loanId);
 }
