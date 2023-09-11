@@ -1,6 +1,7 @@
 package service.impl;
 
 import basics.service.impl.BaseServiceImpl;
+import com.github.mfathi91.time.PersianDate;
 import entity.BankAccount;
 import entity.Student;
 import entity.enums.*;
@@ -12,6 +13,7 @@ import service.StudentService;
 import utility.ApplicationContext;
 import utility.Constants;
 
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -117,7 +119,7 @@ public class StudentServiceImpl extends BaseServiceImpl<StudentRepositoryImpl, S
 
     @Override
     public boolean isGraduated(Student student) throws NotProperTimeException {
-        boolean result = ApplicationContext.currentDateCalendar.get(Calendar.YEAR) > student.getGraduateYear();
+        boolean result = ApplicationContext.currentPersianDate.getYear() > student.getGraduateYear();
         if(result)
             throw new NotProperTimeException(Constants.LOAN_REGISTER_TIME_OUT);
         return false;
@@ -125,7 +127,7 @@ public class StudentServiceImpl extends BaseServiceImpl<StudentRepositoryImpl, S
 
     @Override
     public boolean canRepay(Student student) throws NotProperTimeException {
-        boolean result = ApplicationContext.currentDateCalendar.get(Calendar.YEAR) > student.getGraduateYear();
+        boolean result = ApplicationContext.currentPersianDate.getYear() > student.getGraduateYear();
         if(!result)
             throw new NotProperTimeException(Constants.REPAY_TIME_OUT);
         return true;
@@ -133,11 +135,13 @@ public class StudentServiceImpl extends BaseServiceImpl<StudentRepositoryImpl, S
 
     @Override
     public boolean isRegistrationOpen() throws InvalidDateException {
-        int currentMonth = ApplicationContext.currentDateCalendar.get(Calendar.MONTH);
-        int currentDay = ApplicationContext.currentDateCalendar.get(Calendar.DATE);
+        int currentMonth = ApplicationContext.currentPersianDate.getMonthValue();
+        int currentDay = ApplicationContext.currentPersianDate.getDayOfMonth();
         if(currentMonth == Constants.oddCoursesRegisterMonth && Constants.oddCourseRegisterDays.contains(currentDay))
             return true;
-        if(currentMonth == Constants.evenCourseRegisterMonth && Constants.evenCourseRegisterDays.contains(currentDay))
+        else if(currentMonth == Constants.evenCourseRegisterMonth1 && Constants.evenCourseRegisterDays1.contains(currentDay))
+            return true;
+        else if(currentMonth == Constants.evenCourseRegisterMonth2 && Constants.evenCourseRegisterDays2.contains(currentDay))
             return true;
         throw new InvalidDateException(Constants.NOT_IN_REGITRATION_PERIOD);
     }
@@ -158,7 +162,7 @@ public class StudentServiceImpl extends BaseServiceImpl<StudentRepositoryImpl, S
 
     }
 
-    public Date setDate() {
+    public LocalDate setDate() {
         try{
             printer.getInput("Year of birth");
             int year = input.nextInt();
@@ -169,16 +173,16 @@ public class StudentServiceImpl extends BaseServiceImpl<StudentRepositoryImpl, S
             printer.getInput("Day of birth");
             int day = input.nextInt();
             input.nextLine();
-            int diff = ApplicationContext.currentDateCalendar.get(Calendar.YEAR) - year;
+            int diff = ApplicationContext.currentPersianDate.getYear() - year;
             if(diff < 15)
                 throw new InvalidDateException(Constants.INVALID_AGE_EXCEPTION);
             if(year<0 || month<0 || day<0 || month>12 || day>31)
                 throw new InvalidDateException(Constants.INVALID_DATE_ENTRY_EXCEPTION);
-            if(month == 2 && day > 28)
-                throw new InvalidDateException(Constants.INVALID_DAY_OF_MONTH_EXCEPTION);
-            if((month==4 || month ==6 || month == 9 || month == 11) && day>30)
-                throw new InvalidDateException(Constants.INVALID_DAY_OF_MONTH_EXCEPTION);
-            return new GregorianCalendar(year,month-1,day).getTime();
+//            if(month == 2 && day > 28)
+//                throw new InvalidDateException(Constants.INVALID_DAY_OF_MONTH_EXCEPTION);
+//            if((month==4 || month ==6 || month == 9 || month == 11) && day>30)
+//                throw new InvalidDateException(Constants.INVALID_DAY_OF_MONTH_EXCEPTION);
+            return PersianDate.of(year, month, day).toGregorian();
         }catch (Exception e){
             printer.printError(e.getMessage());
             input.nextLine();

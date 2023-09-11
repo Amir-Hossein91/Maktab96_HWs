@@ -1,5 +1,6 @@
 package entity;
 
+import com.github.mfathi91.time.PersianDate;
 import entity.base.BaseEntity;
 import entity.enums.AcademicGrade;
 import entity.enums.AcceptanceType;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -42,13 +44,13 @@ public class Student extends BaseEntity {
     @Column(unique = true)
     @Pattern(regexp = "\\d{10}", message = Constants.INVALID_NATIONAL_CODE_FORMAT)
     private String nationalCode;
-    private Date birthDate;
+    private LocalDate birthDate;
     @Column(unique = true)
     @Pattern(regexp = "^[0-9]{8}$",message = Constants.INVALID_STUDENT_CODE_FORMAT)
     private String studentNumber;
     @Enumerated(value = EnumType.STRING)
     private UniversityType universityType;
-    @Range(min = 1900 , max = 2999, message = Constants.INVALID_ENTRANCE_YEAR_FORMAT )
+    @Range(min = 1350 , max = 1500, message = Constants.INVALID_ENTRANCE_YEAR_FORMAT )
     private int entranceYear;
     @Enumerated(value = EnumType.STRING)
     private AcademicGrade academicGrade;
@@ -78,11 +80,12 @@ public class Student extends BaseEntity {
     private String password;
 
     public void setBirthDate(int year,int month, int day){
-        birthDate = new GregorianCalendar(year,month-1,day).getTime();
+        PersianDate persianDate = PersianDate.of(year,month,day);
+        birthDate = persianDate.toGregorian();
     }
 
     public int getBirthYear(){
-        return Integer.parseInt(new SimpleDateFormat("yyyy").format(birthDate));
+        return PersianDate.fromGregorian(birthDate).getYear();
     }
 
     public String toString() {
@@ -92,7 +95,7 @@ public class Student extends BaseEntity {
                 ", mothername=" + this.getMothername() +
                 ", identityCode=" + this.getIdentityCode() +
                 ", nationalCode=" + this.getNationalCode() +
-                ", birthDate=" + this.getBirthDate() +
+                ", birthDate=" + PersianDate.fromGregorian(this.getBirthDate()) +
                 ", studentNumber=" + this.getStudentNumber() +
                 ", universityType=" + this.getUniversityType() +
                 ", entranceYear=" + this.getEntranceYear() +

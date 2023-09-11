@@ -1,6 +1,7 @@
 package service.impl;
 
 import basics.service.impl.BaseServiceImpl;
+import com.github.mfathi91.time.PersianDate;
 import entity.BankAccount;
 import entity.Debt;
 import entity.Loan;
@@ -113,7 +114,7 @@ public class DebtServiceImpl extends BaseServiceImpl<DebtRepositoryImpl, Debt> i
                 throw new NotFoundException(Constants.INVALID_CARD_PROPERTIES);
             List<String> result = new ArrayList<>();
             getUnpaidDebts(student).forEach(debt ->
-                    result.add(debt.getId() + "- " + new SimpleDateFormat("yyyy/MM/dd").format(debt.getDueDate())
+                    result.add(debt.getId() + "- " + PersianDate.fromGregorian(debt.getDueDate())
                             + "\t" + debt.getLoan().getLoanType() + "\t" + debt.getAmount()));
             printer.printResult("Choose debt id", result);
             printer.getInput("Debt id");
@@ -145,12 +146,11 @@ public class DebtServiceImpl extends BaseServiceImpl<DebtRepositoryImpl, Debt> i
         }
     }
 
-    private Date calculateDueDate(Loan loan, int monthNumber){
+    private LocalDate calculateDueDate(Loan loan, int monthNumber){
         int year = loan.getBorrower().getGraduateYear()+1;
-        Date date = loan.getRegistrationDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        LocalDate date = loan.getRegistrationDate();
+        PersianDate persianDate = PersianDate.fromGregorian(date);
+        int day = persianDate.getDayOfMonth();
         year += monthNumber/12;
         int month;
         if(monthNumber % 12 > 0)
@@ -159,6 +159,6 @@ public class DebtServiceImpl extends BaseServiceImpl<DebtRepositoryImpl, Debt> i
             month = 12;
             year -= 1;
         }
-        return new GregorianCalendar(year,month-1,day).getTime();
+        return PersianDate.of(year,month,day).toGregorian();
     }
 }

@@ -29,7 +29,7 @@ public class BankAccount extends BaseEntity {
     private String cvv2;
     @Range(min = 1, max = 12, message = Constants.INVALID_EXPIRATION_MONTH_EXCEPTION)
     private int expirationMonth;
-    @Range(min = 1900, max = 2999, message = Constants.INVALID_EXPIRATION_YEAR_EXCEPTION)
+    @Range(min = 1300, max = 1500, message = Constants.INVALID_EXPIRATION_YEAR_EXCEPTION)
     private int expirationYear;
     @OneToOne(mappedBy = "bankAccount")
     private Student owner;

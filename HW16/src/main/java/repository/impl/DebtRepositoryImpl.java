@@ -1,11 +1,13 @@
 package repository.impl;
 
 import basics.repository.impl.BaseRepositoryImpl;
+import com.github.mfathi91.time.PersianDate;
 import entity.Debt;
 import entity.Student;
 import repository.DebtRepository;
 
 import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,13 +37,14 @@ public class DebtRepositoryImpl extends BaseRepositoryImpl<Debt> implements Debt
 
     @Override
     public Optional<List<Debt>> getMonthlyUnpaidDebts(Student student, int year, int month) {
+        LocalDate localDate = PersianDate.of(year,month,1).toGregorian();
         String hql = "select d from Debt d join Loan l on d.loan.id = l.id where l.borrower.id =:s and " +
                 "d.isPaid =:p and year(d.dueDate) =:y and month(d.dueDate) =:m";
         Query query = entityManager.createQuery(hql, Debt.class);
         query.setParameter("s",student.getId());
         query.setParameter("p", false);
-        query.setParameter("y", year);
-        query.setParameter("m", month);
+        query.setParameter("y", localDate.getYear());
+        query.setParameter("m", localDate.getMonthValue());
         return Optional.ofNullable(query.getResultList());
     }
 

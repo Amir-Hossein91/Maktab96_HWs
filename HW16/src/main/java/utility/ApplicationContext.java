@@ -1,5 +1,6 @@
 package utility;
 
+import com.github.mfathi91.time.PersianDate;
 import entity.BankAccount;
 import entity.Debt;
 import entity.Loan;
@@ -13,11 +14,12 @@ import service.impl.DebtServiceImpl;
 import service.impl.LoanServiceImpl;
 import service.impl.StudentServiceImpl;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class ApplicationContext {
-    public final static GregorianCalendar currentDateCalendar;
-    public final static Date currentDate ;
+    public final static PersianDate currentPersianDate;
+    public final static LocalDate currentDate ;
     public final static Printer printer;
     private final static BankAccountRepositoryImpl bankAccountRepository;
     private final static StudentRepositoryImpl studentRepository;
@@ -30,8 +32,8 @@ public class ApplicationContext {
     public final static Map<Integer,Character[]> passwordCharactersMap;
 
     static{
-        currentDateCalendar = new GregorianCalendar(2023,9,26);
-        currentDate = currentDateCalendar.getTime();
+        currentPersianDate = PersianDate.of(1395,8,3);
+        currentDate = currentPersianDate.toGregorian();
         printer = new Printer();
         bankAccountRepository = new BankAccountRepositoryImpl(BankAccount.class);
         studentRepository = new StudentRepositoryImpl(Student.class);

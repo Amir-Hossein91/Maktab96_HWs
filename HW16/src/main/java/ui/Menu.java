@@ -1,5 +1,6 @@
 package ui;
 
+import com.github.mfathi91.time.PersianDate;
 import entity.Debt;
 import entity.Loan;
 import entity.Student;
@@ -109,7 +110,7 @@ public class Menu {
                         List<String> loanStringList = new ArrayList<>();
                         loans.forEach(loan -> loanStringList.add("id: " + loan.getId() + " - type: "
                                 + loan.getLoanType() + " - registered in:  "
-                                + new SimpleDateFormat("yyyy/MM/dd").format(loan.getRegistrationDate())
+                                + PersianDate.fromGregorian(loan.getRegistrationDate())
                                 + " - amount: " + loan.getAmount()));
                         printer.printResult("Select each of the taken loans to see debts",loanStringList);
                         printer.getInput("Loan id");
@@ -120,7 +121,7 @@ public class Menu {
                             List<String> debtsStringList = new ArrayList<>();
                             debts.forEach(debt ->
                                     debtsStringList.add("id: " + debt.getId() + " - due date: " +
-                                            new SimpleDateFormat("yyyy/MM/dd").format(debt.getDueDate()) +
+                                            PersianDate.fromGregorian(debt.getDueDate()) +
                                             " - amount: " + debt.getAmount()));
                             printer.printResult("Debts of loan by id of " + loanId,debtsStringList);
                         } else
@@ -158,14 +159,14 @@ public class Menu {
                         List<String> result = new ArrayList<>();
                         debtService.getPaidDebts(student).forEach(debt -> {
                             result.add(debt.getId() + " - type = " + debt.getLoan().getLoanType() + "\t"
-                                    + new SimpleDateFormat("yyyy/MM/dd").format(debt.getPaidDate()));
+                                    + PersianDate.fromGregorian(debt.getPaidDate()));
                         });
                         printer.printResult("Paid Debts",result);
                     }
                     case 2 -> {
                         List<String> result = new ArrayList<>();
                         debtService.getUnpaidDebts(student).forEach(debt ->
-                            result.add(debt.getId() + "- " + new SimpleDateFormat("yyyy/MM/dd").format(debt.getDueDate())
+                            result.add(debt.getId() + "- " + PersianDate.fromGregorian(debt.getDueDate())
                             +"\t" + debt.getLoan().getLoanType() + "\t" + debt.getAmount()));
 
                         printer.printResult("Unpaid Debts",result);
@@ -173,7 +174,7 @@ public class Menu {
                     case 3 -> {
                         List<String> result = new ArrayList<>();
                         debtService.getMonthlyUnpaidDebts(student).forEach(debt -> {
-                            result.add(debt.getId() + "- " + new SimpleDateFormat("yyyy/MM/dd").format(debt.getDueDate())
+                            result.add(debt.getId() + "- " + PersianDate.fromGregorian(debt.getDueDate())
                                     + "\t" + debt.getAmount());
                         });
                         printer.printResult("Specified month unpaid Debts",result);

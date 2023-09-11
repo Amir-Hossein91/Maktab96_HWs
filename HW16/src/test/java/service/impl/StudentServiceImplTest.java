@@ -99,21 +99,21 @@ class StudentServiceImplTest {
 
     @Test
     void registrationIsOpenIfCurrentDateSetProperly() throws InvalidDateException {
-        // current date = 2023/10/26 ---> proper
+        // current date = 1398/08/03 ---> proper
         assertTrue(studentService.isRegistrationOpen());
     }
 
     @Test
     void registrationIsClosedIfCurrentDateNotSetProperly() throws InvalidDateException {
-        // current date = 2023/09/26 ---> not proper
+        // current date = 1398/07/03 ---> not proper
         assertThrows(InvalidDateException.class,() -> studentService.isRegistrationOpen());
     }
 
     @Test
     void canNotRepayDebtsIfNotGraduated() throws NotProperTimeException {
-        // current year = 2021
+        // current year = 1395
         Student student = Student.builder()
-                .graduateYear(2022).build();
+                .graduateYear(1396).build();
         assertThrows(NotProperTimeException.class,()->studentService.canRepay(student));
         assertFalse(studentService.isGraduated(student));
     }

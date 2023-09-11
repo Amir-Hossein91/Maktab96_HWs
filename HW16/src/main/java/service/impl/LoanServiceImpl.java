@@ -1,6 +1,7 @@
 package service.impl;
 
 import basics.service.impl.BaseServiceImpl;
+import com.github.mfathi91.time.PersianDate;
 import entity.BankAccount;
 import entity.Debt;
 import entity.Loan;
@@ -119,31 +120,40 @@ public class LoanServiceImpl extends BaseServiceImpl<LoanRepositoryImpl, Loan> i
             switch(loanType){
                 case TUITION -> {
                     List<Loan> tuitionLoans = loans.stream().filter(loan -> loan.getLoanType() == LoanType.TUITION).toList();
-                    if(!tuitionLoans.isEmpty()){
-                        for(Loan l : tuitionLoans){
-                            // 604800000 = 7 * 24 * 60 * 60 * 1000 ms
-                            if(ApplicationContext.currentDate.getTime() - l.getRegistrationDate().getTime() <= 604800000)
-                                return true;
-                        }
-                    }
-                    return false;
+                    return areLoansInCurrentPeriod(tuitionLoans);
                 }
                 case EDUCATIONAL -> {
-
                     List<Loan> educationalLoans = loans.stream().filter(loan -> loan.getLoanType() == LoanType.EDUCATIONAL).toList();
-                    if(!educationalLoans.isEmpty()){
-                        for(Loan l : educationalLoans){
-                            if(ApplicationContext.currentDate.getTime() - l.getRegistrationDate().getTime() <= 604800000)
-                                return true;
-                        }
-                    }
-                    return false;
+                    return areLoansInCurrentPeriod(educationalLoans);
                 }
                 default -> {
                     return true;
                 }
             }
         }
+    }
+
+    private boolean areLoansInCurrentPeriod(List<Loan> takenLoans){
+        if(!takenLoans.isEmpty()){
+            for(Loan l : takenLoans){
+                PersianDate persianRegistrationDate = PersianDate.fromGregorian(l.getRegistrationDate());
+                int year = persianRegistrationDate.getYear();
+                int month = persianRegistrationDate.getMonthValue();
+                switch (month){
+                    case 8 -> {
+                        if(ApplicationContext.currentPersianDate.isAfter(PersianDate.of(year,7,30))
+                                && ApplicationContext.currentPersianDate.isBefore(PersianDate.of(year,8,8)))
+                            return true;
+                    }
+                    case 11,12-> {
+                        if(ApplicationContext.currentPersianDate.isAfter(PersianDate.of(year,11,24))
+                                && ApplicationContext.currentPersianDate.isBefore(PersianDate.of(year,12,2)))
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @Override

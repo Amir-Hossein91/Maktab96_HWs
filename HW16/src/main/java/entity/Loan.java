@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @SuperBuilder
@@ -24,7 +25,7 @@ public class Loan extends BaseEntity {
     private Long amount;
     @ManyToOne
     private Student borrower;
-    private Date registrationDate;
+    private LocalDate registrationDate;
 
     public Loan (LoanType loanType, Student borrower){
         this.loanType = loanType;
