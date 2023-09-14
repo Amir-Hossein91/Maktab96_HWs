@@ -11,7 +11,6 @@ import utility.ApplicationContext;
 import utility.Constants;
 import utility.Printer;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Menu {
@@ -113,25 +112,34 @@ public class Menu {
                                 + PersianDate.fromGregorian(loan.getRegistrationDate())
                                 + " - amount: " + loan.getAmount()));
                         printer.printResult("Select each of the taken loans to see debts",loanStringList);
-                        printer.getInput("Loan id");
-                        Long loanId = input.nextLong();
-                        input.nextLine();
-                        if (loans.stream().map(Loan::getId).toList().contains(loanId)){
-                            List<Debt> debts = debtService.findByLoanId(loanId);
-                            List<String> debtsStringList = new ArrayList<>();
-                            debts.forEach(debt ->
-                                    debtsStringList.add("id: " + debt.getId() + " - due date: " +
-                                            PersianDate.fromGregorian(debt.getDueDate()) +
-                                            " - amount: " + debt.getAmount()));
-                            printer.printResult("Debts of loan by id of " + loanId,debtsStringList);
-                        } else
-                            printer.printError(Constants.INVALID_LOAN_ID);
+                        if(!loans.isEmpty()){
+                            printer.getInput("Loan id");
+                            Long loanId = input.nextLong();
+                            input.nextLine();
+                            if (loans.stream().map(Loan::getId).toList().contains(loanId)){
+                                List<Debt> debts = debtService.findByLoanId(loanId);
+                                List<String> debtsStringList = new ArrayList<>();
+                                debts.forEach(debt ->
+                                        debtsStringList.add("id: " + debt.getId() + " - due date: " +
+                                                PersianDate.fromGregorian(debt.getDueDate()) +
+                                                " - amount: " + debt.getAmount()));
+                                printer.printResult("Debts of loan by id of " + loanId,debtsStringList);
+                            } else
+                                printer.printError(Constants.INVALID_LOAN_ID);
+                        }
+
                     }
                     case 2 -> {
-                        printer.printListWithSelect(toBePrinted);
-                        Loan loan = loanService.chooseLoan(possibleLoans.get(input.nextInt()-1));
-                        loanService.saveOrUpdate(loan);
-                        input.nextLine();
+                        if(!possibleLoans.isEmpty()){
+                            printer.printListWithSelect(toBePrinted);
+                            int loanNumber = input.nextInt();
+                            if(loanNumber >0 && loanNumber <= possibleLoans.size()) {
+                                Loan loan = loanService.chooseLoan(possibleLoans.get(loanNumber - 1));
+                                loanService.saveOrUpdate(loan);
+                            } else
+                                printer.printError(Constants.INVALID_LOAN_ID);
+                            input.nextLine();
+                        }
                     }
                     case 3 -> {
                         return;
