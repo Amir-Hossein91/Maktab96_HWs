@@ -1,0 +1,19 @@
+<configuration>
+
+    <appender name="LOG-EVERY-ACTIVITY" class="ch.qos.logback.core.FileAppender">
+        <file>HW17/logs/app.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %p %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="java.question1" level="debug" additivity="false">
+        <appender-ref ref="LOG-EVERY-ACTIVITY"/>
+    </logger>
+    <logger name="org.hibernate" level="error"/>
+
+    <root level="info">
+        <appender-ref ref="LOG-EVERY-ACTIVITY"/>
+    </root>
+
+</configuration>

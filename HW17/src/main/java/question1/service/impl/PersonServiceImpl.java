@@ -1,6 +1,5 @@
 package question1.service.impl;
 
-import org.apache.log4j.Logger;
 import question1.entity.Person;
 import question1.repository.impl.PersonRepositoryImpl;
 import question1.service.PersonService;
