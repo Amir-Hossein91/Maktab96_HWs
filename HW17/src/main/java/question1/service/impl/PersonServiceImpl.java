@@ -52,7 +52,7 @@ public class PersonServiceImpl implements PersonService {
     }
     @Override
     public void delete(Person person){
-        logger.info("Attempt to delete " + person.getFirstname() + " " + person.getLastname() +
+        logger.info("Attempt to delete person " + person.getFirstname() + " " + person.getLastname() +
                 " with claimed id of: " + person.getId());
         if(!isValid(person))
             return;
@@ -60,7 +60,7 @@ public class PersonServiceImpl implements PersonService {
         try{
             personRepository.delete(Person.class,person);
             personRepository.getEntityManager().getTransaction().commit();
-            logger.info("Successfully deleted id " + person.getId() + ": " +person.getFirstname() + " " + person.getLastname());
+            logger.info("Successfully deleted person id " + person.getId() + ": " +person.getFirstname() + " " + person.getLastname());
         } catch (IllegalArgumentException e){
             logger.error("Person not found: " + e);
             System.out.println(e.getMessage());
