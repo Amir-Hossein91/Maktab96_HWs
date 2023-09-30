@@ -3,6 +3,7 @@ package question1;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import question1.entity.Person;
 import question1.service.impl.PersonServiceImpl;
 import question1.utility.ApplicationContext;
 import question1.service.impl.StudentServiceImpl;
@@ -12,10 +13,10 @@ public class Main {
     public static PersonServiceImpl personService = ApplicationContext.personService;
     public static StudentServiceImpl studentService = ApplicationContext.studentService;
     public static TeacherServiceImpl teacherService = ApplicationContext.teacherService;
-    public static Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        logger.error("this is an error log");
+        System.out.println(personService.signUp("md",null));
+
 //        System.out.println(personService.signUp("mohammad", "heidari"));
 
 //        System.out.println(teacherService.signUp("amin","kabiri","36261", Degree.PHD, FacultyLevel.MASTER));
@@ -40,9 +41,9 @@ public class Main {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//        personService.delete(new Person(3,"amin","dehbandi",null));
+//        personService.delete(new Person(3,"amin","hosseini",null));
 
-//        personService.update(new Person(5,"amin", "dehbandi", null));
+//        personService.update(new Person(5,"amin", "hosseini", null));
 
 
 
