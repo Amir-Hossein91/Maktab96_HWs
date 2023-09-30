@@ -13,8 +13,10 @@ public class Main {
     public static PersonServiceImpl personService = ApplicationContext.personService;
     public static StudentServiceImpl studentService = ApplicationContext.studentService;
     public static TeacherServiceImpl teacherService = ApplicationContext.teacherService;
+    public static Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
+        logger.info("*********(new run)**********");
         System.out.println(personService.signUp("md",null));
 
 //        System.out.println(personService.signUp("mohammad", "heidari"));

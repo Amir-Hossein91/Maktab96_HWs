@@ -52,6 +52,7 @@ public class BaseRepositoryImpl<T extends Person> implements BaseRepository<T> {
             em.remove(findById(cname,t.getId()));
         } catch (PersistenceException e) {
             logger.error(cname + "delete failure: " + e);
+            throw e;
         }
     }
 
