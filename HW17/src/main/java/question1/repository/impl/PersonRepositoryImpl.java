@@ -21,11 +21,6 @@ public class PersonRepositoryImpl extends BaseRepositoryImpl<Person> implements 
 
     @Override
     public List<Person> loadAll() {
-        try {
             return getEntityManager().createQuery("select p from Person p").getResultList();
-        } catch (PersistenceException e){
-            logger.error("All information load failure: " + e + "-->" + e.getMessage());
-            return null;
-        }
     }
 }

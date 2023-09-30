@@ -7,6 +7,7 @@ import question1.repository.impl.PersonRepositoryImpl;
 import question1.service.PersonService;
 import question1.validation.EntityValidator;
 
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.List;
@@ -60,21 +61,28 @@ public class PersonServiceImpl implements PersonService {
         try{
             personRepository.delete(Person.class,person);
             personRepository.getEntityManager().getTransaction().commit();
-            logger.info("Successfully deleted person id " + person.getId() + ": " +person.getFirstname() + " " + person.getLastname());
+            logger.info("Successfully deleted person with id= " + person.getId() + ": " +person.getFirstname() + " " + person.getLastname());
         } catch (IllegalArgumentException e){
             logger.error("Person not found: " + e);
+            System.out.println(e.getMessage());
+        } catch (PersistenceException e){
             System.out.println(e.getMessage());
         }
     }
     @Override
     public List<Person> loadAll(){
-        logger.info("Attempt to get all Person information");
-        return personRepository.loadAll();
+        logger.info("Attempt to get all \"Person\" information");
+        try{
+            return personRepository.loadAll();
+        } catch (PersistenceException e){
+            logger.error("loading Person information list failed: " + e);
+            return null;
+        }
     }
 
     @Override
     public boolean contains(Person person){
-        logger.info("Attempt to check if " +person.getFirstname() + " " + person.getLastname() + " exists");
+        logger.info("Attempt to check if Person " +person.getFirstname() + " " + person.getLastname() + " exists");
         return isValid(person) && personRepository.contains(Person.class,person);
     }
 
