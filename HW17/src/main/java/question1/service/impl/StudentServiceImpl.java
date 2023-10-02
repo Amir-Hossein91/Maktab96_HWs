@@ -37,7 +37,7 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.getEntityManager().getTransaction().begin();
         student = studentRepository.save(Student.class,student);
         studentRepository.getEntityManager().getTransaction().commit();
-        logger.info("Student signup completed");
+        logger.info("Student signup completed successfully");
         return student;
     }
 

@@ -4,6 +4,8 @@ package question1;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import question1.entity.Person;
+import question1.entity.Student;
+import question1.entity.enums.StudyField;
 import question1.service.impl.PersonServiceImpl;
 import question1.utility.ApplicationContext;
 import question1.service.impl.StudentServiceImpl;
@@ -17,7 +19,7 @@ public class Main {
 
     public static void main(String[] args) {
         logger.info("*********(new run)**********");
-        System.out.println(personService.signUp("md",null));
+//        System.out.println(personService.signUp("md",null));
 
 //        System.out.println(personService.signUp("mohammad", "heidari"));
 
@@ -39,7 +41,7 @@ public class Main {
 
 //        teacherService.loadAll().forEach(System.out::println);
 
-//        studentService.loadAll().forEach(System.out::println);
+        studentService.loadAll().forEach(System.out::println);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
