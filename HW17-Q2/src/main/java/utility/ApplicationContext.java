@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class ApplicationContext {
     private static final Path path;
-    public static final File file;
+    private static final File file;
     public static Scanner scanner;
     private static final CourseRepositoryImpl courseRepository;
     public static final CourseServiceImpl courseService;

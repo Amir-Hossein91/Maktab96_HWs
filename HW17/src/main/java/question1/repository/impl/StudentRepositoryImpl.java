@@ -5,7 +5,6 @@ import question1.repository.StudentRepository;
 import question1.entity.Student;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
 import java.util.List;
 
 public class StudentRepositoryImpl extends BaseRepositoryImpl<Student> implements StudentRepository {
