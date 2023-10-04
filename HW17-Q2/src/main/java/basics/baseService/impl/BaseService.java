@@ -9,15 +9,22 @@ import javax.persistence.EntityTransaction;
 public class BaseService <R extends BaseRepository<T>, T extends BaseEntity>{
 
     protected R repository;
-    protected EntityTransaction entityTransaction;
+    protected EntityTransaction transaction;
 
     public BaseService(R repository){
         this.repository = repository;
-        entityTransaction = Connection.entityManager.getTransaction();
+        transaction = Connection.entityManager.getTransaction();
     }
 
     public T save (T t){
-        return repository.save(t).orElseThrow();
+        if(transaction.isActive())
+            return repository.save(t).orElseThrow();
+        else {
+            transaction.begin();
+            t = repository.save(t).orElseThrow();
+            transaction.commit();
+            return t;
+        }
     }
 
 }
