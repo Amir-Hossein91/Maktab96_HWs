@@ -12,11 +12,9 @@ import java.util.List;
 
 public class PersonRepositoryImpl extends BaseRepositoryImpl<Person> implements PersonRepository {
 
-    private final Logger logger;
 
     public PersonRepositoryImpl(EntityManager em) {
         super(em);
-        logger = LoggerFactory.getLogger(PersonRepositoryImpl.class);
     }
 
     @Override
