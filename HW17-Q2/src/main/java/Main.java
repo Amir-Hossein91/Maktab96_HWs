@@ -15,14 +15,13 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     private static final StudentCourseRatingServiceImpl studentCourseService = ApplicationContext.studentCourseService;
     private static final StudentServiceImpl studentService = ApplicationContext.studentService;
     private static final CourseServiceImpl courseService = ApplicationContext.courseService;
+    private static List<String> headings;
 
     public static void main(String[] args) throws FileNotFoundException, ParseException {
         saveLines();
@@ -30,20 +29,36 @@ public class Main {
 
     public static void saveLines() throws ParseException {
         Scanner scanner = ApplicationContext.scanner;
-
+        headings = new ArrayList<>(List.of(scanner.nextLine().split(",")));
+        Map<String,String> mapHeadings = new HashMap<>();
+        int columnsCount = headings.size();
         while (scanner.hasNextLine()){
             List<String> line = new ArrayList<>(List.of(scanner.nextLine().split(",")));
-            if (line.size()>5){
-                for(int i = 5 ; i<line.size(); i++){
-                    line.set(4,line.get(4) +"," + line.get(5));
-                    line.remove(5);
+// we assume that the "comment" field is always the last one in the list
+            if (line.size()> columnsCount){
+                for(int i = columnsCount ; i<line.size(); i++){
+                    line.set(columnsCount-1,line.get(columnsCount-1) +"," + line.get(columnsCount));
+                    line.remove(columnsCount);
                 }
             }
-            if(line.get(0).startsWith("\"")){
-                courseService.save(new Course(line.get(0).replace('\"',' ')));
-                studentService.save(new Student(line.get(1)));
-                studentCourseService.save(new StudentCourseRating(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(line.get(2)),Float.parseFloat(line.get(3)), line.get(4).replace('\"',' ')));
+            for(int i =0; i<line.size(); i++){
+                mapHeadings.put(headings.get(i),line.get(i).replace('\"', ' '));
             }
+            Student student = new Student();
+            Course course = new Course();
+            StudentCourseRating rating = new StudentCourseRating();
+            for(Map.Entry<String, String> entry : mapHeadings.entrySet()){
+                switch (entry.getKey()){
+                    case "Course Name" -> course.setName(entry.getValue());
+                    case "Student Name" -> student.setName(entry.getValue());
+                    case "Timestamp" -> rating.setTimeStamp(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(entry.getValue()));
+                    case "Rating" -> rating.setRate(Float.parseFloat(entry.getValue()));
+                    case "Comment" -> rating.setComment(entry.getValue());
+                }
+            }
+            courseService.save(course);
+            studentService.save(student);
+            studentCourseService.save(rating);
         }
     }
 
