@@ -34,12 +34,17 @@ public class Main {
         int columnsCount = headings.size();
         while (scanner.hasNextLine()){
             List<String> line = new ArrayList<>(List.of(scanner.nextLine().split(",")));
-// we assume that the "comment" field is always the last one in the list
+
             if (line.size()> columnsCount){
-                for(int i = columnsCount ; i<line.size(); i++){
-                    line.set(columnsCount-1,line.get(columnsCount-1) +"," + line.get(columnsCount));
-                    line.remove(columnsCount);
+                for (int i =0; i< headings.size(); i++){
+                    if(headings.get(i).equals("Comment")){
+                        for(int j = 0 ; j<line.size() - columnsCount; j++){
+                            line.set(i,line.get(i) +"," + line.get(i+1));
+                            line.remove(i+1);
+                        }
+                    }
                 }
+
             }
             for(int i =0; i<line.size(); i++){
                 mapHeadings.put(headings.get(i),line.get(i).replace('\"', ' '));
